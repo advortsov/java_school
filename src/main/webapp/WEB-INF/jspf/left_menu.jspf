@@ -1,0 +1,36 @@
+<%@ page import="com.tsystems.javaschool.dao.entity.Genre" %>
+<%@ page pageEncoding="UTF-8" %>
+<div class="sidebar1">
+    <h4>Жанры:</h4>
+    <ul class="nav">
+        <jsp:useBean id="genreManager"
+                     class="com.tsystems.javaschool.services.impl.GenreManagerImpl" scope="application"/>
+
+        <%
+            String selectedGenre = "all";
+
+            if (request.getParameter("genre") != null) {
+                selectedGenre = String.valueOf(request.getParameter("genre"));
+            } else if (session.getAttribute("genre") != null) {
+                selectedGenre = String.valueOf(session.getAttribute("genre"));
+            }
+            session.setAttribute("genre", selectedGenre);
+        %>
+
+        <li><a href="books.jsp?genre=all">Все книги</a></li>
+        <%
+            for (Genre genre : genreManager.loadAllGenres() ) {
+                if (selectedGenre.equals(genre.getName())) {
+        %>
+            <li><a style="color:red;" href="books.jsp?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
+        <%
+        } else {
+        %>
+            <li><a  href="books.jsp?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
+        <%     }
+            }
+//            !selectedGenre.equals("all") && !
+        %>
+
+    </ul>
+</div>
