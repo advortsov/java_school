@@ -13,6 +13,8 @@ import javax.persistence.PersistenceException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Alexander Dvortsov
@@ -45,6 +47,19 @@ public class BookManagerImpl implements BookManager {
             bookDAO.save(book);
             JpaUtil.commitTransaction();
         } catch (PersistenceException ex) {
+            ex.printStackTrace();
+            JpaUtil.rollbackTransaction();
+        }
+    }
+
+    @Override
+    public void updateBook(Book book) {
+        try {
+            JpaUtil.beginTransaction();
+            bookDAO.merge(book);
+            JpaUtil.commitTransaction();
+        } catch (PersistenceException ex) {
+            Logger.getLogger(BookManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
             JpaUtil.rollbackTransaction();
         }

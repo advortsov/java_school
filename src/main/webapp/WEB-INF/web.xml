@@ -15,6 +15,15 @@
             <url-pattern>/ShowImage</url-pattern>
         </servlet-mapping>
 
+    <servlet>
+        <servlet-name>EditBookServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.EditBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditBookServlet</servlet-name>
+        <url-pattern>/EditBook</url-pattern>
+    </servlet-mapping>
+
 
     <!--<servlet>-->
         <!--<servlet-name>GenreListController</servlet-name>-->

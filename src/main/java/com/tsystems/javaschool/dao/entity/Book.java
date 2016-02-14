@@ -179,4 +179,22 @@ public class Book {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", pageCount=" + pageCount +
+                ", isbn='" + isbn + '\'' +
+                ", publishYear=" + publishYear +
+                ", image=" + Arrays.toString(image) +
+                ", descr='" + descr + '\'' +
+                ", author=" + author +
+                ", genre=" + genre +
+                ", publisher=" + publisher +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
 }

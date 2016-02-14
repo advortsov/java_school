@@ -6,7 +6,8 @@
 
 <%@include file="../WEB-INF/jspf/left_menu.jspf" %>
 
-<jsp:useBean id="bookManager" class="com.tsystems.javaschool.services.impl.BookManagerImpl" scope="page"/>
+<jsp:useBean id="bookManager" class="com.tsystems.javaschool.services.impl.BookManagerImpl"
+             scope="page"/>
 
 <div class="book_list">
 
@@ -52,6 +53,7 @@
             <br><strong>Год издания:</strong> <%=book.getPublishYear()%>
             <br><strong>Автор:</strong> <%=book.getAuthor()%>
             <br><strong>Цена:</strong> <%=book.getPrice()%> <strong> руб.</strong>
+            <br><a href="../pages/edit.jsp?book_id=<%=book.getId()%>">Редактировать</a>
             <p style="margin:10px;"> <a href="#">Добавить в корзину</a></p>
         </div>
     </div>

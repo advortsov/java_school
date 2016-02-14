@@ -91,7 +91,10 @@ public class Main {
         System.out.println(authorManager.loadAllAuthors());
         System.out.println(publisherManager.loadAllPublishers());
 
-        JpaUtil.closeSession();
+        Publisher publisher = publisherManager.findByPublisherName("PITER");
+        System.out.println(publisher);
+
+                JpaUtil.closeSession();
     }
 
 }

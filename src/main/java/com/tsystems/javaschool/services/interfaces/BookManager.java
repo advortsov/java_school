@@ -28,4 +28,6 @@ public interface BookManager {
     public List<Book> getBooksByGenre(Genre genre);
     public List<Book> findByAuthorName(String name);
     public List<Book> getBooksBySearch(String searchStr, SearchType type);
-}
+    public void updateBook(Book book);
+
+    }
