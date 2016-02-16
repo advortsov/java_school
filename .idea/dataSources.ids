@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - bookstore1@localhost" uuid="94ed91e7-ef4a-40be-bde0-486b0b03c1ae">
+    <database-info product="MySQL" version="5.7.11-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="bookstore1"/>
+    <table name="author" schema="" catalog="bookstore1" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="fio" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FKklnrv3weler2ftkweewlky958" table="book" schema="" catalog="bookstore1" columns="author_id"/>
+    </table>
+    <table name="book" schema="" catalog="bookstore1" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="descr" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="image" sqlType="LONGBLOB" precision="2147483647" scale="0" nullable="true" jdbcType="-4"/>
+      <column name="isbn" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="page_count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="price" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="publish_year" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="quantity" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="author_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="genre_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="publisher_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FKgtvt7p649s4x80y6f4842pnfq" columns="publisher_id" ref-table="publisher" ref-schema="" ref-catalog="bookstore1" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FKklnrv3weler2ftkweewlky958" columns="author_id" ref-table="author" ref-schema="" ref-catalog="bookstore1" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FKm1t3yvw5i7olwdf32cwuul7ta" columns="genre_id" ref-table="genre" ref-schema="" ref-catalog="bookstore1" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FKodo456q9363b72femnfgx0qu8" table="order_line" schema="" catalog="bookstore1" columns="book_id"/>
+      <index name="FKgtvt7p649s4x80y6f4842pnfq" unique="false" columns="publisher_id"/>
+      <index name="FKklnrv3weler2ftkweewlky958" unique="false" columns="author_id"/>
+      <index name="FKm1t3yvw5i7olwdf32cwuul7ta" unique="false" columns="genre_id"/>
+    </table>
+    <table name="client" schema="" catalog="bookstore1" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="address" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="birthday" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="surname" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="username" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="genre" schema="" catalog="bookstore1" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FKm1t3yvw5i7olwdf32cwuul7ta" table="book" schema="" catalog="bookstore1" columns="genre_id"/>
+    </table>
+    <table name="order_line" schema="" catalog="bookstore1" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="quantity" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="book_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="order_id" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FKodo456q9363b72femnfgx0qu8" columns="book_id" ref-table="book" ref-schema="" ref-catalog="bookstore1" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FKodo456q9363b72femnfgx0qu8" unique="false" columns="book_id"/>
+    </table>
+    <table name="publisher" schema="" catalog="bookstore1" type="TABLE">
+      <column name="id" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FKgtvt7p649s4x80y6f4842pnfq" table="book" schema="" catalog="bookstore1" columns="publisher_id"/>
+    </table>
+  </data-source>
+</component>

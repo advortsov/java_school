@@ -13,15 +13,15 @@
 
     <%
         List<Book> list = null;
-      
-        if (request.getParameter("genre") != null && !request.getParameter("genre").equals("all")) {
+
+        if (request.getParameter("genre").equals("all")) {
+            list = bookManager.loadAllBooks();
+        }
+        else if (request.getParameter("genre") != null && !request.getParameter("genre").equals("all")) {
             String genreName = String.valueOf(request.getParameter("genre"));
             list = bookManager.getBooksByGenre(genreManager.findByGenreName(genreName));
         }
-        else if (request.getParameter("genre").equals("all")){
-            list = bookManager.loadAllBooks();
-
-        } else if (request.getParameter("search_string") != null) {
+        else if (request.getParameter("search_string") != null) {
             String searchStr = request.getParameter("search_string");
             SearchType type = SearchType.TITLE;
                 if (request.getParameter("search_option").equals("Автор")) {

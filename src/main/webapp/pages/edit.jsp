@@ -47,6 +47,14 @@
         <br><strong>Название:</strong><input name="book_name" type="text" value="<%=book.getName()%>">
         <br><strong>ISBN:</strong><input name="book_isbn" type="text" value="<%=book.getIsbn()%>">
 
+          <br><strong>Жанр:</strong><select name="book_genre">
+          <%
+            for (Genre genre : genreManager.loadAllGenres() ){
+          %>
+          <option><%=genre.getName()%></option>
+          <% } %>
+        </select>
+
         <br><strong>Издательство:</strong><select name="book_publisher">
         <%
         for (Publisher publisher : publisherManager.loadAllPublishers() ){

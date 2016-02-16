@@ -1,9 +1,5 @@
 package com.tsystems.javaschool.services.enums;
 
-import com.tsystems.javaschool.dao.entity.Order;
-
-import javax.persistence.*;
-import java.util.Collection;
 
 /**
  * @author Alexander Dvortsov

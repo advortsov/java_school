@@ -1,6 +1,8 @@
 package com.tsystems.javaschool.dao.entity;
 
 
+import javax.persistence.*;
+
 /**
  * @author Alexander Dvortsov
  * @version 1.0
@@ -9,12 +11,28 @@ package com.tsystems.javaschool.dao.entity;
  * POJO
  */
 
+@Entity
+@Table(name="order_line")
+//@Embeddable
+@NamedQuery(name = "OrderLine.getAll", query = "SELECT b from OrderLine b")
 public class OrderLine {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int quantity;
-    private Book book;
+
+    //@ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.DETACH) // много линий в одном заказе
+    @JoinColumn(name="order_id")
     private Order order; // onetomany
+
+    @Column(name = "quantity")
+    private int quantity;
+
+//    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name="book_id")
+    private Book book;
 
     public OrderLine() {
     }
@@ -36,6 +54,8 @@ public class OrderLine {
         this.quantity = quantity;
     }
 
+    @OneToOne
+    @JoinColumn(name = "book_id")
     public Book getBook() {
         return book;
     }
@@ -44,6 +64,8 @@ public class OrderLine {
         this.book = book;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "order_id")
     public Order getOrder() {
         return order;
     }

@@ -16,22 +16,71 @@ import java.util.List;
  * @since 09.02.2016
  *
  *
- * POJO
+
+ * org.hibernate.MappingException:
+ * Could not determine type for:
+ * com.tsystems.javaschool.dao.entity.Client, at table: order, for columns: [org.hibernate.mapping.Column(client)]
+ *
+ *
+ *  com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException:
+ *  You have an error in your SQL syntax; check the manual that corresponds to your MySQL
+ *  server version for the right syntax to use near 'order (id bigint not null auto_increment, date datetime, orderStatus varchar(255' at line 1
+
  */
+
+
+@Entity
+@Table(name="buy")
+//@NamedQuery(name = "Order.getAll", query = "SELECT b from Order b")
 public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name="client_id")
     private Client client;
+
+    @Column(name = "orderStatus")
+    @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+
+    @Column(name = "paymentStatus")
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
+
+    @Column(name = "paymentType")
+    @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
+
+    @Column(name = "shippingType")
+    @Enumerated(EnumType.STRING)
     private ShippingType shippingType;
-//    @Column(name = "date")
-//    @Temporal(TemporalType.TIMESTAMP)
+
+
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
     private Date date;
+
+//    @ElementCollection
+//    @CollectionTable(
+//            name="order_line",
+//            joinColumns=@JoinColumn(name="order_id")
+//    )
+
+
+    //@OneToMany(orphanRemoval=true, cascade=CascadeType.ALL)
+
+//    @ElementCollection
+//    @CollectionTable(name = "order_line", joinColumns = @JoinColumn(name = "order_id"))
+//    private List<OrderLine> orderLines;
+    @OneToMany(mappedBy = "order")
     private List<OrderLine> orderLines;
 
     public Order() {
     }
+
 
     public Order(Client client, OrderStatus orderStatus, PaymentStatus paymentStatus, PaymentType paymentType, ShippingType shippingType, List<OrderLine> orderLines) {
         this.client = client;
@@ -42,10 +91,25 @@ public class Order {
         this.orderLines = orderLines;
     }
 
+    //@Id @Column(name = "id")
     public long getId() {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    //    @ManyToOne
+//    @JoinColumn(name = "client_id")
     public Client getClient() {
         return client;
     }
@@ -86,6 +150,7 @@ public class Order {
         this.shippingType = shippingType;
     }
 
+    //@OneToMany(mappedBy = "order", cascade=CascadeType.ALL, orphanRemoval=true)
     public List<OrderLine> getOrderLines() {
         return orderLines;
     }

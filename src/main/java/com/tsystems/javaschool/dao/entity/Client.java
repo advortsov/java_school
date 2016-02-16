@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,19 +16,82 @@ import java.util.logging.Logger;
  * @since 09.02.2016
  *
  * POJO
+ *
  */
-
+@Entity
+@Table(name="client")
+@NamedQuery(name = "Client.getAll", query = "SELECT b from Client b")
 public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    private String surname;
-    private Date birthday;
-    private String email;
-    private String address;
-    private List<Order> ordersById;
 
+    @Column(name="name")
+    private String name;
+
+    @Column(name="surname")
+    private String surname;
+
+    @Column(name="birthday")
+    private Date birthday;
+
+    @Column(name="email")
+    private String email;
+
+    @Column(name="address")
+    private String address;
+
+    @Column(name="username")
     private String username;
+
+    @Column(name="password")
     private String password;
+
+    //@OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
+//    @ElementCollection
+//    @CollectionTable(name = "order", joinColumns = @JoinColumn(name = "client_id"))
+//    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders;
+
+
+    //@OneToMany(mappedBy = "client", cascade=CascadeType.ALL, orphanRemoval=true)
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+
+//
+//    @Entity
+//    @Table(name = "contact")
+//    public class Contact implements Serializable {
+//
+//        private Set<ContactTelDetail> contactTelDetails = new HashSet<ContactTelDetail>();
+//        //...
+//        @OneToMany(mappedBy = "contact", cascade=CascadeType.ALL, orphanRemoval=true)
+//        public Set<ContactTelDetail> getContactTelDetails() {
+//            return this.contactTelDetails;
+//        }
+//        ....
+//    }
+//    @Entity
+//    @Table(name = "contact_tel_detail")
+//    public class ContactTelDetail implements Serializable {
+//
+//        private Contact contact;
+//        //...
+//        @ManyToOne
+//        @JoinColumn(name = "CONTACT_ID")
+//        public Contact getContact() {
+//            return this.contact;
+//        }
+//    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
 
     public Client() {
     }
@@ -86,8 +150,6 @@ public class Client {
     public void setAddress(String address) {
         this.address = address;
     }
-
-
 
     public String getUsername() {
         return username;

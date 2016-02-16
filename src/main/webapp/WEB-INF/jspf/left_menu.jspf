@@ -29,7 +29,6 @@
             <li><a  href="books.jsp?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
         <%     }
             }
-//            !selectedGenre.equals("all") && !
         %>
 
     </ul>

@@ -7,9 +7,10 @@ import com.tsystems.javaschool.dao.interfaces.BookDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.enums.SearchType;
 import com.tsystems.javaschool.services.interfaces.BookManager;
-import org.hibernate.Query;
 
+import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,10 @@ public class BookManagerImpl implements BookManager {
 
     @Override
     public List<Book> loadAllBooks() {
-        return bookDAO.findAll(Book.class);
+        EntityManager manager = JpaUtil.getEntityManager();
+        Query query = manager.createQuery("Select b from Book b");
+        return bookDAO.findMany(query);
+        //return bookDAO.findAll(Book.class);
     }
 
     @Override

@@ -30,26 +30,13 @@ public class Book {
     private String isbn;
     @Column(name="publish_year")
     private int publishYear;
-    @Column(name="image")
+
+    @Column(name="image", length = 1048576) // 1 mb
+    @Lob()
     private byte[] image;
     @Column(name="descr")
     private String descr;
 
-//
-//    @Entity
-//    public class Troop {
-//        @OneToMany(mappedBy="troop")
-//        public Set<Soldier> getSoldiers() {
-//            ...
-//        }
-//
-//        @Entity
-//        public class Soldier {
-//            @ManyToOne
-//            @JoinColumn(name="troop_fk")
-//            public Troop getTroop() {
-//                ...
-//            }
     @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name="author_id") // this column inda book table
     private Author author;

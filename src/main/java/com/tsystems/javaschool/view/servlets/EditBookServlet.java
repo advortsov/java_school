@@ -3,9 +3,11 @@ package com.tsystems.javaschool.view.servlets;
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.services.impl.AuthorManagerImpl;
 import com.tsystems.javaschool.services.impl.BookManagerImpl;
+import com.tsystems.javaschool.services.impl.GenreManagerImpl;
 import com.tsystems.javaschool.services.impl.PublisherManagerImpl;
 import com.tsystems.javaschool.services.interfaces.AuthorManager;
 import com.tsystems.javaschool.services.interfaces.BookManager;
+import com.tsystems.javaschool.services.interfaces.GenreManager;
 import com.tsystems.javaschool.services.interfaces.PublisherManager;
 
 import javax.servlet.ServletException;
@@ -28,8 +30,12 @@ public class EditBookServlet extends HttpServlet{
 
         PublisherManager publisherManager = new PublisherManagerImpl();
         AuthorManager authorManager = new AuthorManagerImpl();
+        GenreManager genreManager = new GenreManagerImpl();
+
+
         BookManager bookManager = new BookManagerImpl();
         book.setName(request.getParameter("book_name"));
+        book.setGenre(genreManager.findByGenreName(request.getParameter("book_genre")));
         book.setIsbn(request.getParameter("book_isbn"));
         book.setPublisher(publisherManager.findByPublisherName(request.getParameter("book_publisher")));
         book.setAuthor(authorManager.findByAuthorName(request.getParameter("book_author")));
