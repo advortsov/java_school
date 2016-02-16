@@ -49,7 +49,7 @@ public class Book {
     @JoinColumn(name="publisher_id") // this column inda book table
     private Publisher publisher;
 
-    @Column(name="quantity")
+    @Column(name="quantity")//
     private int quantity;
 
     @Column(name="price")

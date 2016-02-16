@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 @Entity
-@Table(name="genre")
+@Table(name="genre")//
 @NamedQuery(name = "Genre.getAll", query = "SELECT g from Genre g")
 public class Genre {
 

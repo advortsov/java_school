@@ -40,7 +40,7 @@
                 <div class="welcome">
                     <%
                         String userName = (String) session.getAttribute("username");
-                        if (userName == null || userName == "") userName = "Аноним";
+                        if (userName == null || userName == "") userName = "Аноним";//
                     %>
 
                     <h5>Добро пожаловать, <%=userName%>!</h5>

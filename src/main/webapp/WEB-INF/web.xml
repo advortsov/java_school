@@ -32,7 +32,7 @@
     <!--<servlet-mapping>-->
         <!--<servlet-name>GenreListController</servlet-name>-->
         <!--<url-pattern>/genres</url-pattern>-->
-    <!--</servlet-mapping>-->
+    <!--</servlet-mapping >-->
 
 
 

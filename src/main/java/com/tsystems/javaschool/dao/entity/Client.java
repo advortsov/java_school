@@ -93,7 +93,7 @@ public class Client {
     }
 
 
-    public Client() {
+    public Client() {//
     }
 
     public Client(String name, String surname, Date birthday, String email, String address, String username, String password) {

@@ -14,7 +14,7 @@
             } else if (session.getAttribute("genre") != null) {
                 selectedGenre = String.valueOf(session.getAttribute("genre"));
             }
-            session.setAttribute("genre", selectedGenre);
+            session.setAttribute("genre", selectedGenre);//
         %>
 
         <li><a href="books.jsp?genre=all">Все книги</a></li>

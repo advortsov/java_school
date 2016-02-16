@@ -28,7 +28,7 @@
                     type = SearchType.AUTHOR;
                 }
 
-                if (searchStr != null && !searchStr.trim().equals("")) {
+                if (searchStr != null && !searchStr.trim().equals("")) {//
                     list = bookManager.getBooksBySearch(searchStr, type);
                 }
         }

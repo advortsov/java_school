@@ -84,7 +84,7 @@ public class Order {
 
     public Order(Client client, OrderStatus orderStatus, PaymentStatus paymentStatus, PaymentType paymentType, ShippingType shippingType, List<OrderLine> orderLines) {
         this.client = client;
-        this.orderStatus = orderStatus;
+        this.orderStatus = orderStatus;//
         this.paymentStatus = paymentStatus;
         this.paymentType = paymentType;
         this.shippingType = shippingType;

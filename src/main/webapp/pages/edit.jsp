@@ -38,7 +38,7 @@
     Book book = null;
     book = bookManager.findBookById(Long.valueOf(request.getParameter("book_id")));
   %>
-  <%--<form name="book_edit_form" enctype="multipart/form-data" action="/EditBook" method="post">--%>
+  <%--<form name="book_edit_form" enctype="multipart/form-data" action ="/EditBook" method="post">--%>
   <form name="book_edit_form" action="/EditBook" method="post">
 
     <div class="book_info">
@@ -65,7 +65,7 @@
 
         <br><strong>Автор:</strong><select name="book_author">
         <%
-          for (Author author : authorManager.loadAllAuthors() ){
+          for (Author author : authorManager.loadAllAuthors() ){//
         %>
         <option><%=author.getFio()%></option>
         <% }

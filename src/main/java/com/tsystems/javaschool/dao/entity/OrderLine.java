@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="order_line")
+@Table(name="order_line")//
 //@Embeddable
 @NamedQuery(name = "OrderLine.getAll", query = "SELECT b from OrderLine b")
 public class OrderLine {
