@@ -1,6 +1,7 @@
 package com.tsystems.javaschool.services.impl;
 
 import com.tsystems.javaschool.dao.entity.Order;
+import com.tsystems.javaschool.dao.entity.OrderLine;
 import com.tsystems.javaschool.dao.impl.OrderDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.OrderDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
@@ -25,7 +26,7 @@ public class OrderManagerImpl implements OrderManager {
 
     @Override
     public List<Order> loadAllOrders() {
-        return null;
+        return orderDAO.findAll(Order.class);
     }
 
     @Override
@@ -48,5 +49,14 @@ public class OrderManagerImpl implements OrderManager {
     @Override
     public void deleteOrder(Order order) {
 
+    }
+
+    public int orderTotalSumm(Order order){
+        List<OrderLine> orderLines = order.getOrderLines();
+        int totalSumm = 0;
+        for (OrderLine orderLine : orderLines){
+            totalSumm += ( orderLine.getBook().getPrice() * orderLine.getQuantity() );
+        }
+        return totalSumm;
     }
 }

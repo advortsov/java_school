@@ -2,7 +2,9 @@ package com.tsystems.javaschool.services.impl;
 
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Genre;
+import com.tsystems.javaschool.dao.impl.AuthorDAOImpl;
 import com.tsystems.javaschool.dao.impl.BookDAOImpl;
+import com.tsystems.javaschool.dao.interfaces.AuthorDAO;
 import com.tsystems.javaschool.dao.interfaces.BookDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.enums.SearchType;
@@ -25,6 +27,7 @@ import java.util.logging.Logger;
 public class BookManagerImpl implements BookManager {
 
     private BookDAO bookDAO = new BookDAOImpl();
+    private AuthorDAO authorDAO = new AuthorDAOImpl();
 
     @Override
     public List<Book> findByBookName(String name) {
@@ -33,7 +36,7 @@ public class BookManagerImpl implements BookManager {
 
     @Override
     public List<Book> findByAuthorName(String name) {
-        return bookDAO.findByAuthor(name);
+        return bookDAO.findByAuthor(authorDAO.findByName(name));
     }
 
     @Override
@@ -94,7 +97,7 @@ public class BookManagerImpl implements BookManager {
     @Override
     public List<Book> getBooksBySearch(String searchStr, SearchType type) {
         if (type == SearchType.AUTHOR){
-            return bookDAO.findByAuthor(searchStr);
+            return findByAuthorName(searchStr);
         } else if (type == SearchType.TITLE){
             return bookDAO.findByName(searchStr);
         }
@@ -104,6 +107,6 @@ public class BookManagerImpl implements BookManager {
 
     @Override
     public int getBookQuantity(long id) {
-        return 0;
+        return findBookById(id).getQuantity();
     }
 }

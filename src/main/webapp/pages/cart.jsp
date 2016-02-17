@@ -1,7 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.tsystems.javaschool.dao.entity.*" %>
 <%@ page import="com.tsystems.javaschool.services.ShoppingCart" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="com.tsystems.javaschool.services.enums.ShippingType" %>
 <%@ page import="com.tsystems.javaschool.services.enums.PaymentType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -17,18 +16,25 @@
   currentClient = (Client) session.getAttribute("currentClient");
     if (currentClient == null){
       session.invalidate();
-      response.sendRedirect("index.jsp");
+      //response.sendRedirect("index.jsp");
     }
 
-  cartManager.setShoppingCart((ShoppingCart) session.getAttribute("cart"));
-  cartManager.fillUpFromCookies(request); // заполняем ее из кукисов
+  List<OrderLine> orderLines = null;
 
-  List<OrderLine> orderLines = cartManager.getShoppingCart().getItems();
-
+  if (request.getSession(false) != null) {
+      cartManager.setShoppingCart((ShoppingCart) session.getAttribute("cart"));
+      cartManager.fillUpFromCookies(request); // заполняем ее из кукисов
+      orderLines = cartManager.getShoppingCart().getItems();
+  } else {
+    response.sendRedirect("index.jsp");
+  }
 
 %>
 
 <div class="cart_penal">
+  <%
+    if (!orderLines.isEmpty()) {
+  %>
 
   <br><strong>Корзина</strong>
 
@@ -36,6 +42,7 @@
 
   <style>
     table {
+      font-size: 13px;
       border-collapse: collapse;
       width: 100%;
     }
@@ -52,6 +59,7 @@
       color: white;
     }
   </style>
+
 
   <table border="1">
     <tr>
@@ -92,11 +100,16 @@
     <% } %>
   </select>
 
-
-
-    <p><input type="submit" value="Оформить заказ"></p>
+    <p><input type="submit"  value="Оформить заказ"></p>
 
   </form>
+  <%
+    } else {
+  %>
+  <br><strong>Ваша корзина пока пуста</strong>
+<%
+  }
+%>
 
 </div>
 

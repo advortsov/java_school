@@ -75,7 +75,7 @@ public class Order {
 //    @ElementCollection
 //    @CollectionTable(name = "order_line", joinColumns = @JoinColumn(name = "order_id"))
 //    private List<OrderLine> orderLines;
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // добавил
     private List<OrderLine> orderLines;
 
     public Order() {

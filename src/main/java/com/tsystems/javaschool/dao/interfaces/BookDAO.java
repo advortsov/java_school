@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.dao.interfaces;
 
+import com.tsystems.javaschool.dao.entity.Author;
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Genre;
 
@@ -15,5 +16,6 @@ public interface BookDAO extends GenericDAO<Book, Long>{
 
     public List<Book> findByGenre(Genre genre);
 
-    public List<Book> findByAuthor(String name);
+    public List<Book> findByAuthor(Author author);
+    public List<Book> findByAuthorName(String authorName);
 }

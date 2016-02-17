@@ -2,6 +2,7 @@
 <%@ page import="com.tsystems.javaschool.services.impl.ClientManagerImpl" %>
 <%@ page import="com.tsystems.javaschool.services.ShoppingCart" %>
 <%@ page import="javax.persistence.NoResultException" %>
+<%@ page import="com.tsystems.javaschool.dao.entity.Client" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 

@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.dao.impl;
 
+import com.tsystems.javaschool.dao.entity.Author;
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.dao.interfaces.BookDAO;
@@ -42,13 +43,18 @@ public class BookDAOImpl extends GenericDAOImpl<Book, Long> implements BookDAO {
     }
 
     @Override
-    public List<Book> findByAuthor(String author) {
+    public List<Book> findByAuthor(Author author) {
         List<Book> books = null;
         String sql = "SELECT a FROM Book a WHERE a.author = :author";
         Query query = JpaUtil.getEntityManager().createQuery(sql).
                 setParameter("author", author);
         books = findMany(query);
         return books;
+    }
+
+    @Override
+    public List<Book> findByAuthorName(String authorName) {
+        return null;
     }
 
 

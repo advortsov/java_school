@@ -16,7 +16,7 @@
 
         List<Book> currentBookList = null;
 
-        if (request.getParameter("genre").equals("all")) {
+        if (request.getParameter("genre") != null && request.getParameter("genre").equals("all")) {
             currentBookList = bookManager.loadAllBooks();
         }
         else if (request.getParameter("genre") != null && !request.getParameter("genre").equals("all")) {
