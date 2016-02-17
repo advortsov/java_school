@@ -16,7 +16,7 @@ public class Publisher {//
     //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "source_pkey")
     private long id;
 
-    @Column(name="name")
+    @Column(name="name", unique = true)
     private String name;
 
     public Publisher() {

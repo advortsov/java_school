@@ -11,5 +11,6 @@ import java.math.BigDecimal;
  * @since 09.02.2016
  */
 public interface ClientDAO extends GenericDAO<Client, Long> {
+    public Client findByUserName(String name);
 
 }

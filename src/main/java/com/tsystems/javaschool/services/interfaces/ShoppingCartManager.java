@@ -4,6 +4,8 @@ package com.tsystems.javaschool.services.interfaces;
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Order;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Alexander Dvortsov
  * @version 1.0
@@ -15,4 +17,9 @@ public interface ShoppingCartManager {
     public void removeLine(Book book);
     public void clearCart();
     public Order createOrder();
+    public boolean isEnoughBooksInStock(int quantity);
+
+    public void fillUpFromCookies(HttpServletRequest request);
+
+    public void deleteExistingCookies(long id, HttpServletRequest req);
 }

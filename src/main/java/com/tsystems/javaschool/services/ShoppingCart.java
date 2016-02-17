@@ -4,6 +4,7 @@ package com.tsystems.javaschool.services;
 import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.entity.OrderLine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public class ShoppingCart {
     private List<OrderLine> items;
 
     public ShoppingCart() {
+        items = new ArrayList<>(); // чтоб нуллпоинтера не было
     }
 
     public ShoppingCart(Client client, List<OrderLine> items) {
@@ -39,4 +41,6 @@ public class ShoppingCart {
     public void setItems(List<OrderLine> items) {
         this.items = items;
     }
+
+
 }

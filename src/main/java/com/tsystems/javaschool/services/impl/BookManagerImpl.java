@@ -101,4 +101,9 @@ public class BookManagerImpl implements BookManager {
         return null;
 
     }
+
+    @Override
+    public int getBookQuantity(long id) {
+        return 0;
+    }
 }

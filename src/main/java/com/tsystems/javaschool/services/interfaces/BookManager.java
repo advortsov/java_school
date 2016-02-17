@@ -29,5 +29,6 @@ public interface BookManager {
     public List<Book> findByAuthorName(String name);
     public List<Book> getBooksBySearch(String searchStr, SearchType type);
     public void updateBook(Book book);
+    public int getBookQuantity(long id);
 
-    }
+}

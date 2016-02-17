@@ -20,13 +20,12 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "source_pkey")
     private long id;
     @Column(name="name")
     private String name;
     @Column(name="page_count")
     private int pageCount;
-    @Column(name="isbn")
+    @Column(name="isbn", unique = true)
     private String isbn;
     @Column(name="publish_year")
     private int publishYear;

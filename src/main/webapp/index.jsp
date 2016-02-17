@@ -27,9 +27,9 @@
                 <p class="title">Войти: </p>
                 <form class="login_form" name="username" action="pages/main.jsp"
                       method="POST"  id="login_form" >
-                    Логин: <input type="text" name="username" value="" size="20" />
-                    Пароль: <input type="password" name="password" value="" size="20" />
-                    <a href="">Войти анонимно</a></p>
+                    <br>Логин: <input type="text" name="username" value="" size="20" /></br>
+                    <br>Пароль: <input type="password" name="password" value="" size="20" /></br>
+                    <br><a href="">Войти анонимно</a></br></p>
 
                     <input type="submit" value="Войти" />
                 </form>

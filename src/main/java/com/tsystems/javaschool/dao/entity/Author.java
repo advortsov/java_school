@@ -25,7 +25,7 @@ public class Author {
 
     private long id;//
 
-    @Column(name="fio")
+    @Column(name="fio", unique = true, nullable = false)
     private String fio;
 
     public Author() {

@@ -1,3 +1,4 @@
+<%@ page import="com.tsystems.javaschool.dao.entity.Client" %>
 <%@ page pageEncoding="UTF-8" %>
 
 <html>
@@ -40,7 +41,10 @@
                 <div class="welcome">
                     <%
                         String userName = (String) session.getAttribute("username");
-                        if (userName == null || userName == "") userName = "Аноним";//
+                        if (userName == null || userName == "") {
+                            userName = "Anonymous";
+                            session.setAttribute("username", userName);
+                        }
                     %>
 
                     <h5>Добро пожаловать, <%=userName%>!</h5>
@@ -48,7 +52,7 @@
                     <div class="personal_controllers">
                         <h6> <a href="../index.jsp">Выход</a></h6>
                         <h6><a href="../pages/admin.jsp">Личный кабинет</a></h6>
-                        <h6><a href="#">Корзина</a></h6>
+                        <h6><a href="../pages/cart.jsp">Корзина</a></h6>
                     </div>
 
                             </div>

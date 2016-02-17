@@ -6,8 +6,13 @@ import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Order;
 import com.tsystems.javaschool.dao.entity.OrderLine;
 import com.tsystems.javaschool.services.ShoppingCart;
+import com.tsystems.javaschool.services.interfaces.BookManager;
 import com.tsystems.javaschool.services.interfaces.ShoppingCartManager;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,6 +24,12 @@ import java.util.List;
 public class ShoppingCartManagerImpl implements ShoppingCartManager {
 
     private ShoppingCart shoppingCart;
+
+    public ShoppingCartManagerImpl() {
+    }
+
+    BookManager bookManager = new BookManagerImpl();
+
 
     public ShoppingCartManagerImpl(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
@@ -48,7 +59,6 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
                 break;
             }
         }
-
     }
 
     @Override
@@ -76,4 +86,64 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
         //Order order = new Order(shoppingCart.getClient(), )
         return null;
     }
+
+
+    @Override
+    public boolean isEnoughBooksInStock(int id) {
+        BookManager bookManager = new BookManagerImpl();
+
+        for (OrderLine orderLine : shoppingCart.getItems()){
+            int wantedQuantity = orderLine.getQuantity();
+            int storeQuantity = bookManager.getBookQuantity(orderLine.getBook().getId());
+
+            if (wantedQuantity > storeQuantity){
+                //throw new NotEnoughBooksInTheStockException(quantity);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public void fillUpFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+
+        List<OrderLine> newItems = new ArrayList<>();
+        // заполняем по куки корзину
+        if (cookies.length != 0){
+            for (Cookie cookie : cookies){
+                String value  = cookie.getValue();
+                if (value.contains("qty")) {
+                    String[] arr = value.split("qty");
+                    long id = Long.parseLong(arr[0]);
+                    int quantity = Integer.parseInt(arr[1]);
+
+                    newItems.add(new OrderLine(quantity, bookManager.findBookById(id)));
+                }
+            }
+        }
+
+        if (!newItems.isEmpty()){
+            shoppingCart.setItems(newItems);
+        }
+
+    }
+
+    @Override
+    public void deleteExistingCookies(long bookId, HttpServletRequest req) {
+        // удаляем куки с таким же айди, чтобы перезаписать количество
+        Cookie[] cookies = req.getCookies();
+        for (Cookie cookie : cookies){
+            String value  = cookie.getValue();
+            if (value.contains("qty")) {
+                String[] arr = value.split("qty");
+                long id = Long.parseLong(arr[0]);
+                if (id == bookId) {
+                    cookie.setMaxAge(0);
+                }
+            }
+        }
+    }
+
+
 }
