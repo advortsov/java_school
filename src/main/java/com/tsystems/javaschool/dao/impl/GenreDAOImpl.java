@@ -18,6 +18,7 @@ public class GenreDAOImpl extends GenericDAOImpl<Genre, Long> implements GenreDA
 
     @Override
     public Genre findByName(String name) {
+        System.out.println("genreName = " + name);
         Genre genre = null;
         String sql = "SELECT g FROM Genre g WHERE g.name = :name";
         Query query = JpaUtil.getEntityManager().createQuery(sql).

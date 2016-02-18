@@ -38,13 +38,23 @@
     Book book = null;
     book = bookManager.findBookById(Long.valueOf(request.getParameter("book_id")));
   %>
-  <%--<form name="book_edit_form" enctype="multipart/form-data" action ="/EditBook" method="post">--%>
-  <form name="book_edit_form" action="/EditBook" method="post">
+  <form name="book_edit_form" enctype="multipart/form-data" action ="/EditBook" method="post">
+  <%--<form name="book_edit_form" action="/EditBook" method="post">--%>
 
     <div class="book_info">
       <div class="book_details">
-        <%--<br><input type="file" name="cover" multiple accept="image/jpeg">--%>
-        <br><strong>Название:</strong><input name="book_name" type="text" value="<%=book.getName()%>">
+        <br><input type="file" name="cover" multiple accept="image/jpeg">
+
+          <%--<FORM action="http://server.com/cgi/handle"--%>
+                <%--enctype="multipart/form-data"--%>
+                <%--method="post">--%>
+            <%--<P>--%>
+              <%--What is your name? <INPUT type="text" name="submit-name"><BR>--%>
+              <%--What files are you sending? <INPUT type="file" name="files"><BR>--%>
+              <%--<INPUT type="submit" value="Send"> <INPUT type="reset">--%>
+          <%--</FORM>--%>
+
+          <br><strong>Название:</strong><input name="book_name" type="text" value="<%=book.getName()%>">
         <br><strong>ISBN:</strong><input name="book_isbn" type="text" value="<%=book.getIsbn()%>">
 
           <br><strong>Жанр:</strong><select name="book_genre">
@@ -76,7 +86,7 @@
         <br><strong>Количество страниц:</strong><input name="book_pages" type="text" value="<%=book.getPageCount()%>">
         <br><strong>Год издания:</strong><input name="book_year" type="text" value="<%=book.getPublishYear()%>">
         <br><strong>Цена:</strong><input name="book_price" type="text" value="<%=book.getPrice()%>"><strong> руб.</strong>
-        <p><input type="submit" value="Сохранить"></p>
+        <p><input type="submit" value="Сохранить"><INPUT type="reset"></p>
       </div>
     </div>
 
