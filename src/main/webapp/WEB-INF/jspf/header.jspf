@@ -39,18 +39,22 @@
                 </div>
                 <div class="welcome">
                     <%
-                        String userName = (String) session.getAttribute("username");
+                        String userName = (String) session.getAttribute("j_username");
                         if (userName == null || userName == "") {
                             userName = "Anonymous";
                             session.setAttribute("username", userName);
                         }
                     %>
 
-                    <h5>Добро пожаловать, <%=userName%>!</h5>
+                    <%--<h5>Добро пожаловать, <%=userName%>!</h5>--%>
+                    <h5>Добро пожаловать, <%= request.getUserPrincipal().getName().toString() %>!</h5>
+
+                        <%--<% request.isUserInRole("admin") %>--%>
 
                     <div class="personal_controllers">
-                        <h6> <a href="../index.jsp">Выход</a></h6>
-                        <h6><a href="../pages/admin.jsp">Личный кабинет</a></h6>
+                        <h6> <a href="../logout">Выход</a></h6>
+                        <h6><a href="../pages/admin.jsp">Статистика</a></h6>
+                        <h6><a href="../pages/profile.jsp">Личный кабинет</a></h6>
                         <h6><a href="../pages/cart.jsp">Корзина</a></h6>
                     </div>
 

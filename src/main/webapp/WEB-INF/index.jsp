@@ -5,15 +5,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Магазин книг:: Вход</title>
-        <link href="css/style_index.css" rel="stylesheet" type="text/css">
+        <link href="../css/style_index.css" rel="stylesheet" type="text/css">
     </head>
 
     <body>
-        <%session.invalidate(); %>
+        <%--<%session.invalidate(); %>--%>
         <div class="main">
 
             <div class="content">
-                <p class="title"><span class="text"><img src="images/lib.png" width="76" height="77" hspace="10" vspace="10" align="middle"></span></p>
+                <p class="title"><span class="text"><img src="../images/lib.png" width="76" height="77" hspace="10" vspace="10" align="middle"></span></p>
                 <p class="title">Магазин книг</p>
 
                 <p class="text" align="center">
@@ -25,10 +25,12 @@
 
             <div class="login_div" >
                 <p class="title">Войти: </p>
-                <form class="login_form" name="username" action="pages/main.jsp"
+                <form class="login_form" name="username" action="j_security_check"
+                <%--<form class="login_form" name="username" action="pages/main.jsp"--%>
                       method="POST"  id="login_form" >
-                    <br>Логин: <input type="text" name="username" value="" size="20" /></br>
-                    <br>Пароль: <input type="password" name="password" value="" size="20" /></br>
+                    <br>Логин: <input type="text" name="j_username" value="" size="20" /></br>
+                    <br>Пароль: <input type="password" name="j_password" value="" size="20" /></br>
+
                     <br><a href="">Войти анонимно</a></br></p>
 
                     <input type="submit" value="Войти" />

@@ -1,12 +1,12 @@
 package com.tsystems.javaschool.dao.entity;
 
+import com.tsystems.javaschool.dao.enums.UserRole;
+
 import javax.persistence.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,9 +14,6 @@ import java.util.logging.Logger;
  * @author Alexander Dvortsov
  * @version 1.0
  * @since 09.02.2016
- *
- * POJO
- *
  */
 @Entity
 @Table(name="client")
@@ -41,16 +38,22 @@ public class Client {
     @Column(name="address")
     private String address;
 
-    @Column(name="username")
-    private String username;
+//    @Column(name="user_name", unique = true, length = 15)
+//    private String username;
 
-    @Column(name="password")
-    private String password;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
+    private User user;
 
-    //@OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
+//    @Column(name="password")
+//    private String password;
+//
+//    @OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
 //    @ElementCollection
 //    @CollectionTable(name = "order", joinColumns = @JoinColumn(name = "client_id"))
-//    private List<Order> orders = new ArrayList<>();
+//    @Column(name = "orderStatus")
+//    @Enumerated(EnumType.STRING)
+//    private Set<UserRole> userRoleSet = new HashSet<>();
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
@@ -96,14 +99,16 @@ public class Client {
     public Client() {//
     }
 
-    public Client(String name, String surname, Date birthday, String email, String address, String username, String password) {
+
+    public Client(String name, String surname, Date birthday, String email,
+                  String address, User user, List<Order> orders) {
         this.name = name;
         this.surname = surname;
         this.birthday = birthday;
         this.email = email;
         this.address = address;
-        this.username = username;
-        this.password = password;
+        this.user = user;
+        this.orders = orders;
     }
 
     public long getId() {
@@ -151,20 +156,16 @@ public class Client {
         this.address = address;
     }
 
-    public String getUsername() {
-        return username;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public User getUser() {
+        return user;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -176,10 +177,11 @@ public class Client {
                 ", birthday=" + birthday +
                 ", email='" + email + '\'' +
                 ", address='" + address + '\'' +
-                ", username='" + username + '\'' +
-                ", orders=" + orders.size() +
+                ", user=" + user +
+                ", orders=" + orders +
                 '}';
     }
+
 
     //eq hashcode
 

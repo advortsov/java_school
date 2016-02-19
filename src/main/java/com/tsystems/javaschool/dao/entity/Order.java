@@ -58,25 +58,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private ShippingType shippingType;
 
-
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
 
-
-
-    //    @ElementCollection
-//    @CollectionTable(
-//            name="order_line",
-//            joinColumns=@JoinColumn(name="order_id")
-//    )
-
-
-    //@OneToMany(orphanRemoval=true, cascade=CascadeType.ALL)
-
-//    @ElementCollection
-//    @CollectionTable(name = "order_line", joinColumns = @JoinColumn(name = "order_id"))
-//    private List<OrderLine> orderLines;
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // добавил
     private List<OrderLine> orderLines;
 
@@ -93,7 +78,6 @@ public class Order {
         this.orderLines = orderLines;
     }
 
-    //@Id @Column(name = "id")
     public long getId() {
         return id;
     }
@@ -110,8 +94,6 @@ public class Order {
         this.date = date;
     }
 
-    //    @ManyToOne
-//    @JoinColumn(name = "client_id")
     public Client getClient() {
         return client;
     }

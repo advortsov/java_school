@@ -9,5 +9,6 @@ import com.tsystems.javaschool.dao.entity.Client;
  */
 public interface ClientManager {
     public Client findByUserName(String name);
+    public void updateClient(Client client);
 
 }

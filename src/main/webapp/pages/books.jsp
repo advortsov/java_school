@@ -1,7 +1,6 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Book" %>
 <%@ page import="com.tsystems.javaschool.services.enums.SearchType" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.tsystems.javaschool.services.ShoppingCart" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -13,7 +12,6 @@
 <div class="book_list">
 
     <%
-
         List<Book> currentBookList = null;
 
         if (request.getParameter("genre") != null && request.getParameter("genre").equals("all")) {
@@ -34,11 +32,10 @@
                     currentBookList = bookManager.getBooksBySearch(searchStr, type);
                 }
         }
-       %>
+    %>
     <h5 style="text-align: left; margin-top:20px;">Найдено книг: <%=currentBookList.size() %> </h5>
               <%  session.setAttribute("currentBookList", currentBookList);
                 for (Book book : currentBookList) {
-
     %>
 
     <div class="book_info">

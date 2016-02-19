@@ -17,11 +17,11 @@
             ClientManager clientManager = new ClientManagerImpl();
             Client client = null;
             try {
-                  client = clientManager.findByUserName(userName); // вообще должен выгружаться из бд здесь, и анонимус тоже
+                  client = clientManager.findByUserName(userName);
+                  // вообще должен выгружаться из бд здесь, и анонимус тоже
             } catch (NoResultException ex){
                   //ignore
             }
-
 
             if (client == null || userName == "") {
                   userName = "Anonymous";
@@ -29,6 +29,7 @@
                   client = clientManager.findByUserName(userName);
             }
             session.setAttribute("currentClient", client);
+            System.out.println("currentClient: " + (Client)session.getAttribute("currentClient"));
             // теперь у нас в сессии есть наш клиент из базы
 
             // инициализация корзины

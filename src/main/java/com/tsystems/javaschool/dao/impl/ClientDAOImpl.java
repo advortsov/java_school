@@ -17,7 +17,7 @@ public class ClientDAOImpl extends GenericDAOImpl<Client, Long> implements Clien
     @Override
     public Client findByUserName(String name) {
         Client client = null;
-        String sql = "SELECT c FROM Client c WHERE c.username = :name";
+        String sql = "SELECT c FROM Client c WHERE c.user.user_name = :name";
         Query query = JpaUtil.getEntityManager().createQuery(sql).
                 setParameter("name", name);
         client = findOne(query);

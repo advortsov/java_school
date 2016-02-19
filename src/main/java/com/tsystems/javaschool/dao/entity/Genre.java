@@ -17,8 +17,8 @@ public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "source_pkey")
     private long id;
+
     @Column(name="name", unique = true)
     private String name;
 
