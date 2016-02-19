@@ -5,6 +5,7 @@ import com.tsystems.javaschool.dao.entity.Order;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Alexander Dvortsov
@@ -14,7 +15,7 @@ import java.util.List;
 public interface AdminManager {
 
     public List<Order> getTopTenBooks();
-    public List<Client> getTopTenClients();
-    public List<Order> getRevenuePerPeriod(Date periodStart, Date periodEnd);
+    public Map<Client, Integer> getTopTenClients();
+    public List<Order> getOrdersPerPeriod(Date periodStart, Date periodEnd);
 
 }

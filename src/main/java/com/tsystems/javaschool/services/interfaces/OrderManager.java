@@ -19,4 +19,7 @@ public interface OrderManager {
     public Order findOrderById(long id);
 
     public void deleteOrder(Order order);
+
+    public int orderTotalSumm(Order order);
+
 }

@@ -167,5 +167,20 @@ public class Client {
         this.password = password;
     }
 
-//eq hashcode
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthday=" + birthday +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", username='" + username + '\'' +
+                ", orders=" + orders.size() +
+                '}';
+    }
+
+    //eq hashcode
+
 }

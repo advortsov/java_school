@@ -63,7 +63,9 @@ public class Order {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-//    @ElementCollection
+
+
+    //    @ElementCollection
 //    @CollectionTable(
 //            name="order_line",
 //            joinColumns=@JoinColumn(name="order_id")
@@ -158,4 +160,5 @@ public class Order {
     public void setOrderLines(List<OrderLine> orderLines) {
         this.orderLines = orderLines;
     }
+
 }
