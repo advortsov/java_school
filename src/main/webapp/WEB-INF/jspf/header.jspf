@@ -41,7 +41,7 @@
                     <%
                         String userName = (String) session.getAttribute("j_username");
                         if (userName == null || userName == "") {
-                            userName = "Anonymous";
+                            userName = request.getUserPrincipal().getName().toString();
                             session.setAttribute("username", userName);
                         }
                     %>

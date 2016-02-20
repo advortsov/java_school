@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.dao.entity;
 
+import com.sun.istack.internal.NotNull;
 import com.tsystems.javaschool.services.enums.OrderStatus;
 import com.tsystems.javaschool.services.enums.PaymentStatus;
 import com.tsystems.javaschool.services.enums.PaymentType;
@@ -39,35 +40,34 @@ public class Order {
     private long id;
 
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name="client_id")
+    @JoinColumn(name="client_id", nullable = false)
     private Client client;
 
-    @Column(name = "orderStatus")
+    @Column(name = "orderStatus", nullable = false)
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @Column(name = "paymentStatus")
+    @Column(name = "paymentStatus", nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    @Column(name = "paymentType")
+    @Column(name = "paymentType", nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
 
-    @Column(name = "shippingType")
+    @Column(name = "shippingType", nullable = false)
     @Enumerated(EnumType.STRING)
     private ShippingType shippingType;
 
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // добавил
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE) // добавил 20 feb
     private List<OrderLine> orderLines;
 
     public Order() {
     }
-
 
     public Order(Client client, OrderStatus orderStatus, PaymentStatus paymentStatus, PaymentType paymentType, ShippingType shippingType, List<OrderLine> orderLines) {
         this.client = client;
@@ -134,7 +134,6 @@ public class Order {
         this.shippingType = shippingType;
     }
 
-    //@OneToMany(mappedBy = "order", cascade=CascadeType.ALL, orphanRemoval=true)
     public List<OrderLine> getOrderLines() {
         return orderLines;
     }

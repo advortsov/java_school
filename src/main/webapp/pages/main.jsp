@@ -18,7 +18,6 @@
             Client client = null;
             try {
                   client = clientManager.findByUserName(userName);
-                  // вообще должен выгружаться из бд здесь, и анонимус тоже
             } catch (NoResultException ex){
                   //ignore
             }

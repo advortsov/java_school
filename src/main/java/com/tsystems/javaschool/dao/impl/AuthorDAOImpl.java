@@ -17,11 +17,11 @@ import java.util.List;
 public class AuthorDAOImpl extends GenericDAOImpl<Author, Long> implements AuthorDAO {
 
     @Override
-    public Author findByName(String fio) {
+    public Author findByName(String name) {
         Author author = null;
-        String sql = "SELECT a FROM Author a WHERE a.fio = :fio";
+        String sql = "SELECT a FROM Author a WHERE a.name = :name";
         Query query = JpaUtil.getEntityManager().createQuery(sql).
-                setParameter("fio", fio);
+                setParameter("name", name);
         author = findOne(query);
         return author;
     }

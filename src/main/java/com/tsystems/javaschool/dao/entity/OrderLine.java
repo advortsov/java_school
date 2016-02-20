@@ -21,17 +21,15 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    //@ManyToOne(fetch=FetchType.LAZY)
     @ManyToOne(cascade = CascadeType.DETACH) // много линий в одном заказе
-    @JoinColumn(name="order_id")
-    private Order order; // onetomany
+    @JoinColumn(name="order_id", nullable = false)
+    private Order order;
 
-    @Column(name = "quantity")
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
-//    @OneToOne(fetch=FetchType.LAZY)
     @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name="book_id")
+    @JoinColumn(name="book_id", nullable = false)
     private Book book;
 
     public OrderLine() {

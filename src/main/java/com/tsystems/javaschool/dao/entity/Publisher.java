@@ -10,13 +10,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="publisher")
-public class Publisher {//
+public class Publisher {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "source_pkey")
     private long id;
 
-    @Column(name="name", unique = true)
+    @Column(name="name", unique = true, nullable = false)
     private String name;
 
     public Publisher() {

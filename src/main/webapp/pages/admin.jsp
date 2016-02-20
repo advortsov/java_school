@@ -26,6 +26,7 @@
   }
 
 %>
+<br><a href="../pages/add_book.jsp">Добавить книгу</a></br></p>
 
 <div class="admin_penal">
   <%

@@ -25,9 +25,7 @@
 
             <div class="login_div" >
                 <p class="title">Войти: </p>
-                <form class="login_form" name="username" action="j_security_check"
-                <%--<form class="login_form" name="username" action="pages/main.jsp"--%>
-                      method="POST"  id="login_form" >
+                <form class="login_form" name="username" action="j_security_check" method="POST" id="login_form">
                     <br>Логин: <input type="text" name="j_username" value="" size="20" /></br>
                     <br>Пароль: <input type="password" name="j_password" value="" size="20" /></br>
 

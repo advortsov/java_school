@@ -41,6 +41,4 @@ public class ShoppingCart {
     public void setItems(List<OrderLine> items) {
         this.items = items;
     }
-
-
 }

@@ -1,10 +1,7 @@
 package com.tsystems.javaschool.view;
 
 
-import com.tsystems.javaschool.dao.entity.Author;
-import com.tsystems.javaschool.dao.entity.Book;
-import com.tsystems.javaschool.dao.entity.Genre;
-import com.tsystems.javaschool.dao.entity.Publisher;
+import com.tsystems.javaschool.dao.entity.*;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.impl.*;
 import com.tsystems.javaschool.services.interfaces.*;
@@ -87,10 +84,15 @@ public class Main {
         Publisher publisher = publisherManager.findByPublisherName("PITER");
         System.out.println(publisher);
 
-        AdminManager adminManager = new AdminManagerImpl();
+        //AdminManager adminManager = new AdminManagerImpl();
         //printMap(adminManager.getTopTenClients());
 
         //System.out.println(adminManager.getOrdersPerPeriod(new Date(System.currentTimeMillis() - 1000*60*60*24*2), new Date(System.currentTimeMillis())));
+//
+//        ClientManager clientManager = new ClientManagerImpl();
+//
+//        Client client = clientManager.findByUserName("admin");
+//        System.out.println(client);
 
         JpaUtil.closeSession();
     }
@@ -102,6 +104,14 @@ public class Main {
             System.out.println(pair.getKey() + " = " + pair.getValue());
             it.remove(); // avoids a ConcurrentModificationException
         }
+
+
+
+
+
     }
+
+
+
 
 }

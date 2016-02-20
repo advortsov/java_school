@@ -42,8 +42,7 @@
 
     <div class="book_info">
       <div class="book_details">
-        <br><input type="file" name="cover" multiple accept="image/jpeg">
-
+          <br><strong>Обложка:</strong><input type="file" name="cover" multiple accept="image/jpeg">
           <br><strong>Название:</strong><input name="book_name" type="text" value="<%=book.getName()%>">
           <br><strong>ISBN:</strong><input name="book_isbn" type="text" value="<%=book.getIsbn()%>">
           <br><strong>Жанр:</strong><select name="book_genre">
@@ -66,7 +65,7 @@
         <%
           for (Author author : authorManager.loadAllAuthors() ){//
         %>
-        <option><%=author.getFio()%></option>
+        <option><%=author.getName()%></option>
         <% }
           session.setAttribute("currentBook", book);
         %>

@@ -21,18 +21,23 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name="name")
+
+    @Column(name="name", nullable = false)
     private String name;
+
     @Column(name="page_count")
     private int pageCount;
-    @Column(name="isbn", unique = true)
+
+    @Column(name="isbn", unique = true, nullable = false)
     private String isbn;
+
     @Column(name="publish_year")
     private int publishYear;
 
     @Column(name="image", length = 1048576) // 1 mb
     @Lob()
     private byte[] image;
+
     @Column(name="descr")
     private String descr;
 

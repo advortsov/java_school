@@ -25,31 +25,35 @@ public class Author {
 
     private long id;//
 
-    @Column(name="fio", unique = true, nullable = false)
-    private String fio;
+    @Column(name="name", unique = true, nullable = false)
+    // from 20 feb //@Column(nulable = false)
+    private String name;
 
     public Author() {
     }
 
-    public Author(String fio) {
-        this.fio = fio;
+    public Author(String name) {
+        this.name = name;
     }
 
     public long getId() {
         return id;
     }
 
-
-    public String getFio() {
-        return fio;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setFio(String fio) {
-        this.fio = fio;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return fio;
+        return name;
     }
 }

@@ -1,14 +1,9 @@
 package com.tsystems.javaschool.dao.entity;
 
-import com.tsystems.javaschool.dao.enums.UserRole;
 
 import javax.persistence.*;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Alexander Dvortsov
@@ -38,65 +33,23 @@ public class Client {
     @Column(name="address")
     private String address;
 
-//    @Column(name="user_name", unique = true, length = 15)
-//    private String username;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
 
-//    @Column(name="password")
-//    private String password;
-//
-//    @OneToMany(orphanRemoval=true, cascade={CascadeType.ALL})
-//    @ElementCollection
-//    @CollectionTable(name = "order", joinColumns = @JoinColumn(name = "client_id"))
-//    @Column(name = "orderStatus")
-//    @Enumerated(EnumType.STRING)
-//    private Set<UserRole> userRoleSet = new HashSet<>();
-
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
 
-
-    //@OneToMany(mappedBy = "client", cascade=CascadeType.ALL, orphanRemoval=true)
     public List<Order> getOrders() {
         return orders;
     }
-
-
-//
-//    @Entity
-//    @Table(name = "contact")
-//    public class Contact implements Serializable {
-//
-//        private Set<ContactTelDetail> contactTelDetails = new HashSet<ContactTelDetail>();
-//        //...
-//        @OneToMany(mappedBy = "contact", cascade=CascadeType.ALL, orphanRemoval=true)
-//        public Set<ContactTelDetail> getContactTelDetails() {
-//            return this.contactTelDetails;
-//        }
-//        ....
-//    }
-//    @Entity
-//    @Table(name = "contact_tel_detail")
-//    public class ContactTelDetail implements Serializable {
-//
-//        private Contact contact;
-//        //...
-//        @ManyToOne
-//        @JoinColumn(name = "CONTACT_ID")
-//        public Contact getContact() {
-//            return this.contact;
-//        }
-//    }
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 
 
-    public Client() {//
+    public Client() {
     }
 
 

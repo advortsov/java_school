@@ -1,7 +1,5 @@
 package com.tsystems.javaschool.dao.entity;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -33,12 +31,10 @@ public class User implements Serializable{
 //    @JoinColumn(name="client_id")
 //    private Client client;
     @Id
-    @Column(name="user_name", length = 15)
-    @NotNull
-    private String user_name;
+    @Column(name="user_name", length = 15, unique = true, nullable = false)
+    private String userName;
 
-    @Column(name="user_pass", length = 15)
-    @NotNull
+    @Column(name="user_pass", length = 15, nullable = false)
     private String userPass;
 
     //    @OneToOne(cascade = CascadeType.DETACH)
@@ -46,12 +42,12 @@ public class User implements Serializable{
 //    private Genre genre;
 
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String user_name) {
+        this.userName = user_name;
     }
 
     public String getUserPass() {
@@ -65,7 +61,7 @@ public class User implements Serializable{
     @Override
     public String toString() {
         return "User{" +
-                "user_name='" + user_name + '\'' +
+                "user_name='" + userName + '\'' +
                 ", userPass='" + userPass + '\'' +
                 '}';
     }

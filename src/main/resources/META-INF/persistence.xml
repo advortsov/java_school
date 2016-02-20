@@ -4,11 +4,6 @@
     <persistence-unit name="BOOKSTORE1">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <!--<class>com.tsystems.javaschool.dao.entity.Author</class>-->
-        <!--<class>com.tsystems.javaschool.dao.entity.Genre</class>-->
-        <!--<class>com.tsystems.javaschool.dao.entity.Publisher</class>-->
-        <!--<class>com.tsystems.javaschool.dao.entity.Book</class>-->
-
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/bookstore1"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
