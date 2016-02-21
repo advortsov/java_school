@@ -2,11 +2,14 @@ package com.tsystems.javaschool.dao.impl;
 
 
 import com.tsystems.javaschool.dao.entity.Author;
+import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.interfaces.AuthorDAO;
+import com.tsystems.javaschool.dao.interfaces.BookDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
+import com.tsystems.javaschool.services.impl.BookManagerImpl;
+import com.tsystems.javaschool.services.interfaces.BookManager;
 
 import javax.persistence.Query;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -15,6 +18,8 @@ import java.util.List;
  * @since 09.02.2016
  */
 public class AuthorDAOImpl extends GenericDAOImpl<Author, Long> implements AuthorDAO {
+    private BookDAO bookDAO = new BookDAOImpl();
+
 
     @Override
     public Author findByName(String name) {
@@ -25,4 +30,15 @@ public class AuthorDAOImpl extends GenericDAOImpl<Author, Long> implements Autho
         author = findOne(query);
         return author;
     }
+
+    @Override
+    public void setNullBeforeDelete(Author author) {
+        BookManager bookManager = new BookManagerImpl();
+        List<Book> allBooks = bookManager.getBooksByAuthor(author);
+        for (Book book : allBooks) {
+            book.setAuthor(null);
+            bookDAO.merge(book);
+        }
+    }
 }
+

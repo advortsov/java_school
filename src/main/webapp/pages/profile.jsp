@@ -1,4 +1,5 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.*" %>
+<%@ page import="com.tsystems.javaschool.view.controllers.ClientController" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -33,6 +34,12 @@
 
   <%
     Client currClient = (Client) session.getAttribute("currentClient");
+    if (currClient == null) {
+      System.out.println("!!!");
+      currClient = ClientController.actualizeClient(request, userName);
+      System.out.println(session.getAttribute("currentClient"));
+
+    }
   %>
   <form name="client_edit_form" action ="/editProfile" method="post">
     <div class="book_info">

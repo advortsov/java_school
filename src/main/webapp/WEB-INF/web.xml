@@ -8,17 +8,17 @@
     <display-name>Archetype Created Web Application</display-name>
 
     <servlet>
-            <servlet-name>ShowImage</servlet-name>
-            <servlet-class>com.tsystems.javaschool.view.servlets.ShowImage</servlet-class>
+        <servlet-name>ShowImage</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.ShowImage</servlet-class>
     </servlet>
-        <servlet-mapping>
-            <servlet-name>ShowImage</servlet-name>
-            <url-pattern>/ShowImage</url-pattern>
-        </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowImage</servlet-name>
+        <url-pattern>/ShowImage</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>EditBookServlet</servlet-name>
-        <servlet-class>com.tsystems.javaschool.view.servlets.EditBookServlet</servlet-class>
+        <servlet-class>com.tsystems.javaschool.view.servlets.book.EditBookServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EditBookServlet</servlet-name>
@@ -27,7 +27,7 @@
 
     <servlet>
         <servlet-name>AddBookServlet</servlet-name>
-        <servlet-class>com.tsystems.javaschool.view.servlets.AddBookServlet</servlet-class>
+        <servlet-class>com.tsystems.javaschool.view.servlets.book.AddBookServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddBookServlet</servlet-name>
@@ -41,6 +41,81 @@
     <servlet-mapping>
         <servlet-name>AddToCartServlet</servlet-name>
         <url-pattern>/addToCart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddGenreServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.genre.AddGenreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddGenreServlet</servlet-name>
+        <url-pattern>/addGenre</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>EditGenreServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.genre.EditGenreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditGenreServlet</servlet-name>
+        <url-pattern>/editGenre</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteGenreServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.genre.DeleteGenreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteGenreServlet</servlet-name>
+        <url-pattern>/delGenre</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddPublisherServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.publisher.AddPublisherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddPublisherServlet</servlet-name>
+        <url-pattern>/addPublisher</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>EditPublisherServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.publisher.EditPublisherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditPublisherServlet</servlet-name>
+        <url-pattern>/editPublisher</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeletePublisherServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.publisher.DeletePublisherServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeletePublisherServlet</servlet-name>
+        <url-pattern>/delPublisher</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AddAuthorServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.author.AddAuthorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddAuthorServlet</servlet-name>
+        <url-pattern>/addAuthor</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>EditAuthorServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.author.EditAuthorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EditAuthorServlet</servlet-name>
+        <url-pattern>/editAuthor</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteAuthorServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.author.DeleteAuthorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteAuthorServlet</servlet-name>
+        <url-pattern>/delAuthor</url-pattern>
     </servlet-mapping>
 
 
@@ -69,8 +144,7 @@
     <servlet-mapping>
         <servlet-name>EditClientServlet</servlet-name>
         <url-pattern>/editProfile</url-pattern>
-    </servlet-mapping >
-
+    </servlet-mapping>
 
 
     <security-constraint>
@@ -100,25 +174,25 @@
         </form-login-config>
     </login-config>
 
-        <session-config>
-            <session-timeout>
-                30
-            </session-timeout>
-        </session-config>
+    <session-config>
+        <session-timeout>
+            1
+        </session-timeout>
+    </session-config>
 
-        <welcome-file-list>
-            <welcome-file>main.jsp</welcome-file>
-        </welcome-file-list>
+    <welcome-file-list>
+        <welcome-file>main.jsp</welcome-file>
+    </welcome-file-list>
 
-        <jsp-config>
-            <jsp-property-group>
-                <display-name>header_and_footer</display-name>
-                <url-pattern>/pages/*</url-pattern>
-                <page-encoding>UTF-8</page-encoding>
-                <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
-                <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>
-            </jsp-property-group>
-        </jsp-config>
+    <jsp-config>
+        <jsp-property-group>
+            <display-name>header_and_footer</display-name>
+            <url-pattern>/pages/*</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+            <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
+            <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>
+        </jsp-property-group>
+    </jsp-config>
 
 </web-app>
 

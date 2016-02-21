@@ -20,4 +20,6 @@ public interface PublisherManager {
     public Publisher findPublisherById(long id);
 
     public void deletePublisher(Publisher publisher);
+
+    public void updatePublisher(Publisher publisher);
 }

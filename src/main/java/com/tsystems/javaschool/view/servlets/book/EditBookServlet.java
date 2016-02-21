@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.view.servlets;
+package com.tsystems.javaschool.view.servlets.book;
 
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.services.impl.AuthorManagerImpl;
@@ -25,12 +25,14 @@ import java.util.List;
 /**
  * @author Alexander Dvortsov
  * @version 1.0
- * @since 20.02.2016
+ * @since 14.02.2016
  */
-public class AddBookServlet extends HttpServlet {
+public class EditBookServlet extends HttpServlet{
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-        Book book = new Book();
+
+        Book book = (Book) request.getSession().getAttribute("currentBook");
 
         PublisherManager publisherManager = new PublisherManagerImpl();
         AuthorManager authorManager = new AuthorManagerImpl();
@@ -48,46 +50,44 @@ public class AddBookServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        for (FileItem item : items) {
-            if (item.isFormField()) {
-                String name = item.getFieldName();
-                String value = item.getString();
-                switch (name){
-                    case "book_name":
-                        book.setName(value);
-                        break;
-                    case "book_genre":
-                        book.setGenre(genreManager.findByGenreName(value));
-                        break;
-                    case "book_isbn":
-                        book.setIsbn(value);
-                        break;
-                    case "book_publisher":
-                        book.setPublisher(publisherManager.findByPublisherName(value));
-                        break;
-                    case "book_author":
-                        book.setAuthor(authorManager.findByAuthorName(value));
-                        break;
-                    case "book_pages":
-                        book.setPageCount(Integer.parseInt(value));
-                        break;
-                    case "book_year":
-                        book.setPublishYear(Integer.parseInt(value));
-                        break;
-                    case "book_price":
-                        book.setPrice(Integer.parseInt(value));
-                        break;
-                    case "book_count":
-                        book.setQuantity(Integer.parseInt(value));
-                        break;
-                }
-            } else {
-                book.setImage(item.get());
-            }
-        }
+       for (FileItem item : items) {
+           if (item.isFormField()) {
+               String name = item.getFieldName();
+               String value = item.getString();
+               switch (name){
+                   case "book_name":
+                       book.setName(value);
+                       break;
+                   case "book_genre":
+                       book.setGenre(genreManager.findByGenreName(value));
+                       break;
+                   case "book_isbn":
+                       book.setIsbn(value);
+                       break;
+                   case "book_publisher":
+                       book.setPublisher(publisherManager.findByPublisherName(value));
+                       break;
+                   case "book_author":
+                       book.setAuthor(authorManager.findByAuthorName(value));
+                       break;
+                   case "book_pages":
+                       book.setPageCount(Integer.parseInt(value));
+                       break;
+                   case "book_year":
+                       book.setPublishYear(Integer.parseInt(value));
+                       break;
+                   case "book_price":
+                       book.setPrice(Integer.parseInt(value));
+                       break;
+               }
+           } else {
+               book.setImage(item.get());
+           }
+       }
 
-        bookManager.saveNewBook(book);
+        bookManager.updateBook(book);
 
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("pages/books.jsp?genre=all");
     }
+
 }

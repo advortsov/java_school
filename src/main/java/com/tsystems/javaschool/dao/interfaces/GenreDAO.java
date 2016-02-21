@@ -14,4 +14,5 @@ public interface GenreDAO extends GenericDAO<Genre, Long> {
     //add some methods to GenericDAO standart methods:
     public Genre findByName(String name);
 
+    public void setNullBeforeDelete(Genre entity);
 }

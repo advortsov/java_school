@@ -19,6 +19,8 @@ public interface GenreManager {
 
     public void saveNewGenre(Genre genre);
 
+    public void updateGenre(Genre genre);
+
     public Genre findGenreById(long id);
 
     public void deleteGenre(Genre genre);

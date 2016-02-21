@@ -63,7 +63,7 @@ public class Order {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE) // добавил 20 feb
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // добавил 20 feb
     private List<OrderLine> orderLines;
 
     public Order() {

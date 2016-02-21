@@ -179,7 +179,6 @@ public class Book {
                 ", pageCount=" + pageCount +
                 ", isbn='" + isbn + '\'' +
                 ", publishYear=" + publishYear +
-                ", image=" + Arrays.toString(image) +
                 ", descr='" + descr + '\'' +
                 ", author=" + author +
                 ", genre=" + genre +

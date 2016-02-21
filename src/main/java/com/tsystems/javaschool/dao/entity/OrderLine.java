@@ -21,7 +21,8 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(cascade = CascadeType.DETACH) // много линий в одном заказе
+    //@ManyToOne(cascade = CascadeType.DETACH) // много линий в одном заказе было так до 20
+    @ManyToOne(cascade = CascadeType.ALL) // много линий в одном заказе
     @JoinColumn(name="order_id", nullable = false)
     private Order order;
 

@@ -70,7 +70,5 @@ public class CreateOrderServlet extends HttpServlet {
         orderManager.saveNewOrder(order);
 
         resp.sendRedirect("pages/cart.jsp");
-
-
     }
 }

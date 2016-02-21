@@ -32,7 +32,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 
     public void delete(T entity) {
         EntityManager manager = this.getManager();
-        manager.detach(entity); // i hope its deleting)
+        manager.remove(entity);
     }
 
     public List<T> findMany(Query query) {
@@ -61,4 +61,6 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
         T = query.getResultList();
         return T;
     }
+
+
 }

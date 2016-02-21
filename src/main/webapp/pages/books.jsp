@@ -1,6 +1,7 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Book" %>
 <%@ page import="com.tsystems.javaschool.services.enums.SearchType" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.tsystems.javaschool.view.controllers.BookListController" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
@@ -11,28 +12,32 @@
 
 <div class="book_list">
 
-    <%
-        List<Book> currentBookList = null;
+    <%--<%--%>
+        <%--List<Book> currentBookList = null;--%>
 
-        if (request.getParameter("genre") != null && request.getParameter("genre").equals("all")) {
-            currentBookList = bookManager.loadAllBooks();
-        }
-        else if (request.getParameter("genre") != null && !request.getParameter("genre").equals("all")) {
-            String genreName = String.valueOf(request.getParameter("genre"));
-            currentBookList = bookManager.getBooksByGenre(genreManager.findByGenreName(genreName));
-        }
-        else if (request.getParameter("search_string") != null) {
-            String searchStr = request.getParameter("search_string");
-            SearchType type = SearchType.TITLE;
-                if (request.getParameter("search_option").equals("Автор")) {
-                    type = SearchType.AUTHOR;
-                }
+        <%--if (request.getParameter("genre") != null && request.getParameter("genre").equals("all")) {--%>
+            <%--currentBookList = bookManager.loadAllBooks();--%>
+        <%--}--%>
+        <%--else if (request.getParameter("genre") != null && !request.getParameter("genre").equals("all")) {--%>
+            <%--String genreName = String.valueOf(request.getParameter("genre"));--%>
+            <%--currentBookList = bookManager.getBooksByGenre(genreManager.findByGenreName(genreName));--%>
+        <%--}--%>
+        <%--else if (request.getParameter("search_string") != null) {--%>
+            <%--String searchStr = request.getParameter("search_string");--%>
+            <%--SearchType type = SearchType.TITLE;--%>
+                <%--if (request.getParameter("search_option").equals("Автор")) {--%>
+                    <%--type = SearchType.AUTHOR;--%>
+                <%--}--%>
 
-                if (searchStr != null && !searchStr.trim().equals("")) {//
-                    currentBookList = bookManager.getBooksBySearch(searchStr, type);
-                }
-        }
-    %>
+                <%--if (searchStr != null && !searchStr.trim().equals("")) {//--%>
+                    <%--currentBookList = bookManager.getBooksBySearch(searchStr, type);--%>
+                <%--}--%>
+        <%--}--%>
+    <%--%>--%>
+
+        <%
+            List<Book> currentBookList = BookListController.getBySearch(request);
+        %>
     <h5 style="text-align: left; margin-top:20px;">Найдено книг: <%=currentBookList.size() %> </h5>
               <%  session.setAttribute("currentBookList", currentBookList);
                 for (Book book : currentBookList) {

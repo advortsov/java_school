@@ -24,4 +24,6 @@ public interface AuthorManager {
     public Author findAuthorById(long id);
 
     public void deleteAuthor(Author author);
+
+    void updateAuthor(Author author);
 }

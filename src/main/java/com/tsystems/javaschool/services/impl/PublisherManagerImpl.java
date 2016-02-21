@@ -12,6 +12,8 @@ import com.tsystems.javaschool.services.interfaces.PublisherManager;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Alexander Dvortsov
@@ -56,6 +58,19 @@ public class PublisherManagerImpl implements PublisherManager {
             publisherDAO.delete(publisher);
             JpaUtil.commitTransaction();
         } catch (PersistenceException ex) {
+            ex.printStackTrace();
+            JpaUtil.rollbackTransaction();
+        }
+    }
+
+    @Override
+    public void updatePublisher(Publisher publisher) {
+        try {
+            JpaUtil.beginTransaction();
+            publisherDAO.merge(publisher);
+            JpaUtil.commitTransaction();
+        } catch (PersistenceException ex) {
+            Logger.getLogger(BookManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
             JpaUtil.rollbackTransaction();
         }

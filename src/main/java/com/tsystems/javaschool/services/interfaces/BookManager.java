@@ -1,10 +1,10 @@
 package com.tsystems.javaschool.services.interfaces;
 
+import com.tsystems.javaschool.dao.entity.Author;
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.services.enums.SearchType;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -26,9 +26,14 @@ public interface BookManager {
     //////
 
     public List<Book> getBooksByGenre(Genre genre);
+
     public List<Book> findByAuthorName(String name);
+
     public List<Book> getBooksBySearch(String searchStr, SearchType type);
+
     public void updateBook(Book book);
+
     public int getBookQuantity(long id);
 
+    public List<Book> getBooksByAuthor(Author author);
 }

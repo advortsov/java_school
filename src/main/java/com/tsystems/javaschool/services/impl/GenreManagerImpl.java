@@ -12,6 +12,8 @@ import javax.persistence.PersistenceException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Alexander Dvortsov
@@ -45,6 +47,19 @@ public class GenreManagerImpl implements GenreManager {
     }
 
     @Override
+    public void updateGenre(Genre genre) {
+        try {
+            JpaUtil.beginTransaction();
+            genreDAO.merge(genre);
+            JpaUtil.commitTransaction();
+        } catch (PersistenceException ex) {
+            Logger.getLogger(BookManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+            JpaUtil.rollbackTransaction();
+        }
+    }
+
+    @Override
     public Genre findGenreById(long id) {
         Genre genre = null;
         try {
@@ -61,6 +76,7 @@ public class GenreManagerImpl implements GenreManager {
     public void deleteGenre(Genre genre) {
         try {
             JpaUtil.beginTransaction();
+            genreDAO.setNullBeforeDelete(genre); // its covered by transaction. because JPA doesn't implements ON DELETE SET NULL
             genreDAO.delete(genre);
             JpaUtil.commitTransaction();
         } catch (PersistenceException ex) {

@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.services.impl;
 
+import com.tsystems.javaschool.dao.entity.Author;
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.dao.impl.AuthorDAOImpl;
@@ -108,5 +109,10 @@ public class BookManagerImpl implements BookManager {
     @Override
     public int getBookQuantity(long id) {
         return findBookById(id).getQuantity();
+    }
+
+    @Override
+    public List<Book> getBooksByAuthor(Author author) {
+        return bookDAO.findByAuthor(author);
     }
 }

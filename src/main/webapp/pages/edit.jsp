@@ -14,6 +14,9 @@
 
   <br><strong>Редактирование книги</strong>
 
+  <br><a href="../pages/delBook">Удалить книгу</a></br></p>
+
+
   <style>
     table {
       border-collapse: collapse;
@@ -74,7 +77,7 @@
         <br><strong>Количество страниц:</strong><input name="book_pages" type="text" value="<%=book.getPageCount()%>">
         <br><strong>Год издания:</strong><input name="book_year" type="text" value="<%=book.getPublishYear()%>">
         <br><strong>Цена:</strong><input name="book_price" type="text" value="<%=book.getPrice()%>"><strong> руб.</strong>
-        <p><input type="submit" value="Сохранить"><INPUT type="reset"></p>
+        <p><input type="submit" value="Сохранить"> </p>
       </div>
     </div>
 

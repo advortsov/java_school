@@ -43,6 +43,9 @@ public class Genre {
 
     @Override
     public String toString() {
-        return name;
+        return "Genre{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

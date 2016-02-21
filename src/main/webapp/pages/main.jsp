@@ -3,33 +3,22 @@
 <%@ page import="com.tsystems.javaschool.services.ShoppingCart" %>
 <%@ page import="javax.persistence.NoResultException" %>
 <%@ page import="com.tsystems.javaschool.dao.entity.Client" %>
+<%@ page import="com.tsystems.javaschool.view.controllers.ClientController" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
            
 <%@include file="../WEB-INF/jspf/left_menu.jspf" %>
 
-<jsp:useBean id="shoppingCartManager" class="com.tsystems.javaschool.services.impl.ShoppingCartManagerImpl" scope="application"/>
+<jsp:useBean id="shoppingCartManager"
+             class="com.tsystems.javaschool.services.impl.ShoppingCartManagerImpl" scope="application"/>
 
 <div style="float:left; margin-top: 20px;">
 
       <%
-            ClientManager clientManager = new ClientManagerImpl();
-            Client client = null;
-            try {
-                  client = clientManager.findByUserName(userName);
-            } catch (NoResultException ex){
-                  //ignore
-            }
+            Client client = ClientController.actualizeClient(request, userName);
 
-            if (client == null || userName == "") {
-                  userName = "Anonymous";
-                  session.setAttribute("username", userName);
-                  client = clientManager.findByUserName(userName);
-            }
-            session.setAttribute("currentClient", client);
-            System.out.println("currentClient: " + (Client)session.getAttribute("currentClient"));
-            // теперь у нас в сессии есть наш клиент из базы
+
 
             // инициализация корзины
             ShoppingCart shoppingCart = new ShoppingCart();

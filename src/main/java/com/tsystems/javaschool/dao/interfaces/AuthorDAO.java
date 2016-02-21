@@ -13,4 +13,5 @@ import java.math.BigDecimal;
 public interface AuthorDAO extends GenericDAO<Author, Long> {
     public Author findByName(String name);
 
+    public void setNullBeforeDelete(Author author);
 }

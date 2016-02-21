@@ -48,7 +48,7 @@ public class OrderManagerImpl implements OrderManager {
 
     @Override
     public void deleteOrder(Order order) {
-
+        throw new UnsupportedOperationException();
     }
 
     public int orderTotalSumm(Order order){

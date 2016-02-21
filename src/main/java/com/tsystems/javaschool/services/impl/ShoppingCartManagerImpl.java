@@ -110,7 +110,8 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
 
         List<OrderLine> newItems = new ArrayList<>();
         // заполняем по куки корзину
-        if (cookies.length != 0){
+
+        if (cookies != null){
             for (Cookie cookie : cookies){
                 String value  = cookie.getValue();
                 if (value.contains("qty")) {
