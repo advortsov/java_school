@@ -72,4 +72,13 @@ public class OrderLine {
     public void setOrder(Order order) {
         this.order = order;
     }
+
+    @Override
+    public String toString() {
+        return "OrderLine{" +
+                "order=" + order +
+                ", quantity=" + quantity +
+                ", book=" + book.getName() +
+                '}';
+    }
 }

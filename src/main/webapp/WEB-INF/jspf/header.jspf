@@ -53,7 +53,7 @@
 
                     <div class="personal_controllers">
                         <h6> <a href="../logout">Выход</a></h6>
-                        <h6><a href="../pages/admin.jsp">Статистика</a></h6>
+                        <h6><a href="../pages/admin.jsp">Админка</a></h6>
                         <h6><a href="../pages/profile.jsp">Личный кабинет</a></h6>
                         <h6><a href="../pages/cart.jsp">Корзина</a></h6>
                     </div>

@@ -28,56 +28,56 @@ public class Book {
     @Column(name="page_count")
     private int pageCount;
 
-    @Column(name="isbn", unique = true, nullable = false)
-    private String isbn;
+        @Column(name="isbn", unique = true, nullable = false)
+        private String isbn;
 
-    @Column(name="publish_year")
-    private int publishYear;
+        @Column(name="publish_year")
+        private int publishYear;
 
-    @Column(name="image", length = 1048576) // 1 mb
-    @Lob()
-    private byte[] image;
+        @Column(name="image", length = 1048576) // 1 mb
+        @Lob()
+        private byte[] image;
 
-    @Column(name="descr")
-    private String descr;
+        @Column(name="descr")
+        private String descr;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name="author_id") // this column inda book table
-    private Author author;
+        @OneToOne(cascade = CascadeType.DETACH)
+        @JoinColumn(name="author_id") // this column inda book table
+        private Author author;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name="genre_id") // this column inda book table
-    private Genre genre;
+        @OneToOne(cascade = CascadeType.DETACH)
+        @JoinColumn(name="genre_id") // this column inda book table
+        private Genre genre;
 
-    @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name="publisher_id") // this column inda book table
-    private Publisher publisher;
+        @OneToOne(cascade = CascadeType.DETACH)
+        @JoinColumn(name="publisher_id") // this column inda book table
+        private Publisher publisher;
 
-    @Column(name="quantity")//
-    private int quantity;
+        @Column(name="quantity")//
+        private int quantity;
 
-    @Column(name="price")
-    private int price;
+        @Column(name="price")
+        private int price;
 
-    //private List<OrderLine> orderLinesById;
+        //private List<OrderLine> orderLinesById;
 
-    public Book() {
-    }
+        public Book() {
+        }
 
-    public Book(String name, int pageCount, String isbn, int publishYear, byte[] image,
-                String descr, Author author, Genre genre, Publisher publisher, int quantity, int price) {
-        this.name = name;
-        this.pageCount = pageCount;
-        this.isbn = isbn;
-        this.publishYear = publishYear;
-        this.image = image;
-        this.descr = descr;
-        this.author = author;
-        this.genre = genre;
-        this.publisher = publisher;
-        this.quantity = quantity;
-        this.price = price;
-    }
+        public Book(String name, int pageCount, String isbn, int publishYear, byte[] image,
+        String descr, Author author, Genre genre, Publisher publisher, int quantity, int price) {
+            this.name = name;
+            this.pageCount = pageCount;
+            this.isbn = isbn;
+            this.publishYear = publishYear;
+            this.image = image;
+            this.descr = descr;
+            this.author = author;
+            this.genre = genre;
+            this.publisher = publisher;
+            this.quantity = quantity;
+            this.price = price;
+        }
 
     public long getId() {
         return id;
@@ -169,6 +169,37 @@ public class Book {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        if (pageCount != book.pageCount) return false;
+        if (publishYear != book.publishYear) return false;
+        if (price != book.price) return false;
+        if (!name.equals(book.name)) return false;
+        if (!isbn.equals(book.isbn)) return false;
+        if (author != null ? !author.equals(book.author) : book.author != null) return false;
+        if (genre != null ? !genre.equals(book.genre) : book.genre != null) return false;
+        return !(publisher != null ? !publisher.equals(book.publisher) : book.publisher != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + pageCount;
+        result = 31 * result + isbn.hashCode();
+        result = 31 * result + publishYear;
+        result = 31 * result + (author != null ? author.hashCode() : 0);
+        result = 31 * result + (genre != null ? genre.hashCode() : 0);
+        result = 31 * result + (publisher != null ? publisher.hashCode() : 0);
+        result = 31 * result + price;
+        return result;
     }
 
     @Override

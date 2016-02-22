@@ -26,10 +26,10 @@
     }
 
 %>
-<br><a href="../pages/add_book.jsp">Добавить книгу</a></br></p>
-<br><a href="../pages/add_genre.jsp">Добавить жанр</a></br></p>
-<br><a href="../pages/add_publisher.jsp">Добавить издателя</a></br></p>
-<br><a href="../pages/add_author.jsp">Добавить автора</a></br></p>
+<br><a href="../pages/add_book.jsp">Управление книгами</a></br></p>
+<br><a href="../pages/add_genre.jsp">Управление жанрами</a></br></p>
+<br><a href="../pages/add_publisher.jsp">Управление издателями</a></br></p>
+<br><a href="../pages/add_author.jsp">Управление авторами</a></br></p>
 
 
 <div class="admin_penal">

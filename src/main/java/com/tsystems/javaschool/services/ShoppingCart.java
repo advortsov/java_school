@@ -41,4 +41,12 @@ public class ShoppingCart {
     public void setItems(List<OrderLine> items) {
         this.items = items;
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "client=" + client +
+                ", items=" + items +
+                '}';
+    }
 }

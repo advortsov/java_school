@@ -36,11 +36,27 @@
 
     <servlet>
         <servlet-name>AddToCartServlet</servlet-name>
-        <servlet-class>com.tsystems.javaschool.view.servlets.AddToCartServlet</servlet-class>
+        <servlet-class>com.tsystems.javaschool.view.servlets.cart.AddToCartServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddToCartServlet</servlet-name>
         <url-pattern>/addToCart</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ClearCartServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.cart.ClearCartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClearCartServlet</servlet-name>
+        <url-pattern>/clearCart</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RemoveOrderLineServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.cart.RemoveOrderLineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RemoveOrderLineServlet</servlet-name>
+        <url-pattern>/removeOrderLine</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -176,7 +192,7 @@
 
     <session-config>
         <session-timeout>
-            1
+            10
         </session-timeout>
     </session-config>
 

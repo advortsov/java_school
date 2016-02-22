@@ -1,11 +1,8 @@
 package com.tsystems.javaschool.services.impl;
 
-import com.tsystems.javaschool.dao.entity.Author;
 import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.entity.Order;
-import com.tsystems.javaschool.dao.impl.ClientDAOImpl;
 import com.tsystems.javaschool.dao.impl.OrderDAOImpl;
-import com.tsystems.javaschool.dao.interfaces.ClientDAO;
 import com.tsystems.javaschool.dao.interfaces.OrderDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.AdminManager;
@@ -24,12 +21,7 @@ public class AdminManagerImpl implements AdminManager {
 
     private OrderDAO orderDAO = new OrderDAOImpl();
 
-    @Override
-    public List<Order> getTopTenBooks() {
-        return null;
-    }
-
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map ) {
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
             @Override
@@ -46,6 +38,11 @@ public class AdminManagerImpl implements AdminManager {
     }
 
     @Override
+    public List<Order> getTopTenBooks() {
+        return null;
+    }
+
+    @Override
     public Map<Client, Integer> getTopTenClients() {
         ClientManager clientManager = new ClientManagerImpl();
         OrderManager orderManager = new OrderManagerImpl();
@@ -54,7 +51,7 @@ public class AdminManagerImpl implements AdminManager {
 
         Map<Client, Integer> clientTotalSummMap = new HashMap<>();
 
-        for (Order order : allOrders){
+        for (Order order : allOrders) {
             int orderTotalSumm = orderManager.orderTotalSumm(order);
             Client currClient = order.getClient();
             if (clientTotalSummMap.get(currClient) == null) clientTotalSummMap.put(currClient, 0);
@@ -63,6 +60,7 @@ public class AdminManagerImpl implements AdminManager {
         }
 
         return sortByValue(clientTotalSummMap);
+
     }
 
     @Override
