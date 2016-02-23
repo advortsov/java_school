@@ -137,11 +137,19 @@
 
     <servlet>
         <servlet-name>CreateOrderServlet</servlet-name>
-        <servlet-class>com.tsystems.javaschool.view.servlets.CreateOrderServlet</servlet-class>
+        <servlet-class>com.tsystems.javaschool.view.servlets.order.CreateOrderServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateOrderServlet</servlet-name>
         <url-pattern>/CreateOrder</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SetOrderStatusServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.order.SetOrderStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SetOrderStatusServlet</servlet-name>
+        <url-pattern>/setOrderStatus</url-pattern>
     </servlet-mapping>
 
     <servlet>

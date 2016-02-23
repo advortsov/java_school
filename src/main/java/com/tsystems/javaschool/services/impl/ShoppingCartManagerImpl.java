@@ -1,7 +1,6 @@
 package com.tsystems.javaschool.services.impl;
 
 
-
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Order;
 import com.tsystems.javaschool.dao.entity.OrderLine;
@@ -12,7 +11,6 @@ import com.tsystems.javaschool.services.interfaces.ShoppingCartManager;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,12 +21,11 @@ import java.util.List;
  */
 public class ShoppingCartManagerImpl implements ShoppingCartManager {
 
+    BookManager bookManager = new BookManagerImpl();
     private ShoppingCart shoppingCart;
 
     public ShoppingCartManagerImpl() {
     }
-
-    BookManager bookManager = new BookManagerImpl();
 
 
     public ShoppingCartManagerImpl(ShoppingCart shoppingCart) {
@@ -53,8 +50,8 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
     @Override
     public void setBookAmount(Book book, int amount) {
         List<OrderLine> currentLines = shoppingCart.getItems();
-        for (OrderLine line : currentLines){
-            if (line.getBook().equals(book.getId())){
+        for (OrderLine line : currentLines) {
+            if (line.getBook().equals(book.getId())) {
                 line.setQuantity(amount);
                 break;
             }
@@ -62,12 +59,12 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
     }
 
     @Override
-    public void removeLine(Book book){
+    public void removeLine(Book book) {
         List<OrderLine> currentLines = shoppingCart.getItems();
         Iterator<OrderLine> i = currentLines.iterator();
         while (i.hasNext()) {
             OrderLine orderLine = i.next();
-            if (orderLine.getBook().equals(book)){
+            if (orderLine.getBook().equals(book)) {
                 i.remove();
             }
         }
@@ -92,11 +89,11 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
     public boolean isEnoughBooksInStock(int id) {
         BookManager bookManager = new BookManagerImpl();
 
-        for (OrderLine orderLine : shoppingCart.getItems()){
+        for (OrderLine orderLine : shoppingCart.getItems()) {
             int wantedQuantity = orderLine.getQuantity();
             int storeQuantity = bookManager.getBookQuantity(orderLine.getBook().getId());
 
-            if (wantedQuantity > storeQuantity){
+            if (wantedQuantity > storeQuantity) {
                 //throw new NotEnoughBooksInTheStockException(quantity);
                 return false;
             }
@@ -111,9 +108,9 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
         List<OrderLine> newItems = new ArrayList<>();
         // заполняем по куки корзину
 
-        if (cookies != null){
-            for (Cookie cookie : cookies){
-                String value  = cookie.getValue();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                String value = cookie.getValue();
                 if (value.contains("qty")) {
                     String[] arr = value.split("qty");
                     long id = Long.parseLong(arr[0]);
@@ -124,7 +121,7 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
             }
         }
 
-        if (!newItems.isEmpty()){
+        if (!newItems.isEmpty()) {
             shoppingCart.setItems(newItems);
         }
 
@@ -134,8 +131,8 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
     public void deleteExistingCookies(long bookId, HttpServletRequest req) {
         // удаляем куки с таким же айди, чтобы перезаписать количество
         Cookie[] cookies = req.getCookies();
-        for (Cookie cookie : cookies){
-            String value  = cookie.getValue();
+        for (Cookie cookie : cookies) {
+            String value = cookie.getValue();
             if (value.contains("qty")) {
                 String[] arr = value.split("qty");
                 long id = Long.parseLong(arr[0]);
@@ -145,8 +142,6 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
             }
         }
     }
-
-
 
 
 }

@@ -1,12 +1,17 @@
 package com.tsystems.javaschool.services.impl;
 
 import com.tsystems.javaschool.dao.entity.Client;
+import com.tsystems.javaschool.dao.entity.Order;
 import com.tsystems.javaschool.dao.impl.ClientDAOImpl;
+import com.tsystems.javaschool.dao.impl.OrderDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.ClientDAO;
+import com.tsystems.javaschool.dao.interfaces.OrderDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.ClientManager;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,5 +39,16 @@ public class ClientManagerImpl implements ClientManager{
             ex.printStackTrace();
             JpaUtil.rollbackTransaction();
         }
+    }
+
+    @Override
+    public List<Order> getClientOrders(Client currClient) {
+        OrderDAO orderDAO = new OrderDAOImpl();
+        List<Order> orders = null;
+        String sql = "SELECT o FROM Order o WHERE o.client = :currClient";
+        Query query = JpaUtil.getEntityManager().createQuery(sql).
+                setParameter("currClient", currClient);
+        orders = orderDAO.findMany(query);
+        return orders;
     }
 }

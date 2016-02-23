@@ -1,15 +1,11 @@
 package com.tsystems.javaschool.services.impl;
 
-import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.dao.entity.Publisher;
-import com.tsystems.javaschool.dao.impl.GenreDAOImpl;
 import com.tsystems.javaschool.dao.impl.PublisherDAOImpl;
-import com.tsystems.javaschool.dao.interfaces.GenreDAO;
 import com.tsystems.javaschool.dao.interfaces.PublisherDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.PublisherManager;
 
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
 import java.util.List;
 import java.util.logging.Level;

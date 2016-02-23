@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.services.interfaces;
 
+import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.entity.Order;
 
 import java.util.List;
@@ -21,5 +22,9 @@ public interface OrderManager {
     public void deleteOrder(Order order);
 
     public int orderTotalSumm(Order order);
+
+    void updateOrder(Order order);
+
+    void deductBooksFromStore(Order order);
 
 }

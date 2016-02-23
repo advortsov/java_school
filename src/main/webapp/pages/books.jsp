@@ -1,7 +1,6 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Book" %>
-<%@ page import="com.tsystems.javaschool.services.enums.SearchType" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.tsystems.javaschool.view.controllers.BookListController" %>
+<%@ page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 

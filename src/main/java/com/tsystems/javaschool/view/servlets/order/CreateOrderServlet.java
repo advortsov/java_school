@@ -1,4 +1,4 @@
-package com.tsystems.javaschool.view.servlets;
+package com.tsystems.javaschool.view.servlets.order;
 
 import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.entity.Order;
@@ -30,6 +30,7 @@ import java.util.List;
  * @since 17.02.2016
  */
 public class CreateOrderServlet extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -38,6 +39,7 @@ public class CreateOrderServlet extends HttpServlet {
         ClearCartServlet.clearCartAndCookies(req, resp);
 
         List<OrderLine> orderLines = (List<OrderLine>) req.getSession().getAttribute("orderLines");
+        //List<OrderLine> orderLines = order
 
         Enumeration eNames = req.getSession().getAttributeNames();
         while (eNames.hasMoreElements()) {

@@ -1,11 +1,8 @@
 package com.tsystems.javaschool.view.servlets.author;
 
 import com.tsystems.javaschool.dao.entity.Author;
-import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.services.impl.AuthorManagerImpl;
-import com.tsystems.javaschool.services.impl.GenreManagerImpl;
 import com.tsystems.javaschool.services.interfaces.AuthorManager;
-import com.tsystems.javaschool.services.interfaces.GenreManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

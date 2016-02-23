@@ -57,5 +57,13 @@ public class BookDAOImpl extends GenericDAOImpl<Book, Long> implements BookDAO {
         return null;
     }
 
+    @Override
+    public void setBookQuantity(long bookId, int orderQuantity) {
+        Book book = this.findByID(Book.class, bookId);
+        int actualQuantity = book.getQuantity();
+        book.setQuantity(actualQuantity - orderQuantity);
+        merge(book);
+    }
+
 
 }

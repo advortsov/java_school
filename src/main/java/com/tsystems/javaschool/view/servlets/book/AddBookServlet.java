@@ -1,7 +1,6 @@
 package com.tsystems.javaschool.view.servlets.book;
 
 import com.tsystems.javaschool.dao.entity.Book;
-import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.services.impl.AuthorManagerImpl;
 import com.tsystems.javaschool.services.impl.BookManagerImpl;
 import com.tsystems.javaschool.services.impl.GenreManagerImpl;
@@ -44,8 +43,7 @@ public class AddBookServlet extends HttpServlet {
         List<FileItem> items = null;
         try {
             items = upload.parseRequest(request);
-        }
-        catch (FileUploadException e) {
+        } catch (FileUploadException e) {
             e.printStackTrace();
         }
 
@@ -53,7 +51,7 @@ public class AddBookServlet extends HttpServlet {
             if (item.isFormField()) {
                 String name = item.getFieldName();
                 String value = item.getString();
-                switch (name){
+                switch (name) {
                     case "book_name":
                         book.setName(value);
                         break;

@@ -1,7 +1,7 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Client" %>
 <%@ page import="com.tsystems.javaschool.dao.entity.Order" %>
-<%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -42,7 +42,7 @@
     <style>
         table {
             /*font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;*/
-            font-size: 13px;
+            font-size: 10px;
             border-collapse: collapse;
             text-align: center;
         }
@@ -50,7 +50,7 @@
         th, td:first-child {
             /*background: white;*/
             color: black;
-            padding: 10px 20px;
+            padding: 5px 10px;
         }
 
         th, td {
@@ -73,13 +73,11 @@
             <td>id</td>
             <td>Дата</td>
             <td>Имя клиента</td>
-            <td>Статус</td>
+            <td>Статус заказа</td>
             <td>Способ доставки</td>
             <td>Способ оплаты</td>
             <td>Статус оплаты</td>
             <td>Сумма заказа</td>
-            <td></td>
-            <td></td>
         </tr>
         <%
             for (Order order : orders) {
@@ -100,9 +98,11 @@
             <td><%=order.getPaymentStatus()%>
             </td>
             <td><%=orderManager.orderTotalSumm(order)%> руб.</td>
-            <td><a href=""><img src="../images/delete.png" alt="Удалить" name="delete"/></a></td>
-            <td><a href=""><img src="../images/edit.png" alt="Редактировать" name="edit"/></a></td>
-            <td><a href=""><img src="../images/save.png" alt="Сохранить" name="save"/></a></td>
+            <td>
+                <a href="../pages/edit_order.jsp?order_id=<%=order.getId()%>">
+                    <img src="../images/edit.png" alt="Редактировать" name="edit"/></a>
+            </td>
+
         </tr>
         <%
             }

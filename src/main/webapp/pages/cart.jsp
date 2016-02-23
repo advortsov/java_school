@@ -14,6 +14,7 @@
 <jsp:useBean id="shoppingCartManager" class="com.tsystems.javaschool.services.impl.ShoppingCartManagerImpl"
              scope="session"/>
 <jsp:useBean id="currentClient" class="com.tsystems.javaschool.dao.entity.Client" scope="page"/>
+<jsp:useBean id="orderLines1" class="java.util.ArrayList" scope="session"/>
 
 <%
     currentClient = (Client) session.getAttribute("currentClient");
@@ -94,8 +95,7 @@
             </tr>
             <%
                 }
-                session.setAttribute("orderLines", orderLines);
-                System.out.println(session.getAttribute("orderLines"));
+                request.getSession().setAttribute("orderLines", orderLines);
 
 //                session.setAttribute("cart", shoppingCartManager.getShoppingCart());
                 //CartController.writeBooksIntoCookie(request, response, newBook.getId(), previousQuantity, shoppingCartManager);

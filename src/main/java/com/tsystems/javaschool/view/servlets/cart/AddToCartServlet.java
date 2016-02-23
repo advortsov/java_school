@@ -52,26 +52,24 @@ public class AddToCartServlet extends HttpServlet {
         if (orderLineWithThisBook == null) {
             orderLines.add(new OrderLine(1, newBook)); //одну книгу добавляем может сетом реализовать? или мапой?
         } else {
-            previousQuantity = orderLineWithThisBook.getQuantity();
-            for (OrderLine orderLine : orderLines) {
-                if (orderLine.getBook().equals(newBook)) {
-                    orderLine.setQuantity(++previousQuantity);
-                }
+                previousQuantity = orderLineWithThisBook.getQuantity();
+        for (OrderLine orderLine : orderLines) {
+            if (orderLine.getBook().equals(newBook)) {
+                orderLine.setQuantity(++previousQuantity);
             }
         }
+    }
 
-        // при каждом клике на добавить в корзину затираются старые и создаются новые куки:
+    // при каждом клике на добавить в корзину затираются старые и создаются новые куки:
 
-        // возможно здесь придется еще и юзер нейм добавлять, для разграничения по ролям
+    // возможно здесь придется еще и юзер нейм добавлять, для разграничения по ролям
 //        <h5>Добро пожаловать, <%= request.getUserPrincipal().getName().toString() %>!</h5>
 
-        cart.setItems(orderLines);
-        shoppingCartManager.setShoppingCart(cart);
+    cart.setItems(orderLines);
+    shoppingCartManager.setShoppingCart(cart);
 
-        CartController.writeBooksIntoCookie(req, resp,
-                newBook.getId(), previousQuantity, shoppingCartManager);
-
-        req.getSession().setAttribute("shoppingCartManager", shoppingCartManager);
+    CartController.writeBooksIntoCookie(req, resp,
+            newBook.getId(), previousQuantity, shoppingCartManager);
 
         resp.sendRedirect("pages/books.jsp?genre=all");
 
