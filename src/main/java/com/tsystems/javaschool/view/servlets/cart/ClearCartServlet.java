@@ -26,9 +26,9 @@ public class ClearCartServlet extends HttpServlet {
         ShoppingCartManager shoppingCartManager
                 = (ShoppingCartManager) req.getSession().getAttribute("cartManager");
 
-        if (shoppingCartManager != null) {
-            shoppingCartManager.clearCart();
-        }
+//        if (shoppingCartManager != null) {
+//            shoppingCartManager.clearCart();
+//        }
             CartController.deleteCartsBooksCookies(req, resp);
 
 

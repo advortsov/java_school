@@ -8,6 +8,7 @@ import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.AdminManager;
 import com.tsystems.javaschool.services.interfaces.ClientManager;
 import com.tsystems.javaschool.services.interfaces.OrderManager;
+import com.tsystems.javaschool.services.util.Managers;
 
 import javax.persistence.Query;
 import java.util.*;
@@ -21,7 +22,7 @@ public class AdminManagerImpl implements AdminManager {
 
     private OrderDAO orderDAO = new OrderDAOImpl();
 
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
+    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
             @Override
@@ -44,8 +45,8 @@ public class AdminManagerImpl implements AdminManager {
 
     @Override
     public Map<Client, Integer> getTopTenClients() {
-        ClientManager clientManager = new ClientManagerImpl();
-        OrderManager orderManager = new OrderManagerImpl();
+        ClientManager clientManager = Managers.getClientManager();
+        OrderManager orderManager = Managers.getOrderManager();
 
         List<Order> allOrders = orderManager.loadAllOrders();
 
@@ -60,7 +61,6 @@ public class AdminManagerImpl implements AdminManager {
         }
 
         return sortByValue(clientTotalSummMap);
-
     }
 
     @Override

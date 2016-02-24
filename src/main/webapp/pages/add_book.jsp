@@ -14,7 +14,6 @@
   <br><strong>Добавление книги</strong>
 
   <form name="book_add_form" enctype="multipart/form-data" action ="/AddBook" method="post">
-
     <div class="book_info">
       <div class="book_details">
         <br><strong>Обложка:</strong><input type="file" name="cover" multiple accept="image/jpeg">
@@ -50,8 +49,8 @@
         <br><strong>Год издания:</strong><input name="book_year" type="text">
         <br><strong>количество на складе:</strong><input name="book_count" type="number">
         <br><strong>Цена:</strong><input name="book_price" type="text"><strong> руб.</strong>
-
-        <p><input type="submit" value="Сохранить"></p>
+        <input type="hidden" name="action" value="add"></p>
+        <p><input type="submit" value="Добавить"></p>
       </div>
     </div>
 

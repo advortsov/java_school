@@ -1,14 +1,9 @@
 package com.tsystems.javaschool.dao.impl;
 
-import com.tsystems.javaschool.dao.entity.Genre;
-import com.tsystems.javaschool.dao.entity.Order;
 import com.tsystems.javaschool.dao.entity.Publisher;
-import com.tsystems.javaschool.dao.interfaces.GenreDAO;
 import com.tsystems.javaschool.dao.interfaces.PublisherDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 

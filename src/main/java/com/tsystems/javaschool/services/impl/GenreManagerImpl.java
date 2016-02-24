@@ -7,10 +7,7 @@ import com.tsystems.javaschool.dao.interfaces.GenreDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.GenreManager;
 
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

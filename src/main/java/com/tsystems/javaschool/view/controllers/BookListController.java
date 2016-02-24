@@ -2,12 +2,26 @@ package com.tsystems.javaschool.view.controllers;
 
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.services.enums.SearchType;
+import com.tsystems.javaschool.services.impl.AuthorManagerImpl;
 import com.tsystems.javaschool.services.impl.BookManagerImpl;
 import com.tsystems.javaschool.services.impl.GenreManagerImpl;
+import com.tsystems.javaschool.services.impl.PublisherManagerImpl;
+import com.tsystems.javaschool.services.interfaces.AuthorManager;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 import com.tsystems.javaschool.services.interfaces.GenreManager;
+import com.tsystems.javaschool.services.interfaces.PublisherManager;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -15,24 +29,52 @@ import java.util.List;
  * @version 1.0
  * @since 20.02.2016
  */
-public class BookListController {
+public class BookListController extends HttpServlet {
 
-    public static List<Book> getBySearch(HttpServletRequest request){
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Book> currBookList = getByParam(req);
+        req.getSession().setAttribute("currentBookList", currBookList);
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/pages/books.jsp");
+        requestDispatcher.forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
+
+        if (action != null) {
+            switch (action) {
+                case "add": {
+                    addBook(req);
+                    break;
+                }
+                case "edit": {
+                    //editBook(req);
+                    break;
+                }
+            }
+        }
+
+
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/pages/books.jsp");
+        requestDispatcher.forward(req, resp);
+    }
+
+    private List<Book> getByParam(HttpServletRequest req) {
         List<Book> currentBookList = null;
         BookManager bookManager = new BookManagerImpl();
         GenreManager genreManager = new GenreManagerImpl();
 
-        if (request.getParameter("genre") != null && request.getParameter("genre").equals("all")) {
+        if (req.getParameter("genre") != null && req.getParameter("genre").equals("all")) {
             currentBookList = bookManager.loadAllBooks();
-        }
-        else if (request.getParameter("genre") != null && !request.getParameter("genre").equals("all")) {
-            String genreName = String.valueOf(request.getParameter("genre"));
+        } else if (req.getParameter("genre") != null && !req.getParameter("genre").equals("all")) {
+            String genreName = String.valueOf(req.getParameter("genre"));
             currentBookList = bookManager.getBooksByGenre(genreManager.findByGenreName(genreName));
-        }
-        else if (request.getParameter("search_string") != null) {
-            String searchStr = request.getParameter("search_string");
+        } else if (req.getParameter("search_string") != null) {
+            String searchStr = req.getParameter("search_string");
             SearchType type = SearchType.TITLE;
-            if (request.getParameter("search_option").equals("Автор")) {
+            if (req.getParameter("search_option").equals("Автор")) {
                 type = SearchType.AUTHOR;
             }
 
@@ -44,4 +86,66 @@ public class BookListController {
         return currentBookList;
     }
 
+    private void addBook(HttpServletRequest request) {
+        Book book = new Book();
+
+        PublisherManager publisherManager = new PublisherManagerImpl();
+        AuthorManager authorManager = new AuthorManagerImpl();
+        GenreManager genreManager = new GenreManagerImpl();
+
+        BookManager bookManager = new BookManagerImpl();
+
+        FileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        List<FileItem> items = null;
+        try {
+            items = upload.parseRequest(request);
+        } catch (FileUploadException e) {
+            e.printStackTrace();
+        }
+
+        for (FileItem item : items) {
+            if (item.isFormField()) {
+                String name = item.getFieldName();
+                String value = item.getString();
+                switch (name) {
+                    case "book_name":
+                        if (value.length() == 0) throw new IllegalArgumentException();
+                        book.setName(value);
+                        break;
+                    case "book_genre":
+                        book.setGenre(genreManager.findByGenreName(value));
+                        break;
+                    case "book_isbn":
+                        if (value.length() == 0) throw new IllegalArgumentException();
+                        book.setIsbn(value);
+                        break;
+                    case "book_publisher":
+                        book.setPublisher(publisherManager.findByPublisherName(value));
+                        break;
+                    case "book_author":
+                        book.setAuthor(authorManager.findByAuthorName(value));
+                        break;
+                    case "book_pages":
+                        book.setPageCount(Integer.parseInt(value));
+                        break;
+                    case "book_year":
+                        book.setPublishYear(Integer.parseInt(value));
+                        break;
+                    case "book_price":
+                        book.setPrice(Integer.parseInt(value));
+                        break;
+                    case "book_count":
+                        book.setQuantity(Integer.parseInt(value));
+                        break;
+                }
+            } else {
+                book.setImage(item.get());
+            }
+        }
+
+        bookManager.saveNewBook(book);
+
+//        resp.sendRedirect("pages/admin.jsp");
+    }
 }

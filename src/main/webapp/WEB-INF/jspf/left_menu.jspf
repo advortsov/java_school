@@ -17,16 +17,16 @@
             session.setAttribute("genre", selectedGenre);//
         %>
 
-        <li><a href="books.jsp?genre=all">Все книги</a></li>
+        <li><a href="/bookList?genre=all">Все книги</a></li>
         <%
             for (Genre genre : genreManager.loadAllGenres() ) {
                 if (selectedGenre.equals(genre.getName())) {
         %>
-            <li><a style="color:red;" href="books.jsp?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
+            <li><a style="color:red;" href="bookList?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
         <%
         } else {
         %>
-            <li><a  href="books.jsp?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
+            <li><a  href="bookList?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
         <%     }
             }
         %>

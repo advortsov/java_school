@@ -35,10 +35,11 @@
     <%--%>--%>
 
         <%
-            List<Book> currentBookList = BookListController.getBySearch(request);
+//            List<Book> currentBookList = BookListController.getByParam(request);
+            List<Book> currentBookList = (List<Book>)session.getAttribute("currentBookList");
         %>
     <h5 style="text-align: left; margin-top:20px;">Найдено книг: <%=currentBookList.size() %> </h5>
-              <%  session.setAttribute("currentBookList", currentBookList);
+              <%
                 for (Book book : currentBookList) {
     %>
 

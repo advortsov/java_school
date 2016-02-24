@@ -1,20 +1,17 @@
 package com.tsystems.javaschool.dao.entity;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Alexander Dvortsov
  * @version 1.0
  * @since 09.02.2016
- *
+ * <p>
  * Pojo
  */
 
 @Entity
-@Table(name="book")
+@Table(name = "book")
 @NamedQuery(name = "Book.getAll", query = "SELECT b from Book b")
 public class Book {
 
@@ -22,62 +19,62 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name="page_count")
+    @Column(name = "page_count")
     private int pageCount;
 
-        @Column(name="isbn", unique = true, nullable = false)
-        private String isbn;
+    @Column(name = "isbn", unique = true, nullable = false)
+    private String isbn;
 
-        @Column(name="publish_year")
-        private int publishYear;
+    @Column(name = "publish_year")
+    private int publishYear;
 
-        @Column(name="image", length = 1048576) // 1 mb
-        @Lob()
-        private byte[] image;
+    @Column(name = "image", length = 1048576) // 1 mb
+    @Lob()
+    private byte[] image;
 
-        @Column(name="descr")
-        private String descr;
+    @Column(name = "descr")
+    private String descr;
 
-        @OneToOne(cascade = CascadeType.DETACH)
-        @JoinColumn(name="author_id") // this column inda book table
-        private Author author;
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "author_id") // this column inda book table
+    private Author author;
 
-        @OneToOne(cascade = CascadeType.DETACH)
-        @JoinColumn(name="genre_id") // this column inda book table
-        private Genre genre;
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "genre_id") // this column inda book table
+    private Genre genre;
 
-        @OneToOne(cascade = CascadeType.DETACH)
-        @JoinColumn(name="publisher_id") // this column inda book table
-        private Publisher publisher;
+    @OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "publisher_id") // this column inda book table
+    private Publisher publisher;
 
-        @Column(name="quantity")//
-        private int quantity;
+    @Column(name = "quantity")//
+    private int quantity;
 
-        @Column(name="price")
-        private int price;
+    @Column(name = "price")
+    private int price;
 
-        //private List<OrderLine> orderLinesById;
+    //private List<OrderLine> orderLinesById;
 
-        public Book() {
-        }
+    public Book() {
+    }
 
-        public Book(String name, int pageCount, String isbn, int publishYear, byte[] image,
-        String descr, Author author, Genre genre, Publisher publisher, int quantity, int price) {
-            this.name = name;
-            this.pageCount = pageCount;
-            this.isbn = isbn;
-            this.publishYear = publishYear;
-            this.image = image;
-            this.descr = descr;
-            this.author = author;
-            this.genre = genre;
-            this.publisher = publisher;
-            this.quantity = quantity;
-            this.price = price;
-        }
+    public Book(String name, int pageCount, String isbn, int publishYear, byte[] image,
+                String descr, Author author, Genre genre, Publisher publisher, int quantity, int price) {
+        this.name = name;
+        this.pageCount = pageCount;
+        this.isbn = isbn;
+        this.publishYear = publishYear;
+        this.image = image;
+        this.descr = descr;
+        this.author = author;
+        this.genre = genre;
+        this.publisher = publisher;
+        this.quantity = quantity;
+        this.price = price;
+    }
 
     public long getId() {
         return id;

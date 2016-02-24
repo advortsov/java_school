@@ -11,11 +11,7 @@ import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.enums.SearchType;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 
-import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
-import javax.persistence.Query;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,6 +26,13 @@ public class BookManagerImpl implements BookManager {
     private BookDAO bookDAO = new BookDAOImpl();
     private AuthorDAO authorDAO = new AuthorDAOImpl();
 
+    public BookManagerImpl(BookDAO bookDAO) {
+        this.bookDAO = bookDAO;
+    }
+
+    public BookManagerImpl() {
+    }
+
     @Override
     public List<Book> findByBookName(String name) {
         return bookDAO.findByName(name);
@@ -42,10 +45,10 @@ public class BookManagerImpl implements BookManager {
 
     @Override
     public List<Book> loadAllBooks() {
-        EntityManager manager = JpaUtil.getEntityManager();
-        Query query = manager.createQuery("Select b from Book b");
-        return bookDAO.findMany(query);
-        //return bookDAO.findAll(Book.class);
+//        EntityManager manager = JpaUtil.getEntityManager();
+//        Query query = manager.createQuery("Select b from Book b");
+//        return bookDAO.findMany(query);
+        return bookDAO.findAll(Book.class);
     }
 
     @Override
@@ -97,13 +100,12 @@ public class BookManagerImpl implements BookManager {
 
     @Override
     public List<Book> getBooksBySearch(String searchStr, SearchType type) {
-        if (type == SearchType.AUTHOR){
+        if (type == SearchType.AUTHOR) {
             return findByAuthorName(searchStr);
-        } else if (type == SearchType.TITLE){
+        } else if (type == SearchType.TITLE) {
             return bookDAO.findByName(searchStr);
         }
         return null;
-
     }
 
     @Override

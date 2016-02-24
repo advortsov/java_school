@@ -7,12 +7,12 @@ import javax.persistence.*;
  * @author Alexander Dvortsov
  * @version 1.0
  * @since 09.02.2016
- *
+ * <p>
  * POJO
  */
 
 @Entity
-@Table(name="order_line")//
+@Table(name = "order_line")//
 //@Embeddable
 @NamedQuery(name = "OrderLine.getAll", query = "SELECT b from OrderLine b")
 public class OrderLine {
@@ -23,14 +23,14 @@ public class OrderLine {
 
     //@ManyToOne(cascade = CascadeType.DETACH) // много линий в одном заказе было так до 20
     @ManyToOne(cascade = CascadeType.ALL) // много линий в одном заказе
-    @JoinColumn(name="order_id", nullable = false)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
     @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name="book_id", nullable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
     public OrderLine() {

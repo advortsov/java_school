@@ -1,13 +1,7 @@
 package com.tsystems.javaschool.dao.impl;
 
-import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.dao.entity.Order;
-import com.tsystems.javaschool.dao.interfaces.GenreDAO;
 import com.tsystems.javaschool.dao.interfaces.OrderDAO;
-import org.hibernate.Query;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author Alexander Dvortsov

@@ -1,11 +1,8 @@
 package com.tsystems.javaschool.services.impl;
 
 import com.tsystems.javaschool.dao.entity.Author;
-import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.impl.AuthorDAOImpl;
-import com.tsystems.javaschool.dao.impl.BookDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.AuthorDAO;
-import com.tsystems.javaschool.dao.interfaces.BookDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.AuthorManager;
 

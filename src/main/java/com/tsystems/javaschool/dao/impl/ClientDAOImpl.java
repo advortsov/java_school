@@ -1,12 +1,10 @@
 package com.tsystems.javaschool.dao.impl;
 
-import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.interfaces.ClientDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 
 import javax.persistence.Query;
-import java.util.List;
 
 /**
  * @author Alexander Dvortsov

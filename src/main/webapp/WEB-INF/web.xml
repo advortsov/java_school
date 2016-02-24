@@ -6,6 +6,18 @@
 
 
     <display-name>Archetype Created Web Application</display-name>
+    <!-- -->
+    <!--Controllers-->
+
+    <servlet>
+        <servlet-name>BookListController</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.controllers.BookListController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BookListController</servlet-name>
+        <url-pattern>/bookList</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>ShowImage</servlet-name>

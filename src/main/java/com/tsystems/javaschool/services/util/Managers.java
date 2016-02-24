@@ -17,7 +17,7 @@ public class Managers {
     private static GenreManager genreManager;
     private static OrderManager orderManager;
     private static PublisherManager publisherManager;
-    private static ShoppingCartManager shoppingCartManager;
+    private static ShoppingCartManager shoppingCartManager; //
 
     public static AdminManager getAdminManager() {
         if (adminManager == null) adminManager = new AdminManagerImpl();
