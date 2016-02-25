@@ -183,6 +183,15 @@
     </servlet-mapping>
 
 
+    <!--erorrs-->
+    <error-page>
+
+        <exception-type>com.tsystems.javaschool.dao.exeption.NotRegisteredUserException</exception-type>
+
+        <location>/error/not_registered_user.html</location>
+
+    </error-page>
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>bookstore</web-resource-name>

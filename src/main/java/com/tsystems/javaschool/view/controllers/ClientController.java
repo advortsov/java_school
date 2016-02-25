@@ -1,13 +1,12 @@
 package com.tsystems.javaschool.view.controllers;
 
 import com.tsystems.javaschool.dao.entity.Client;
+import com.tsystems.javaschool.dao.exeption.NotRegisteredUserException;
 import com.tsystems.javaschool.services.ShoppingCart;
 import com.tsystems.javaschool.services.impl.ClientManagerImpl;
-import com.tsystems.javaschool.services.impl.ShoppingCartManagerImpl;
 import com.tsystems.javaschool.services.interfaces.ClientManager;
 import com.tsystems.javaschool.services.interfaces.ShoppingCartManager;
 
-import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -18,16 +17,12 @@ import javax.servlet.http.HttpSession;
  */
 public class ClientController {
 
-    public static Client actualizeClient(HttpServletRequest request, String userName) {
+    public static Client actualizeClient(HttpServletRequest request, String userName) throws NotRegisteredUserException {
         ClientManager clientManager = new ClientManagerImpl();
         HttpSession session = request.getSession();
 
-        Client client = null;
-        try {
-            client = clientManager.findByUserName(userName);
-        } catch (NoResultException ex) {
-            //ignore
-        }
+        Client client = clientManager.findByUserName(userName);
+
 
         if (client == null || userName == "") {
             userName = "Anonymous";

@@ -1,13 +1,13 @@
 <%@ page pageEncoding="UTF-8" %>
 
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Онлайн-магазин</title>
-        <link href="../css/style_main.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-        <%
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Онлайн-магазин</title>
+    <link href="../css/style_main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <%
             request.setCharacterEncoding("UTF-8");
             String searchString = "";
 
@@ -26,47 +26,49 @@
 
         %>
 
-        <div class="container">
+<div class="container">
 
-            <div class="header">
-                <div class="logo">
-                    <a href="main.jsp"><img src="../images/lib.png" alt="Логотип" name="logo" /></a>
+    <div class="header">
+        <div class="logo">
+            <a href="main.jsp"><img src="../images/lib.png" alt="Логотип" name="logo"/></a>
 
-                </div>
-                <div class="descr">
-                    <h3>Онлайн-магазин книг<br/> T-Systems</h3>
+        </div>
+        <div class="descr">
+            <h3>Онлайн-магазин книг<br/> T-Systems</h3>
 
-                </div>
-                <div class="welcome">
-                    <%
-                        String userName = (String) session.getAttribute("j_username");
-                        if (userName == null || userName == "") {
-                            userName = request.getUserPrincipal().getName().toString();
-                            session.setAttribute("username", userName);
-                        }
-                    %>
+        </div>
+        <div class="welcome">
+            <%
+                String userName = (String) session.getAttribute("j_username");
+                if (userName == null || userName == "") {
+                    userName = request.getUserPrincipal().getName().toString();
+                    session.setAttribute("username", userName);
+                }
+            %>
 
-                    <%--<h5>Добро пожаловать, <%=userName%>!</h5>--%>
-                    <h5>Добро пожаловать, <%= request.getUserPrincipal().getName().toString() %>!</h5>
+            <%--<h5>Добро пожаловать, <%=userName%>!</h5>--%>
+            <h5>Добро пожаловать, <%= request.getUserPrincipal().getName().toString() %>!</h5>
 
-                        <%--<% request.isUserInRole("admin") %>--%>
 
-                    <div class="personal_controllers">
-                        <h6> <a href="../logout">Выход</a></h6>
-                        <h6><a href="../pages/admin.jsp">Админка</a></h6>
-                        <h6><a href="../pages/profile.jsp">Личный кабинет</a></h6>
-                        <h6><a href="../pages/cart.jsp">Корзина</a></h6>
-                    </div>
+            <div class="personal_controllers">
+                <h6><a href="../logout">Выход</a></h6>
+                <% if(request.isUserInRole("admin"))
+                    {%>
+                <h6><a href="../pages/admin.jsp">Админка</a></h6>
+                <% }%>
+                <h6><a href="../pages/profile.jsp">Личный кабинет</a></h6>
+                <h6><a href="../pages/cart.jsp">Корзина</a></h6>
+            </div>
 
-                            </div>
-                            <div class="search_form">
-                                <form name="search_form" method="GET" action="books.jsp">
-                                    <input type="text" name="search_string" value="<%=searchString%>" size="100"/>
-                                    <input class="search_button" type="submit" value="Поиск"/>
-                                    <select name="search_option">
-                                        <option>Название</option>
-                                        <option>Автор</option>
-                                    </select>
-                                </form>
-                            </div>
-                            </div>
+        </div>
+        <div class="search_form">
+            <form name="search_form" method="GET" action="/bookList">
+                <input type="text" name="search_string" value="<%=searchString%>" size="100"/>
+                <input class="search_button" type="submit" value="Поиск"/>
+                <select name="search_option">
+                    <option>Название</option>
+                    <option>Автор</option>
+                </select>
+            </form>
+        </div>
+    </div>

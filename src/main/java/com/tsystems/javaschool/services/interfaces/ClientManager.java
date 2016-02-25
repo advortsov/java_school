@@ -2,6 +2,7 @@ package com.tsystems.javaschool.services.interfaces;
 
 import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.entity.Order;
+import com.tsystems.javaschool.dao.exeption.NotRegisteredUserException;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @since 17.02.2016
  */
 public interface ClientManager {
-    public Client findByUserName(String name);
+    public Client findByUserName(String name) throws NotRegisteredUserException;
 
     public void updateClient(Client client);
 

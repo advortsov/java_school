@@ -2,8 +2,7 @@ package com.tsystems.javaschool.dao.interfaces;
 
 
 import com.tsystems.javaschool.dao.entity.Client;
-
-import java.math.BigDecimal;
+import com.tsystems.javaschool.dao.exeption.NotRegisteredUserException;
 
 /**
  * @author Alexander Dvortsov
@@ -11,6 +10,6 @@ import java.math.BigDecimal;
  * @since 09.02.2016
  */
 public interface ClientDAO extends GenericDAO<Client, Long> {
-    public Client findByUserName(String name);
+    public Client findByUserName(String name) throws NotRegisteredUserException;
 
 }

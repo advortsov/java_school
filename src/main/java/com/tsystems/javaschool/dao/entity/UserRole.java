@@ -33,7 +33,7 @@ public class UserRole {
     private String userName;
 
     @Id
-    @Column(name = "role_name", unique = true, length = 15, nullable = false)
+    @Column(name = "role_name", length = 15, nullable = false)
     private String userRole;
 
 

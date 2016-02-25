@@ -22,11 +22,11 @@
             for (Genre genre : genreManager.loadAllGenres() ) {
                 if (selectedGenre.equals(genre.getName())) {
         %>
-            <li><a style="color:red;" href="bookList?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
+            <li><a style="color:red;" href="/bookList?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
         <%
         } else {
         %>
-            <li><a  href="bookList?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
+            <li><a  href="/bookList?genre=<%=genre.getName()%>"><%=genre.getName()%></a></li>
         <%     }
             }
         %>
