@@ -41,16 +41,44 @@ public class BookListController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
+        String action = null;
+
+        // --------------------- cause its encrypt data form:
+
+        FileItemFactory factory = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(factory);
+        List<FileItem> items = null;
+        try {
+            items = upload.parseRequest(req);
+        } catch (FileUploadException e) {
+            e.printStackTrace();
+        }
+
+        for (FileItem item : items) {
+            if (item.isFormField()) {
+                String name = item.getFieldName();
+                String value = item.getString();
+
+                if (name.equals("action")) {
+                    action = value;
+                }
+            }
+        }
+        // --------------------- cause its encrypt data form
+
 
         if (action != null) {
             switch (action) {
                 case "add": {
-                    addBook(req);
+                    addBook(items);
                     break;
                 }
                 case "edit": {
-                    //editBook(req);
+                    editBook(req, items);
+                    break;
+                }
+                case "delete": {
+                    //deleteBook(req);
                     break;
                 }
             }
@@ -86,7 +114,7 @@ public class BookListController extends HttpServlet {
         return currentBookList;
     }
 
-    private void addBook(HttpServletRequest request) {
+    private void addBook(List<FileItem> items) {
         Book book = new Book();
 
         PublisherManager publisherManager = new PublisherManagerImpl();
@@ -94,15 +122,6 @@ public class BookListController extends HttpServlet {
         GenreManager genreManager = new GenreManagerImpl();
 
         BookManager bookManager = new BookManagerImpl();
-
-        FileItemFactory factory = new DiskFileItemFactory();
-        ServletFileUpload upload = new ServletFileUpload(factory);
-        List<FileItem> items = null;
-        try {
-            items = upload.parseRequest(request);
-        } catch (FileUploadException e) {
-            e.printStackTrace();
-        }
 
         for (FileItem item : items) {
             if (item.isFormField()) {
@@ -145,7 +164,54 @@ public class BookListController extends HttpServlet {
         }
 
         bookManager.saveNewBook(book);
-
-//        resp.sendRedirect("pages/admin.jsp");
     }
+
+    private void editBook(HttpServletRequest request, List<FileItem> items) {
+        Book book = (Book) request.getSession().getAttribute("currentBook");
+
+        PublisherManager publisherManager = new PublisherManagerImpl();
+        AuthorManager authorManager = new AuthorManagerImpl();
+        GenreManager genreManager = new GenreManagerImpl();
+
+        BookManager bookManager = new BookManagerImpl();
+
+        for (FileItem item : items) {
+            if (item.isFormField()) {
+                String name = item.getFieldName();
+                String value = item.getString();
+                switch (name) {
+                    case "book_name":
+                        book.setName(value);
+                        break;
+                    case "book_genre":
+                        book.setGenre(genreManager.findByGenreName(value));
+                        break;
+                    case "book_isbn":
+                        book.setIsbn(value);
+                        break;
+                    case "book_publisher":
+                        book.setPublisher(publisherManager.findByPublisherName(value));
+                        break;
+                    case "book_author":
+                        book.setAuthor(authorManager.findByAuthorName(value));
+                        break;
+                    case "book_pages":
+                        book.setPageCount(Integer.parseInt(value));
+                        break;
+                    case "book_year":
+                        book.setPublishYear(Integer.parseInt(value));
+                        break;
+                    case "book_price":
+                        book.setPrice(Integer.parseInt(value));
+                        break;
+                }
+            } else {
+                book.setImage(item.get());
+            }
+        }
+
+        bookManager.updateBook(book);
+
+    }
+
 }

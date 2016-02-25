@@ -109,14 +109,20 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
         // заполняем по куки корзину
 
         if (cookies != null) {
+            String cookieOwner = (String) request.getSession().getAttribute("name_for_greeting");
+            long id;
+            int quantity;
             for (Cookie cookie : cookies) {
                 String value = cookie.getValue();
-                if (value.contains("qty")) {
-                    String[] arr = value.split("qty");
-                    long id = Long.parseLong(arr[0]);
-                    int quantity = Integer.parseInt(arr[1]);
+                if (value.contains("dlm")) {
+                    String[] cookieContent = value.split("dlm");
+                    if (cookieContent[0].equals(cookieOwner)) {
+                        id = Long.parseLong(cookieContent[1]);
+                        quantity = Integer.parseInt(cookieContent[2]);
+                        newItems.add(new OrderLine(quantity, bookManager.findBookById(id)));
 
-                    newItems.add(new OrderLine(quantity, bookManager.findBookById(id)));
+                    }
+
                 }
             }
         }

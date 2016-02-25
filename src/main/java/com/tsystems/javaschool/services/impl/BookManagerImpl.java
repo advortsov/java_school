@@ -10,7 +10,6 @@ import com.tsystems.javaschool.dao.interfaces.BookDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.enums.SearchType;
 import com.tsystems.javaschool.services.interfaces.BookManager;
-import com.tsystems.javaschool.view.LoggerUtil;
 import org.apache.log4j.Logger;
 
 import javax.persistence.PersistenceException;

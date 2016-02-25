@@ -26,10 +26,10 @@
     }
 
 %>
-<br><a href="../pages/add_book.jsp">Управление книгами</a></br></p>
-<br><a href="../pages/add_genre.jsp">Управление жанрами</a></br></p>
-<br><a href="../pages/add_publisher.jsp">Управление издателями</a></br></p>
-<br><a href="../pages/add_author.jsp">Управление авторами</a></br></p>
+<br><a href="add_book.jsp">Управление книгами</a></br></p>
+<br><a href="add_genre.jsp">Управление жанрами</a></br></p>
+<br><a href="add_publisher.jsp">Управление издателями</a></br></p>
+<br><a href="add_author.jsp">Управление авторами</a></br></p>
 
 
 <div class="admin_penal">
@@ -98,7 +98,7 @@
             </td>
             <td><%=orderManager.orderTotalSumm(order)%> руб.</td>
             <td>
-                <a href="../pages/edit_order.jsp?order_id=<%=order.getId()%>">
+                <a href="edit_order.jsp=<%=order.getId()%>">
                     <img src="../images/edit.png" alt="Редактировать" name="edit"/></a>
             </td>
 

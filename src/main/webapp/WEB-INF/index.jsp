@@ -29,7 +29,7 @@
                     <br>Логин: <input type="text" name="j_username" value="" size="20" /></br>
                     <br>Пароль: <input type="password" name="j_password" value="" size="20" /></br>
 
-                    <br><a href="">Войти анонимно</a></br></p>
+                    <br><a href="/pages/main.jsp">Войти анонимно</a></br></p>
 
                     <input type="submit" value="Войти" />
                 </form>

@@ -2,11 +2,12 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Order" %>
 <%@ page import="com.tsystems.javaschool.services.util.Managers" %>
 <%@ page import="com.tsystems.javaschool.view.controllers.ClientController" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
-<%@include file="../WEB-INF/jspf/left_menu.jspf" %>
+<%@include file="/WEB-INF/jspf/left_menu.jspf" %>
 
 <jsp:useBean id="clientManager" class="com.tsystems.javaschool.services.impl.ClientManagerImpl" scope="page"/>
 <jsp:useBean id="publisherManager" class="com.tsystems.javaschool.services.impl.PublisherManagerImpl" scope="page"/>
@@ -18,13 +19,20 @@
 
     <%
         Client currClient = (Client) session.getAttribute("currentClient");
-        if (currClient == null) {
-            currClient = ClientController.actualizeClient(request, userName);
-            System.out.println(session.getAttribute("currentClient"));
+        if (currClient == null || currClient.getName().equals("Guest")) {
 
+            String currClientName;
+
+            if (request.getUserPrincipal().getName().toString() != null) {
+                currClientName = request.getUserPrincipal().getName().toString();
+            } else {
+                currClientName = (String) session.getAttribute("username");
+            }
+            currClient = ClientController.actualizeClient(request, currClientName);
         }
     %>
     <form name="client_edit_form" action="/editProfile" method="post">
+
         <div class="book_info">
             <div class="book_details">
                 <br><strong>Имя:</strong><input name="client_name" type="text" value="<%=currClient.getName()%>">
@@ -47,7 +55,10 @@
 
     <div class="client_orders_penal">
         <%
-            List<Order> clientOrders = Managers.getClientManager().getClientOrders(currClient);
+            List<Order> clientOrders = new ArrayList<>();
+            if (request.isUserInRole("user") || request.isUserInRole("admin")) {
+                clientOrders = Managers.getClientManager().getClientOrders(currClient);
+            }
             if (!clientOrders.isEmpty()) {
         %>
 
@@ -58,7 +69,6 @@
                 font-size: 10px;
                 border-collapse: collapse;
                 text-align: center;
-
             }
 
             th, td:first-child {

@@ -13,7 +13,7 @@
 
   <br><strong>Добавление книги</strong>
 
-  <form name="book_add_form" enctype="multipart/form-data" action ="/AddBook" method="post">
+  <form name="book_add_form" enctype="multipart/form-data" action ="/bookList" method="post">
     <div class="book_info">
       <div class="book_details">
         <br><strong>Обложка:</strong><input type="file" name="cover" multiple accept="image/jpeg">

@@ -15,23 +15,21 @@ import java.io.IOException;
  * @since 22.02.2016
  */
 public class ClearCartServlet extends HttpServlet {
+    public static void clearCartAndCookies(HttpServletRequest req, HttpServletResponse resp) {
+        ShoppingCartManager shoppingCartManager
+                = (ShoppingCartManager) req.getSession().getAttribute("cartManager");
+
+        if (shoppingCartManager != null) {
+            shoppingCartManager.clearCart();
+        }
+        CartController.deleteCartsBooksCookies(req, resp);
+
+        req.setAttribute("cartManager", shoppingCartManager);
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         clearCartAndCookies(req, resp);
         resp.sendRedirect("pages/cart.jsp");
-    }
-
-
-    public static void clearCartAndCookies(HttpServletRequest req, HttpServletResponse resp){
-        ShoppingCartManager shoppingCartManager
-                = (ShoppingCartManager) req.getSession().getAttribute("cartManager");
-
-//        if (shoppingCartManager != null) {
-//            shoppingCartManager.clearCart();
-//        }
-            CartController.deleteCartsBooksCookies(req, resp);
-
-
-        req.setAttribute("cartManager", shoppingCartManager);
     }
 }

@@ -17,20 +17,28 @@ import javax.servlet.http.HttpSession;
  */
 public class ClientController {
 
-    public static Client actualizeClient(HttpServletRequest request, String userName) throws NotRegisteredUserException {
+    public static Client actualizeClient(HttpServletRequest request, String userName) {
         ClientManager clientManager = new ClientManagerImpl();
         HttpSession session = request.getSession();
 
-        Client client = clientManager.findByUserName(userName);
-
-
-        if (client == null || userName == "") {
-            userName = "Anonymous";
-            session.setAttribute("username", userName);
+        Client client = null;
+        try {
             client = clientManager.findByUserName(userName);
+        } catch (NotRegisteredUserException ex) {
+            client = new Client();
+            client.setName("Guest");
+            userName = "Guest";
+            session.setAttribute("username", userName);
         }
+
+//
+//        if (client == null || userName == "") {
+//            userName = "Guest";
+//            session.setAttribute("username", userName);
+//            client = clientManager.findByUserName(userName);
+//        }
         session.setAttribute("currentClient", client);
-        // теперь у нас в сессии есть наш клиент из базы
+        // теперь у нас в сессии есть наш клиент из базы или подложка для анонимуса
 
         return client;
     }

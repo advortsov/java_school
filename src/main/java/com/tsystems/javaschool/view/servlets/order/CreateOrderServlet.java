@@ -35,18 +35,11 @@ public class CreateOrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-
-        ClearCartServlet.clearCartAndCookies(req, resp);
+//        if ( (req.isUserInRole("admin") || req.isUserInRole("user")) ){
+//            resp.sendRedirect("index.jsp");
+//        }
 
         List<OrderLine> orderLines = (List<OrderLine>) req.getSession().getAttribute("orderLines");
-        //List<OrderLine> orderLines = order
-
-        Enumeration eNames = req.getSession().getAttributeNames();
-        while (eNames.hasMoreElements()) {
-            String attributeName = (String) eNames.nextElement();
-            Object attribute = req.getSession().getAttribute(attributeName);
-            System.out.println(attributeName + " as " + attribute.getClass().getName() + ": " + attribute);
-        }
 
         BookManager bookManager = new BookManagerImpl();
         // заданное на прошлой форме количество перезаписываем в каждом ордерлайне
@@ -80,7 +73,10 @@ public class CreateOrderServlet extends HttpServlet {
             order.setDate(new Date(System.currentTimeMillis()));
             OrderManager orderManager = new OrderManagerImpl();
             orderManager.saveNewOrder(order);
-            resp.sendRedirect("pages/cart.jsp");
+
+            ClearCartServlet.clearCartAndCookies(req, resp);
+
+            resp.sendRedirect("user_pages/profile.jsp");
         } else {
             try {
                 throw new EmptyOrderException();
