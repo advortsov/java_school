@@ -111,6 +111,7 @@ public class BookListController extends HttpServlet {
             }
         }
 
+        req.setAttribute("currentBookList", currentBookList);
         return currentBookList;
     }
 

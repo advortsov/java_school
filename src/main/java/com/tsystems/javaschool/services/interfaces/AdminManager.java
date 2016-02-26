@@ -16,7 +16,7 @@ public interface AdminManager {
 
     public List<Order> getTopTenBooks();
 
-    public Map<Client, Integer> getTopTenClients();
+    public List<Client> getTopTenClients();
 
     public List<Order> getOrdersPerPeriod(Date periodStart, Date periodEnd);
 

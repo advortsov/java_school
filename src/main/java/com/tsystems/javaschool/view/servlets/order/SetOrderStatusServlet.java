@@ -26,6 +26,6 @@ public class SetOrderStatusServlet extends HttpServlet {
 
         Managers.getOrderManager().updateOrder(orderForEdit);
 
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp");
     }
 }

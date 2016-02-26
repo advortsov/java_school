@@ -2,15 +2,16 @@ package com.tsystems.javaschool.services.impl;
 
 import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.entity.Order;
+import com.tsystems.javaschool.dao.exeption.NotRegisteredUserException;
 import com.tsystems.javaschool.dao.impl.OrderDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.OrderDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.AdminManager;
 import com.tsystems.javaschool.services.interfaces.ClientManager;
-import com.tsystems.javaschool.services.interfaces.OrderManager;
 import com.tsystems.javaschool.services.util.Managers;
 
 import javax.persistence.Query;
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -44,23 +45,72 @@ public class AdminManagerImpl implements AdminManager {
     }
 
     @Override
-    public Map<Client, Integer> getTopTenClients() {
+    public List<Client> getTopTenClients() { //Map<Client, Integer>
+//        ClientManager clientManager = Managers.getClientManager();
+//        OrderManager orderManager = Managers.getOrderManager();
+//
+//        List<Order> allOrders = orderManager.loadAllOrders();
+//
+//        Map<Client, Integer> clientTotalSummMap = new HashMap<>();
+//
+//        for (Order order : allOrders) {
+//            int orderTotalSumm = orderManager.orderTotalSumm(order);
+//            Client currClient = order.getClient();
+//            if (clientTotalSummMap.get(currClient) == null) clientTotalSummMap.put(currClient, 0);
+//            int newTotalSumm = clientTotalSummMap.get(currClient) + orderTotalSumm;
+//            clientTotalSummMap.put(currClient, newTotalSumm);
+//        }
+//
+//        return sortByValue(clientTotalSummMap);
+
+        List<Client> topClients = new ArrayList<>();
+        //String sql = "SELECT o FROM Order o WHERE o.date >= :periodStart AND o.date <= :periodEnd";
+//
+//        SELECT buy.client_id as clientId, SUM(book.price*order_line.quantity) as total
+//        FROM buy JOIN order_line ON buy.id = order_line.order_id
+//        JOIN book ON order_line.book_id = book.id
+//
+//        GROUP BY clientId, buy.id
+//        ORDER BY total DESC
+//        #LIMIT 1
+        // String sup_name ="Tortuga Trading";
+//        BigDecimal sum = (List)em.createNativeQuery("SELECT SUM(p.price*l.quantity)
+//                FROM orders o JOIN orderlineitems l ON o.pono=l.pono
+//                JOIN products p ON l.prod_id=p.prod_id
+//                JOIN suppliers s ON p.sup_id=s.sup_id WHERE sup_name =?1")
+//                .setParameter(1, sup_name)
+//                .getSingleResult();
+
+        String sql = "SELECT buy.client_id as clientId, SUM(book.price*order_line.quantity) as total " +
+                "FROM buy JOIN order_line ON buy.id = order_line.order_id " +
+                "JOIN book ON order_line.book_id = book.id " +
+                "GROUP BY clientId ORDER BY total DESC LIMIT 10";
+
+        List<Object[]> resultList = JpaUtil.getEntityManager().createNativeQuery(sql).getResultList();
+//
+//        TypedQuery<Object[]> q = getEntityManager().createQuery(
+//                "SELECT c.id, count(p.id) " +
+//                        "FROM Product p LEFT JOIN p.category c " +
+//                        "WHERE p.seller.id = :id " +
+//                        "GROUP BY c.id", Object[].class).setParameter("id", id);
+//
+//        List<Object[]> resultList = q.getResultList();
+//        Map<String, Long> resultMap = new HashMap<String, Long>(resultList.size());
+//        for (Object[] result : resultList)
+//            resultMap.put((String)result[0], (Long)result[1]);
+
         ClientManager clientManager = Managers.getClientManager();
-        OrderManager orderManager = Managers.getOrderManager();
-
-        List<Order> allOrders = orderManager.loadAllOrders();
-
-        Map<Client, Integer> clientTotalSummMap = new HashMap<>();
-
-        for (Order order : allOrders) {
-            int orderTotalSumm = orderManager.orderTotalSumm(order);
-            Client currClient = order.getClient();
-            if (clientTotalSummMap.get(currClient) == null) clientTotalSummMap.put(currClient, 0);
-            int newTotalSumm = clientTotalSummMap.get(currClient) + orderTotalSumm;
-            clientTotalSummMap.put(currClient, newTotalSumm);
+        for (Object[] result : resultList) {
+            try {
+                BigInteger bigInteger = (BigInteger) result[0];
+                long id = bigInteger.longValue();
+                topClients.add(clientManager.findById(id));
+            } catch (NotRegisteredUserException e) {
+                e.printStackTrace();
+            }
         }
 
-        return sortByValue(clientTotalSummMap);
+        return topClients;
     }
 
     @Override

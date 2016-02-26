@@ -28,6 +28,10 @@ public class ClientManagerImpl implements ClientManager{
     public Client findByUserName(String name) throws NotRegisteredUserException {
         return clientDAO.findByUserName(name);
     }
+    @Override
+    public Client findById(long id) throws NotRegisteredUserException {
+        return clientDAO.findByID(Client.class, id);
+    }
 
     @Override
     public void updateClient(Client client) {

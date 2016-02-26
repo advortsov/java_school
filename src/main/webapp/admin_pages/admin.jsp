@@ -24,8 +24,8 @@
     } else {
         response.sendRedirect("index.jsp");
     }
-
 %>
+
 <br><a href="add_book.jsp">Управление книгами</a></br></p>
 <br><a href="add_genre.jsp">Управление жанрами</a></br></p>
 <br><a href="add_publisher.jsp">Управление издателями</a></br></p>
@@ -98,7 +98,7 @@
             </td>
             <td><%=orderManager.orderTotalSumm(order)%> руб.</td>
             <td>
-                <a href="edit_order.jsp=<%=order.getId()%>">
+                <a href="edit_order.jsp?order_id=<%=order.getId()%>">
                     <img src="../images/edit.png" alt="Редактировать" name="edit"/></a>
             </td>
 

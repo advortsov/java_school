@@ -12,9 +12,11 @@ import java.util.List;
  * @since 17.02.2016
  */
 public interface ClientManager {
-    public Client findByUserName(String name) throws NotRegisteredUserException;
+    Client findByUserName(String name) throws NotRegisteredUserException;
 
-    public void updateClient(Client client);
+    Client findById(long id) throws NotRegisteredUserException;
+
+    void updateClient(Client client);
 
     List<Order> getClientOrders(Client client);
 }

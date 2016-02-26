@@ -2,9 +2,11 @@ package com.tsystems.javaschool.view;
 
 
 import com.tsystems.javaschool.dao.entity.*;
+import com.tsystems.javaschool.dao.exeption.NotRegisteredUserException;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.impl.*;
 import com.tsystems.javaschool.services.interfaces.*;
+import com.tsystems.javaschool.services.util.Managers;
 
 import java.util.*;
 
@@ -94,12 +96,26 @@ public class Main {
 ////        Client client = clientManager.findByUserName("admin");
 ////        System.out.println(client);
 
-        GenreManager genreManager = new GenreManagerImpl();
-        Genre genreForDel = genreManager.findByGenreName("Algorithms");
-        System.out.println("genreForDel " + genreForDel);
-        genreManager.deleteGenre(genreForDel);
+//        GenreManager genreManager = new GenreManagerImpl();
+//        Genre genreForDel = genreManager.findByGenreName("Algorithms");
+//        System.out.println("genreForDel " + genreForDel);
+//        genreManager.deleteGenre(genreForDel);
+//
+//        JpaUtil.closeSession();
 
-        JpaUtil.closeSession();
+        AdminManager adminManager = Managers.getAdminManager();
+        List<Client> clients = adminManager.getTopTenClients();
+
+        for (Client client : clients){
+            System.out.println(client);
+        }
+
+
+//        try {
+//            System.out.println(Managers.getClientManager().findById(1L));
+//        } catch (NotRegisteredUserException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public static void printMap(Map mp) {

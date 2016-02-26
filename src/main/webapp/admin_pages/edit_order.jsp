@@ -10,8 +10,9 @@
     <form name="order_set_status_form" action="/setOrderStatus" method="get">
         <div class="book_info">
             <div class="book_details">
-                <br><strong>ID заказа:</strong><input type="text" value="<%=request.getParameter("order_id")%>"
-                                                      name="order_id" readonly>
+                <br><strong>ID заказа:</strong>
+                <input type="text" value="<%=request.getParameter("order_id")%>"
+                       name="order_id" readonly>
                 <br><strong>Статус выполнения заказа:</strong>
                 <select name="order_status">
                     <%

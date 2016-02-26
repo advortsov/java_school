@@ -1,5 +1,6 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Book" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.tsystems.javaschool.services.util.Managers" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
@@ -14,6 +15,9 @@
 
     <%
         List<Book> currentBookList = (List<Book>) session.getAttribute("currentBookList");
+        if (currentBookList == null) {
+            currentBookList = Managers.getBookManager().loadAllBooks();
+        }
     %>
     <h5 style="text-align: left; margin-top:20px;">Найдено книг: <%=currentBookList.size() %>
     </h5>
