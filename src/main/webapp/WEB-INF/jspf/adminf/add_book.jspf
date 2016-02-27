@@ -1,13 +1,9 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Author" %>
+<%@ page import="com.tsystems.javaschool.dao.entity.Genre" %>
 <%@ page import="com.tsystems.javaschool.dao.entity.Publisher" %>
+<%@ page import="com.tsystems.javaschool.services.util.Managers" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!DOCTYPE html>
-<%@include file="../WEB-INF/jspf/left_menu.jspf" %>
-
-<jsp:useBean id="bookManager" class="com.tsystems.javaschool.services.impl.BookManagerImpl" scope="page"/>
-<jsp:useBean id="publisherManager" class="com.tsystems.javaschool.services.impl.PublisherManagerImpl" scope="page"/>
-<jsp:useBean id="authorManager" class="com.tsystems.javaschool.services.impl.AuthorManagerImpl" scope="page"/>
 
 <div class="edit_penal">
 
@@ -21,7 +17,7 @@
                 <br><strong>ISBN:</strong><input name="book_isbn" type="text">
                 <br><strong>Жанр:</strong><select name="book_genre">
                 <%
-                    for (Genre genre : genreManager.loadAllGenres()) {
+                    for (Genre genre : Managers.getGenreManager().loadAllGenres()) {
                 %>
                 <option><%=genre.getName()%>
                 </option>
@@ -30,7 +26,7 @@
 
                 <br><strong>Издательство:</strong><select name="book_publisher">
                 <%
-                    for (Publisher publisher : publisherManager.loadAllPublishers()) {
+                    for (Publisher publisher : Managers.getPublisherManager().loadAllPublishers()) {
                 %>
                 <option><%=publisher.getName()%>
                 </option>
@@ -39,7 +35,7 @@
 
                 <br><strong>Автор:</strong><select name="book_author">
                 <%
-                    for (Author author : authorManager.loadAllAuthors()) {//
+                    for (Author author : Managers.getAuthorManager().loadAllAuthors()) {//
                 %>
                 <option><%=author.getName()%>
                 </option>
@@ -60,3 +56,4 @@
     </form>
 
 </div>
+
