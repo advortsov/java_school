@@ -22,6 +22,6 @@ public class DeleteGenreServlet extends HttpServlet{
         GenreManager genreManager = new GenreManagerImpl();
         Genre genreForDel = genreManager.findByGenreName(req.getParameter("genre_name"));
         genreManager.deleteGenre(genreForDel);
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp");
     }
 }

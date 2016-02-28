@@ -21,7 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.Enumeration;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,10 +35,6 @@ public class CreateOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
-//        if ( (req.isUserInRole("admin") || req.isUserInRole("user")) ){
-//            resp.sendRedirect("index.jsp");
-//        }
 
         List<OrderLine> orderLines = (List<OrderLine>) req.getSession().getAttribute("orderLines");
 
@@ -63,8 +60,20 @@ public class CreateOrderServlet extends HttpServlet {
             }
         }
 
-        if (!orderLines.isEmpty()) {
-            order.setOrderLines(orderLines);
+        String status = "pages/cart.jsp#order_popup_ok";
+        String notOk = "pages/cart.jsp#order_popup_not_ok";
+
+        try {
+
+            if (orderLines.isEmpty()) throw new EmptyOrderException();
+
+            List<OrderLine> copy = new ArrayList<>();
+
+            for (OrderLine line : orderLines){
+                copy.add(line);
+            }
+
+            order.setOrderLines(copy);
             order.setShippingType(ShippingType.valueOf(req.getParameter("shipping_type")));
             order.setPaymentType(PaymentType.valueOf(req.getParameter("payment_type")));
             order.setPaymentStatus(PaymentStatus.WAITING_FOR_PAYMENT); // потому что заказ только что создан
@@ -76,14 +85,11 @@ public class CreateOrderServlet extends HttpServlet {
 
             ClearCartServlet.clearCartAndCookies(req, resp);
 
-            resp.sendRedirect("user_pages/profile.jsp");
-        } else {
-            try {
-                throw new EmptyOrderException();
-            } catch (EmptyOrderException e) {
-                e.printStackTrace();
-                //resp.sendRedirect("error/empty_order.jsp");
-            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            status = notOk;
+        } finally {
+            resp.sendRedirect(status);
         }
 
     }

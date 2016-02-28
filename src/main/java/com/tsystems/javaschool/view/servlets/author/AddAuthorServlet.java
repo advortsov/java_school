@@ -22,7 +22,7 @@ public class AddAuthorServlet extends HttpServlet {
         Author author = new Author(req.getParameter("author_name"));
         AuthorManager authorManager = new AuthorManagerImpl();
         authorManager.saveNewAuthor(author);
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp");
     }
 }
 

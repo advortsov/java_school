@@ -23,6 +23,6 @@ public class EditGenreServlet extends HttpServlet {
         Genre genre = genreManager.findByGenreName(req.getParameter("genre_for_edit"));
         genre.setName(req.getParameter("genre_name"));
         genreManager.updateGenre(genre);
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp");
     }
 }

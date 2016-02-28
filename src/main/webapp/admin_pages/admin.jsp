@@ -1,7 +1,8 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Client" %>
 <%@ page import="com.tsystems.javaschool.dao.entity.Order" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.tsystems.javaschool.services.interfaces.OrderManager" %>
+<%@ page import="com.tsystems.javaschool.services.impl.OrderManagerImpl" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -20,13 +21,11 @@
         session.invalidate();
     }
 
-    List<Order> orders = new ArrayList<>();
+    OrderManager orderManager1 = new OrderManagerImpl();
 
-    if (request.getSession(false) != null) {
-        orders = orderManager.loadAllOrders();
-    } else {
-        response.sendRedirect("index.jsp");
-    }
+    List<Order> orders = orderManager1.loadAllOrders();
+    //System.out.println(orders.get(orders.size()-1));
+
 %>
 
 
@@ -111,23 +110,6 @@
     <%--tab1 - Авторы--%>
     <%@include file="../WEB-INF/jspf/adminf/add_author.jspf" %>
 
-    <%--tab1 - Заказы--%>
-    <%@include file="../WEB-INF/jspf/adminf/edit_order.jspf" %>
-
-    <%--tab1 - Клиенты--%>
-    <%@include file="../WEB-INF/jspf/adminf/client_stat.jspf" %>
-
-
-    <div>
-        <br><a href="add_genre.jsp">Управление жанрами</a></br></p>
-    </div>
-    <div>
-        <br><a href="add_publisher.jsp">Управление издателями</a></br></p>
-    </div>
-    <div>
-        <br><a href="add_author.jsp">Управление авторами</a></br></p>
-    </div>
-    <div>вкладка 5</div>
 
     <div class="admin_penal">
         <%
@@ -193,7 +175,7 @@
                 </td>
                 <td><%=order.getPaymentStatus()%>
                 </td>
-                <td><%=orderManager.orderTotalSumm(order)%> руб.</td>
+                <td><%=orderManager1.orderTotalSumm(order)%> руб.</td>
                 <td>
                     <a href="edit_order.jsp?order_id=<%=order.getId()%>">
                         <img src="../images/edit.png" alt="Редактировать" name="edit"/></a>
@@ -215,4 +197,9 @@
 
 
     </div>
+
+
+    <%--tab1 - Клиенты--%>
+    <%@include file="../WEB-INF/jspf/adminf/top10.jspf" %>
+
 </div>

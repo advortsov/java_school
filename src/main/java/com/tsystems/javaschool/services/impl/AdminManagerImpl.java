@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.services.impl;
 
+import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.entity.Order;
 import com.tsystems.javaschool.dao.exeption.NotRegisteredUserException;
@@ -7,10 +8,12 @@ import com.tsystems.javaschool.dao.impl.OrderDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.OrderDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.AdminManager;
+import com.tsystems.javaschool.services.interfaces.BookManager;
 import com.tsystems.javaschool.services.interfaces.ClientManager;
 import com.tsystems.javaschool.services.util.Managers;
 
 import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
 
@@ -40,12 +43,42 @@ public class AdminManagerImpl implements AdminManager {
     }
 
     @Override
-    public List<Order> getTopTenBooks() {
-        return null;
+    public Map<Book, Integer> getTopTenBooks() {
+
+        Map<Book, Integer> topBooks = new HashMap<>();
+
+        String sql = "select order_line.book_id, sum(order_line.quantity) " +
+                "as total from order_line GROUP BY book_id ORDER BY total DESC LIMIT 10";
+
+        List<Object[]> resultList = JpaUtil.getEntityManager().createNativeQuery(sql).getResultList();
+
+        BookManager bookManager = Managers.getBookManager();
+        for (Object[] result : resultList) {
+            BigInteger bookId = (BigInteger) result[0];
+            long id = bookId.longValue();
+
+            BigDecimal totalSold = (BigDecimal) result[1];
+            int summ = totalSold.intValue();
+
+            topBooks.put(bookManager.findBookById(id), summ);
+        }
+
+//
+//        System.out.println("---------------------------------------------");
+//        System.out.println("---------------------------------------------");
+//        Iterator it = topBooks.entrySet().iterator();
+//        while (it.hasNext()) {
+//            Map.Entry pair = (Map.Entry) it.next();
+//            System.out.println(pair.getKey() + " " + pair.getValue());
+//        }
+//        System.out.println("---------------------------------------------");
+//        System.out.println("---------------------------------------------");
+//        System.out.println("---------------------------------------------");
+        return sortByValue(topBooks);
     }
 
     @Override
-    public List<Client> getTopTenClients() { //Map<Client, Integer>
+    public Map<Client, Integer> getTopTenClients() { //Map<Client, Integer>
 //        ClientManager clientManager = Managers.getClientManager();
 //        OrderManager orderManager = Managers.getOrderManager();
 //
@@ -63,7 +96,7 @@ public class AdminManagerImpl implements AdminManager {
 //
 //        return sortByValue(clientTotalSummMap);
 
-        List<Client> topClients = new ArrayList<>();
+        Map<Client, Integer> topClients = new HashMap<>();
         //String sql = "SELECT o FROM Order o WHERE o.date >= :periodStart AND o.date <= :periodEnd";
 //
 //        SELECT buy.client_id as clientId, SUM(book.price*order_line.quantity) as total
@@ -102,15 +135,19 @@ public class AdminManagerImpl implements AdminManager {
         ClientManager clientManager = Managers.getClientManager();
         for (Object[] result : resultList) {
             try {
-                BigInteger bigInteger = (BigInteger) result[0];
-                long id = bigInteger.longValue();
-                topClients.add(clientManager.findById(id));
+                BigInteger clientId = (BigInteger) result[0];
+                long id = clientId.longValue();
+
+                BigDecimal clientSumm = (BigDecimal) result[1];
+                int summ = clientSumm.intValue();
+
+                topClients.put(clientManager.findById(id), summ);
             } catch (NotRegisteredUserException e) {
                 e.printStackTrace();
             }
         }
 
-        return topClients;
+        return sortByValue(topClients);
     }
 
     @Override

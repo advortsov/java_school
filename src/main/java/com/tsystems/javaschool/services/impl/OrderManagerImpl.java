@@ -41,6 +41,7 @@ public class OrderManagerImpl implements OrderManager {
             deductBooksFromStore(order); // reserve books from the store, because the order was placed
             orderDAO.save(order);
             JpaUtil.commitTransaction();
+            System.out.println("saveNewOrder transaction committed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         } catch (PersistenceException ex) {
             ex.printStackTrace();
             JpaUtil.rollbackTransaction();

@@ -25,6 +25,6 @@ public class AddPublisherServlet extends HttpServlet {
         Publisher publisher = new Publisher(req.getParameter("publisher_name"));
         PublisherManager publisherManager = new PublisherManagerImpl();
         publisherManager.saveNewPublisher(publisher);
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp");
     }
 }

@@ -142,4 +142,10 @@ public class Order {
         this.orderLines = orderLines;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderLines=" + orderLines +
+                '}';
+    }
 }

@@ -50,7 +50,7 @@
                 session.setAttribute("username", userName);
 
                 String nameForGreeting = null;
-                if (request.getUserPrincipal() != null){
+                if (request.getUserPrincipal() != null) {
                     nameForGreeting = request.getUserPrincipal().getName().toString();
                 } else {
                     nameForGreeting = userName;
@@ -64,11 +64,15 @@
 
             <div class="personal_controllers">
 
+                <% if (request.getUserPrincipal() != null) {%>
                 <h6><a href="/logout">Выход</a></h6>
+                <% } else { %>
+                <h6><a href="/logout">Вход</a></h6>
+                <% } %>
                 <% if (request.isUserInRole("admin")) {%>
                 <h6><a href="../admin_pages/admin.jsp">Админка</a></h6>
                 <% }
-                 if (request.isUserInRole("user") || request.isUserInRole("admin")) {%>
+                    if (request.isUserInRole("user") || request.isUserInRole("admin")) {%>
                 <h6><a href="../user_pages/profile.jsp">Личный кабинет</a></h6>
                 <%}%>
                 <h6><a href="../pages/cart.jsp">Корзина</a></h6>

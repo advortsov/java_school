@@ -24,6 +24,6 @@ public class AddGenreServlet extends HttpServlet {
         Genre newGenre = new Genre(req.getParameter("genre_name"));
         genreManager.saveNewGenre(newGenre);
 
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp");
     }
 }

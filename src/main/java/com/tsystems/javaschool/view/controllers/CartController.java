@@ -30,7 +30,7 @@ public class CartController {
             String value = cookie.getValue();
             if (value.contains("dlm")) {
                 String[] cookieContent = value.split("dlm");
-                if (cookieContent[0].equals(cookieOwner)) {
+                if (cookieContent[0].equals(cookieOwner) || cookieContent[0].equals("Guest")) {
                     cookie.setMaxAge(0);
                     cookie.setPath("/");
                     resp.addCookie(cookie);

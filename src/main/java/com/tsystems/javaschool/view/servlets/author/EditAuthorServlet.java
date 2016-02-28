@@ -22,6 +22,6 @@ public class EditAuthorServlet extends HttpServlet {
         Author author = authorManager.findByAuthorName(req.getParameter("author_for_edit"));
         author.setName(req.getParameter("author_name"));
         authorManager.updateAuthor(author);
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp");
     }
 }

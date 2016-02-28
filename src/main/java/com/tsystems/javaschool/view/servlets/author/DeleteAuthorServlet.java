@@ -23,6 +23,6 @@ public class DeleteAuthorServlet extends HttpServlet {
         AuthorManager authorManager = new AuthorManagerImpl();
         Author authorForDel = authorManager.findByAuthorName(req.getParameter("author_name"));
         authorManager.deleteAuthor(authorForDel);
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp");
     }
 }

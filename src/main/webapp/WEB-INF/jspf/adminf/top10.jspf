@@ -1,0 +1,174 @@
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="com.tsystems.javaschool.dao.entity.Book" %>
+<%@ page pageEncoding="UTF-8" %>
+<div>
+
+    <div class="admin_penal">
+        <%
+            Map<Client, Integer> topTenClients = Managers.getAdminManager().getTopTenClients();
+            if (!topTenClients.isEmpty()) {
+        %>
+
+        <br><strong>Топ-10 клиентов</strong>
+
+        <style>
+            table {
+                font-size: 10px;
+                border-collapse: collapse;
+                text-align: center;
+            }
+
+            th, td:first-child {
+                /*background: white;*/
+                color: black;
+                padding: 5px 10px;
+            }
+
+            th, td {
+                border-style: solid;
+                border-width: 0 1px 1px 0;
+                border-color: black;
+            }
+
+            td {
+                background: #D8E6F3;
+            }
+
+            th:first-child, td:first-child {
+                text-align: left;
+            }
+        </style>
+
+        <table border="1">
+            <tr>
+                <td>Имя</td>
+                <td>Фамилия</td>
+                <td>Адресс</td>
+                <td>E-mail</td>
+                <td>Дата рождения</td>
+                <td>user_name</td>
+                <td>Выручка</td>
+            </tr>
+            <%
+                Iterator it = topTenClients.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    Client client = (Client) pair.getKey();
+            %>
+            <tr>
+                <td><%=client.getName()%>
+                </td>
+                <td><%=client.getSurname()%>
+                </td>
+                <td><%=client.getAddress()%>
+                </td>
+                <td><%=client.getEmail()%>
+                </td>
+                <td><%=client.getBirthday()%>
+                </td>
+                <td><%=client.getUser().getUserName()%>
+                </td>
+                <td><%=pair.getValue()%> руб.
+                </td>
+
+            </tr>
+            <%
+                }
+            %>
+        </table>
+
+        <%
+        } else {
+        %>
+        <br><strong>В базе нет клиентов</strong>
+        <%
+            }
+        %>
+
+
+    </div>
+
+<%--Товары--%>
+    <div class="admin_penal">
+        <%
+            Map<Book, Integer> topTenBooks = Managers.getAdminManager().getTopTenBooks();
+            if (!topTenClients.isEmpty()) {
+        %>
+
+        <br><strong>Топ-10 товаров</strong>
+
+        <style>
+            table {
+                font-size: 10px;
+                border-collapse: collapse;
+                text-align: center;
+            }
+
+            th, td:first-child {
+                color: black;
+                padding: 5px 10px;
+            }
+
+            th, td {
+                border-style: solid;
+                border-width: 0 1px 1px 0;
+                border-color: black;
+            }
+
+            td {
+                background: #D8E6F3;
+            }
+
+            th:first-child, td:first-child {
+                text-align: left;
+            }
+        </style>
+
+        <table border="1">
+            <tr>
+                <td>Название</td>
+                <td>ISBN</td>
+                <td>Цена</td>
+                <td>Остаток на складе</td>
+                <td>Продано</td>
+
+            </tr>
+            <%
+                Iterator it = topTenBooks.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry) it.next();
+                    Book book = (Book) pair.getKey();
+            %>
+            <tr>
+                <td><%=book.getName()%>
+                </td>
+                <td><%=book.getIsbn()%>
+                </td>
+                <td><%=book.getPrice()%> руб.
+                </td>
+                <td><%=book.getQuantity()%>
+                </td>
+                <td><%=pair.getValue()%>
+                </td>
+
+
+            </tr>
+            <%
+                }
+            %>
+        </table>
+
+        <%
+        } else {
+        %>
+        <br><strong>В базе нет книг</strong>
+        <%
+            }
+        %>
+
+
+    </div>
+
+</div>
+

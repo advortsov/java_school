@@ -21,6 +21,6 @@ public class DeletePublisherServlet extends HttpServlet {
         PublisherManager publisherManager = new PublisherManagerImpl();
         Publisher publisherForDel = publisherManager.findByPublisherName(req.getParameter("publisher_name"));
         publisherManager.deletePublisher(publisherForDel);
-        resp.sendRedirect("pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp");
     }
 }

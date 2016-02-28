@@ -3,51 +3,100 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Publisher" %>
 <%@ page import="com.tsystems.javaschool.services.util.Managers" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@page contentType="text/html" pageEncoding="UTF-8" %>--%>
 
 
 <div class="edit_penal">
 
     <br><strong>Добавление книги</strong>
 
+    <p>&nbsp;</p>
+
     <form name="book_add_form" enctype="multipart/form-data" action="/bookList" method="post">
-        <div class="book_info">
-            <div class="book_details">
-                <br><strong>Обложка:</strong><input type="file" name="cover" multiple accept="image/jpeg">
-                <br><strong>Название:</strong><input name="book_name" type="text">
-                <br><strong>ISBN:</strong><input name="book_isbn" type="text">
-                <br><strong>Жанр:</strong><select name="book_genre">
-                <%
-                    for (Genre genre : Managers.getGenreManager().loadAllGenres()) {
-                %>
-                <option><%=genre.getName()%>
-                </option>
-                <% } %>
-            </select>
-
-                <br><strong>Издательство:</strong><select name="book_publisher">
-                <%
-                    for (Publisher publisher : Managers.getPublisherManager().loadAllPublishers()) {
-                %>
-                <option><%=publisher.getName()%>
-                </option>
-                <% } %>
-            </select>
-
-                <br><strong>Автор:</strong><select name="book_author">
-                <%
-                    for (Author author : Managers.getAuthorManager().loadAllAuthors()) {//
-                %>
-                <option><%=author.getName()%>
-                </option>
-                <%
+        <div class="edit_book_info">
+            <div>
+                <style type="text/css">
+                    body {
+                        font-size: 13px;
                     }
-                %>
-            </select>
 
-                <br><strong>Количество страниц:</strong><input name="book_pages" type="text">
-                <br><strong>Год издания:</strong><input name="book_year" type="text">
-                <br><strong>количество на складе:</strong><input name="book_count" type="number">
-                <br><strong>Цена:</strong><input name="book_price" type="text"><strong> руб.</strong>
+                    label {
+                        float: left;
+                        padding-right: 10px;
+                    }
+
+                    .field {
+                        clear: both;
+                        text-align: right;
+                        line-height: 25px;
+                    }
+
+                    .main {
+                        float: left;
+                    }
+                </style>
+
+                <div class="field">
+                    <label for="cover">Обложка:</label><input type="file" name="cover" id="cover" multiple
+                                                              accept="image/jpeg">
+                </div>
+                <div class="field">
+                    <label for="book_name">Название:</label><input name="book_name" type="text" id="book_name" pattern=".{5,255}"
+                                                                   required title="Название может содержать от 5 до 255 букв">
+                </div>
+                <div class="field">
+                    <label for="book_isbn">ISBN:</label><input name="book_isbn" type="text" id="book_isbn" required>
+                </div>
+                <div class="field">
+
+                    <label for="book_genre">Жанр:</label><select name="book_genre" id="book_genre">
+                    <%
+                        for (Genre genre : Managers.getGenreManager().loadAllGenres()) {
+                    %>
+                    <option><%=genre.getName()%>
+                    </option>
+                    <% } %>
+                </select>
+                </div>
+
+                <div class="field">
+                    <label for="book_publisher">Издательство:</label><select name="book_publisher" id="book_publisher">
+                    <%
+                        for (Publisher publisher : Managers.getPublisherManager().loadAllPublishers()) {
+                    %>
+                    <option><%=publisher.getName()%>
+                    </option>
+                    <% } %>
+                </select>
+                </div>
+                <div class="field">
+                    <label for="book_author">Автор:</label><select name="book_author" id="book_author">
+                    <%
+                        for (Author author : Managers.getAuthorManager().loadAllAuthors()) {
+                    %>
+                    <option><%=author.getName()%>
+                    </option>
+                    <%
+                        }
+                    %>
+                </select>
+                </div>
+
+                <div class="field">
+                    <label for="book_pages">Количество страниц:</label><input name="book_pages" type="text"
+                                                                              id="book_pages">
+                </div>
+                <div class="field">
+                    <label for="book_year">Год издания:</label><input name="book_year" type="text" id="book_year">
+                </div>
+                <div class="field">
+                    <label for="book_count">Количество:</label><input name="book_count" type="number"
+                                                                      id="book_count">
+                </div>
+                <div class="field">
+                    <label for="book_price">Цена, руб:</label><input name="book_price" type="text" id="book_price">
+                </div>
+
                 <input type="hidden" name="action" value="add"></p>
                 <p><input type="submit" value="Добавить"></p>
             </div>

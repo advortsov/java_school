@@ -14,6 +14,7 @@
 <div class="book_list">
 
     <%
+
         List<Book> currentBookList = (List<Book>) session.getAttribute("currentBookList");
         if (currentBookList == null) {
             currentBookList = Managers.getBookManager().loadAllBooks();
@@ -41,8 +42,9 @@
             <br><strong>Год издания:</strong> <%=book.getPublishYear()%>
             <br><strong>Автор:</strong> <%=book.getAuthor()%>
             <br><strong>Цена:</strong> <%=book.getPrice()%> <strong> руб.</strong>
+            <% if (request.isUserInRole("admin")) {%>
             <br><a href="../admin_pages/edit.jsp?book_id=<%=book.getId()%>">Редактировать</a>
-
+            <% } %>
             <p style="margin:10px;"><a href="/addToCart?book_id=<%=book.getId()%>">Добавить в корзину</a></p>
         </div>
     </div>

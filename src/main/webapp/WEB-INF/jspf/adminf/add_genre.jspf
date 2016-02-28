@@ -1,0 +1,93 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<%--<div class="genre_management">--%>
+
+<div class="edit_penal">
+    <br><strong>Добавление жанра</strong>
+
+    <form name="genre_add_form" action="/addGenre" method="post">
+        <div class="edit_book_info">
+            <div>
+                <style type="text/css">
+                    body {
+                        font-size: 13px;
+                    }
+
+                    label {
+                        float: left;
+                        padding-right: 10px;
+                    }
+
+                    .field {
+                        clear: both;
+                        text-align: right;
+                        line-height: 25px;
+                    }
+
+                    .main {
+                        float: left;
+                    }
+                </style>
+                <div class="field">
+                    <label for="genre_name">Название:</label><input name="genre_name" type="text" id="genre_name">
+                </div>
+                <input type="hidden" name="action" value="add"></p>
+                <p><input type="submit" value="Сохранить"></p>
+            </div>
+        </div>
+    </form>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+
+    <br><strong>Удаление жанра</strong>
+
+    <form name="genre_del_form" action="/delGenre" method="post">
+        <div class="edit_book_info">
+            <div>
+                <div class="field">
+                    <label for="genre_name_del">Жанр:</label><select name="genre_name" id="genre_name_del">
+                    <%
+                        for (Genre genre : genreManager.loadAllGenres()) {
+                    %>
+                    <option><%=genre.getName()%>
+                    </option>
+                    <% } %>
+                </select>
+                </div>
+                <input type="hidden" name="action" value="delete"></p>
+                <p><input type="submit" value="Удалить"></p>
+            </div>
+        </div>
+    </form>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+
+    <br><strong>Редактирование жанра</strong>
+
+    <form name="genre_edit_form" action="/editGenre" method="post">
+        <div class="edit_book_info">
+            <div>
+                <div class="field">
+                    <label for="genre_name_ed">Выберите жанр для редактирования:</label><select name="genre_for_edit"
+                                                                                                id="genre_name_ed">
+                    <%
+                        for (Genre genre : genreManager.loadAllGenres()) {
+                    %>
+                    <option><%=genre.getName()%>
+                    </option>
+                    <% } %>
+                </select>
+                </div>
+                <div class="field">
+                    <label for="genre_name_new">Введите его новое имя:</label><input name="genre_name" type="text"
+                                                                                     id="genre_name_new">
+                </div>
+                <input type="hidden" name="action" value="edit"></p>
+                <p><input type="submit" value="Редактировать"></p>
+            </div>
+        </div>
+    </form>
+
+</div>

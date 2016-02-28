@@ -104,11 +104,11 @@ public class Main {
 //        JpaUtil.closeSession();
 
         AdminManager adminManager = Managers.getAdminManager();
-        List<Client> clients = adminManager.getTopTenClients();
-
-        for (Client client : clients){
-            System.out.println(client);
-        }
+//        List<Client> clients = adminManager.getTopTenClients();
+//
+//        for (Client client : clients){
+//            System.out.println(client);
+//        }
 
 
 //        try {

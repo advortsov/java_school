@@ -1,5 +1,6 @@
 package com.tsystems.javaschool.services.interfaces;
 
+import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.entity.Order;
 
@@ -14,9 +15,9 @@ import java.util.Map;
  */
 public interface AdminManager {
 
-    public List<Order> getTopTenBooks();
+    public Map<Book, Integer> getTopTenBooks();
 
-    public List<Client> getTopTenClients();
+    public Map<Client, Integer> getTopTenClients();
 
     public List<Order> getOrdersPerPeriod(Date periodStart, Date periodEnd);
 
