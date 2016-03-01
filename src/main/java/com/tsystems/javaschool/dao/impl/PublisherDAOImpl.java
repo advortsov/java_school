@@ -14,7 +14,6 @@ import javax.persistence.Query;
  */
 public class PublisherDAOImpl extends GenericDAOImpl<Publisher, Long> implements PublisherDAO {
 
-
     @Override
     public Publisher findByName(String name) {
         Publisher publisher = null;

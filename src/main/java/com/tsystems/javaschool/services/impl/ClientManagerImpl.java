@@ -7,9 +7,11 @@ import com.tsystems.javaschool.dao.impl.ClientDAOImpl;
 import com.tsystems.javaschool.dao.impl.OrderDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.ClientDAO;
 import com.tsystems.javaschool.dao.interfaces.OrderDAO;
+import com.tsystems.javaschool.dao.util.Daos;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.ClientManager;
 
+import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import java.util.List;
@@ -22,7 +24,7 @@ import java.util.logging.Logger;
  * @since 17.02.2016
  */
 public class ClientManagerImpl implements ClientManager{
-    private ClientDAO clientDAO = new ClientDAOImpl();
+    private ClientDAO clientDAO = Daos.getClientDAO();
 
     @Override
     public Client findByUserName(String name) throws NotRegisteredUserException {
@@ -35,14 +37,14 @@ public class ClientManagerImpl implements ClientManager{
 
     @Override
     public void updateClient(Client client) {
+        EntityManager em = null;
         try {
-            JpaUtil.beginTransaction();
-            clientDAO.merge(client);
-            JpaUtil.commitTransaction();
+            em = JpaUtil.beginTransaction();
+            clientDAO.merge(client, em);
+            JpaUtil.commitTransaction(em);
         } catch (PersistenceException ex) {
-            Logger.getLogger(ClientManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
-            JpaUtil.rollbackTransaction();
+            JpaUtil.rollbackTransaction(em);
         }
     }
 
@@ -51,9 +53,11 @@ public class ClientManagerImpl implements ClientManager{
         OrderDAO orderDAO = new OrderDAOImpl();
         List<Order> orders = null;
         String sql = "SELECT o FROM Order o WHERE o.client = :currClient";
-        Query query = JpaUtil.getEntityManager().createQuery(sql).
+        EntityManager em = JpaUtil.getEntityManager();
+        Query query = em.createQuery(sql).
                 setParameter("currClient", currClient);
         orders = orderDAO.findMany(query);
+        em.close();
         return orders;
     }
 }

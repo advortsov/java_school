@@ -16,23 +16,18 @@ import java.util.List;
 
 public abstract class GenericDAOImpl<T, ID extends Serializable> implements GenericDAO<T, ID> {
 
-    protected EntityManager getManager() {
-        return JpaUtil.getEntityManager();
+
+    public void save(T entity, EntityManager em) {
+        em.persist(entity);
     }
 
-    public void save(T entity) {
-        EntityManager manager = this.getManager();
-        manager.persist(entity);
+    public void merge(T entity, EntityManager em) {
+        em.merge(entity);
     }
 
-    public void merge(T entity) {
-        EntityManager manager = this.getManager();
-        manager.merge(entity);
-    }
-
-    public void delete(T entity) {
-        EntityManager manager = this.getManager();
-        manager.remove(entity);
+    public void delete(T entity, EntityManager em) {
+//        em.remove(entity);
+        em.remove(em.contains(entity) ? entity : em.merge(entity));
     }
 
     public List<T> findMany(Query query) {
@@ -48,19 +43,20 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     }
 
     public T findByID(Class clazz, long id) {
-        EntityManager manager = this.getManager();
         T t = null;
-        t = (T) manager.find(clazz, id);
+        EntityManager em = JpaUtil.getEntityManager();
+        t = (T) em.find(clazz, id);
+        em.close();
         return t;
     }
 
     public List findAll(Class clazz) {
-        EntityManager manager = this.getManager();
         List T = null;
-        Query query = manager.createQuery("from " + clazz.getName());
+        EntityManager em = JpaUtil.getEntityManager();
+        Query query = em.createQuery("from " + clazz.getName());
         T = query.getResultList();
+        em.close();
         return T;
     }
-
 
 }

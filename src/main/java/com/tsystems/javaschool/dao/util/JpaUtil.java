@@ -12,7 +12,6 @@ import javax.persistence.Persistence;
 public class JpaUtil {
 
     private static EntityManagerFactory entityManagerFactory;
-    private static EntityManager entityManager;
 
     public static EntityManagerFactory getEntityManagerFactory() {
         if (entityManagerFactory == null) {
@@ -27,25 +26,18 @@ public class JpaUtil {
         return manager;
     }
 
-    public static void commitTransaction() {
-        JpaUtil.getEntityManager().getTransaction().commit();
+    public static void commitTransaction(EntityManager em) {
+        em.getTransaction().commit();
+        em.close();
     }
 
-    public static void rollbackTransaction() {
-        JpaUtil.getEntityManager().getTransaction().rollback();
+    public static void rollbackTransaction(EntityManager em) {
+        em.getTransaction().rollback();
+        em.close();
     }
 
-    public static void closeSession() {
-        JpaUtil.getEntityManager().close();
-    }
-
-
-    //session
     public static EntityManager getEntityManager() {
-        if (entityManager == null){
-            entityManager = getEntityManagerFactory().createEntityManager();
-        }
-        return entityManager;
+        return getEntityManagerFactory().createEntityManager();
     }
 
 

@@ -176,16 +176,10 @@ ul.nav a:hover, ul.nav a:active, ul.nav a:focus {
 }
 
 .client_orders_penal {
-    position: relative;
     top: 25px;
-    float: none;
+    float: left;
     width: 750px;
 }
-
-/*.container {*/
-/*height: 300px;*/
-/*overflow: scroll;*/
-/*}*/
 
 .book_list h3 {
     text-align: center;
@@ -219,7 +213,6 @@ ul.nav a:hover, ul.nav a:active, ul.nav a:focus {
     float: left;
 }
 
-
 .book_image {
     height: 260px;
     float: left;
@@ -234,6 +227,12 @@ ul.nav a:hover, ul.nav a:active, ul.nav a:focus {
     float: left;
     margin-top: 10px;
 
+}
+
+.top10_penal {
+    top: 25px;
+    float: left;
+    width: 350px;
 }
 
 .order_table {

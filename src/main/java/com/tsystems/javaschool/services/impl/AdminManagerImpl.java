@@ -6,12 +6,14 @@ import com.tsystems.javaschool.dao.entity.Order;
 import com.tsystems.javaschool.dao.exeption.NotRegisteredUserException;
 import com.tsystems.javaschool.dao.impl.OrderDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.OrderDAO;
+import com.tsystems.javaschool.dao.util.Daos;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.interfaces.AdminManager;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 import com.tsystems.javaschool.services.interfaces.ClientManager;
 import com.tsystems.javaschool.services.util.Managers;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -24,7 +26,7 @@ import java.util.*;
  */
 public class AdminManagerImpl implements AdminManager {
 
-    private OrderDAO orderDAO = new OrderDAOImpl();
+    private OrderDAO orderDAO = Daos.getOrderDAO();
 
     private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
         List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
@@ -154,9 +156,11 @@ public class AdminManagerImpl implements AdminManager {
     public List<Order> getOrdersPerPeriod(Date periodStart, Date periodEnd) {
         List<Order> orders = null;
         String sql = "SELECT o FROM Order o WHERE o.date >= :periodStart AND o.date <= :periodEnd";
-        Query query = JpaUtil.getEntityManager().createQuery(sql).
+        EntityManager em = JpaUtil.getEntityManager();
+        Query query = em.createQuery(sql).
                 setParameter("periodStart", periodStart).setParameter("periodEnd", periodEnd);
         orders = orderDAO.findMany(query);
+        em.close();
         return orders;
     }
 }

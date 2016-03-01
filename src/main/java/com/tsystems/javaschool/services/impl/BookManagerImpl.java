@@ -7,12 +7,16 @@ import com.tsystems.javaschool.dao.impl.AuthorDAOImpl;
 import com.tsystems.javaschool.dao.impl.BookDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.AuthorDAO;
 import com.tsystems.javaschool.dao.interfaces.BookDAO;
+import com.tsystems.javaschool.dao.util.Daos;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.enums.SearchType;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 import org.apache.log4j.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,9 +29,8 @@ public class BookManagerImpl implements BookManager {
 
     final static Logger logger = Logger.getLogger(BookManagerImpl.class);//    PropertyConfigurator.configure("log4j.properties");
 
-
-    private BookDAO bookDAO = new BookDAOImpl();
-    private AuthorDAO authorDAO = new AuthorDAOImpl();
+    private BookDAO bookDAO = Daos.getBookDAO();
+    private AuthorDAO authorDAO = Daos.getAuthorDAO();
 
     public BookManagerImpl(BookDAO bookDAO) {
         this.bookDAO = bookDAO;
@@ -57,30 +60,32 @@ public class BookManagerImpl implements BookManager {
     @Override
     public void saveNewBook(Book book) {
         logger.info("Try to save new book...");
+        EntityManager em = null;
         try {
-            JpaUtil.beginTransaction();
-            bookDAO.save(book);
-            JpaUtil.commitTransaction();
+            em = JpaUtil.beginTransaction();
+            bookDAO.save(book, em);
+            JpaUtil.commitTransaction(em);
             logger.info("New book has been saved.");
         } catch (PersistenceException ex) {
             logger.error("New book has not been saved!");
             ex.printStackTrace();
-            JpaUtil.rollbackTransaction();
+            JpaUtil.rollbackTransaction(em);
         }
     }
 
     @Override
     public void updateBook(Book book) {
         logger.info("Try to update book...");
+        EntityManager em = null;
         try {
             JpaUtil.beginTransaction();
-            bookDAO.merge(book);
-            JpaUtil.commitTransaction();
+            bookDAO.merge(book, em);
+            JpaUtil.commitTransaction(em);
             logger.info("New book has been updated.");
         } catch (PersistenceException ex) {
             logger.error("Book has not been updated!");
             ex.printStackTrace();
-            JpaUtil.rollbackTransaction();
+            JpaUtil.rollbackTransaction(em);
         }
     }
 
@@ -93,15 +98,16 @@ public class BookManagerImpl implements BookManager {
     @Override
     public void deleteBook(Book book) {
         logger.info("Try to delete book...");
+        EntityManager em = null;
         try {
-            JpaUtil.beginTransaction();
-            bookDAO.delete(book);
-            JpaUtil.commitTransaction();
+            em = JpaUtil.beginTransaction();
+            bookDAO.delete(book, em);
+            JpaUtil.commitTransaction(em);
             logger.info("New book has been deleted.");
         } catch (PersistenceException ex) {
             logger.error("Book has not been deleted!");
             ex.printStackTrace();
-            JpaUtil.rollbackTransaction();
+            JpaUtil.rollbackTransaction(em);
         }
     }
 
@@ -115,15 +121,20 @@ public class BookManagerImpl implements BookManager {
     public List<Book> getBooksBySearch(String searchStr, SearchType type) {
         logger.info("Try to get books by search...");
 
-        if (type == SearchType.AUTHOR) {
-            logger.info("Searching by author...");
-            return findByAuthorName(searchStr);
-        } else if (type == SearchType.TITLE) {
-            logger.info("Searching by title...");
-            return bookDAO.findByName(searchStr);
+        try {
+
+            if (type == SearchType.AUTHOR) {
+                logger.info("Searching by author...");
+                return findByAuthorName(searchStr);
+            } else if (type == SearchType.TITLE) {
+                logger.info("Searching by title...");
+                return bookDAO.findByName(searchStr);
+            }
+        } catch (NoResultException ex) {
+            logger.info("Nothing found.");
+            //ignore
         }
-        logger.info("Nothing found.");
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

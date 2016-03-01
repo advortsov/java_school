@@ -76,7 +76,6 @@ public class OrderLine {
     @Override
     public String toString() {
         return "OrderLine{" +
-                "order=" + order +
                 ", quantity=" + quantity +
                 ", book=" + book.getName() +
                 '}';

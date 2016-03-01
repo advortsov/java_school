@@ -8,6 +8,7 @@ import com.tsystems.javaschool.services.impl.BookManagerImpl;
 import com.tsystems.javaschool.services.impl.ShoppingCartManagerImpl;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 import com.tsystems.javaschool.services.interfaces.ShoppingCartManager;
+import com.tsystems.javaschool.services.util.Managers;
 import com.tsystems.javaschool.view.controllers.CartController;
 import com.tsystems.javaschool.view.controllers.ClientController;
 
@@ -27,7 +28,7 @@ public class AddToCartServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ShoppingCartManager shoppingCartManager = new ShoppingCartManagerImpl();
+        ShoppingCartManager shoppingCartManager = Managers.getShoppingCartManager();
 
         ShoppingCart cart = (ShoppingCart) req.getSession().getAttribute("cart"); // где то надо бы ее записать
 

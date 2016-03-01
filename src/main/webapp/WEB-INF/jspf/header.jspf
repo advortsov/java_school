@@ -84,8 +84,8 @@
                 <input type="text" name="search_string" value="<%=searchString%>" size="100"/>
                 <input class="search_button" type="submit" value="Поиск"/>
                 <select name="search_option">
-                    <option>Название</option>
-                    <option>Автор</option>
+                    <option value="TITLE">Название</option>
+                    <option value="AUTHOR">Автор</option>
                 </select>
             </form>
         </div>

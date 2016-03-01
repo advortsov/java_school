@@ -3,7 +3,7 @@ package com.tsystems.javaschool.dao.interfaces;
 
 import com.tsystems.javaschool.dao.entity.Genre;
 
-import java.math.BigDecimal;
+import javax.persistence.EntityManager;
 
 /**
  * @author Alexander Dvortsov
@@ -11,8 +11,7 @@ import java.math.BigDecimal;
  * @since 08.02.2016
  */
 public interface GenreDAO extends GenericDAO<Genre, Long> {
-    //add some methods to GenericDAO standart methods:
-    public Genre findByName(String name);
+    Genre findByName(String name);
 
-    public void setNullBeforeDelete(Genre entity);
+    void setNullBeforeDelete(Genre entity, EntityManager em);
 }

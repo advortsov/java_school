@@ -1,10 +1,8 @@
 package com.tsystems.javaschool.view.servlets.publisher;
 
-import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.dao.entity.Publisher;
 import com.tsystems.javaschool.services.impl.GenreManagerImpl;
 import com.tsystems.javaschool.services.impl.PublisherManagerImpl;
-import com.tsystems.javaschool.services.interfaces.GenreManager;
 import com.tsystems.javaschool.services.interfaces.PublisherManager;
 
 import javax.servlet.ServletException;

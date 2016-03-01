@@ -4,6 +4,7 @@ import com.tsystems.javaschool.dao.entity.Author;
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Genre;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -20,5 +21,5 @@ public interface BookDAO extends GenericDAO<Book, Long> {
 
     List<Book> findByAuthorName(String authorName);
 
-    void setBookQuantity(long bookId, int quantity);
+    void setBookQuantity(long bookId, int quantity, EntityManager em);
 }

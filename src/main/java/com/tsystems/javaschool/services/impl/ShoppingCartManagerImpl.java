@@ -7,6 +7,7 @@ import com.tsystems.javaschool.dao.entity.OrderLine;
 import com.tsystems.javaschool.services.ShoppingCart;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 import com.tsystems.javaschool.services.interfaces.ShoppingCartManager;
+import com.tsystems.javaschool.services.util.Managers;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,8 @@ import java.util.List;
  */
 public class ShoppingCartManagerImpl implements ShoppingCartManager {
 
-    BookManager bookManager = new BookManagerImpl();
+    BookManager bookManager = Managers.getBookManager();
+
     private ShoppingCart shoppingCart;
 
     public ShoppingCartManagerImpl() {

@@ -9,6 +9,7 @@ import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.impl.BookManagerImpl;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -32,13 +33,12 @@ public class GenreDAOImpl extends GenericDAOImpl<Genre, Long> implements GenreDA
     }
 
     @Override
-    public void setNullBeforeDelete(Genre entity) {
+    public void setNullBeforeDelete(Genre entity, EntityManager em) {
         BookManager bookManager = new BookManagerImpl();
         List<Book> allBooks = bookManager.getBooksByGenre(entity);
-
         for (Book book : allBooks) {
             book.setGenre(null);
-            bookDAO.merge(book);
+            bookDAO.merge(book, em);
         }
     }
 

@@ -2,6 +2,7 @@ package com.tsystems.javaschool.services.interfaces;
 
 import com.tsystems.javaschool.dao.entity.Order;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -10,20 +11,20 @@ import java.util.List;
  * @since 17.02.2016
  */
 public interface OrderManager {
-    public Order findByGenreName(String name);
+    Order findByGenreName(String name);
 
-    public List<Order> loadAllOrders();
+    List<Order> loadAllOrders();
 
-    public void saveNewOrder(Order order);
+    void saveNewOrder(Order order);
 
-    public Order findOrderById(long id);
+    void deductBooksFromStore(Order order, EntityManager em);
 
-    public void deleteOrder(Order order);
+    Order findOrderById(long id);
 
-    public int orderTotalSumm(Order order);
+    void deleteOrder(Order order);
+
+    int orderTotalSumm(Order order);
 
     void updateOrder(Order order);
-
-    void deductBooksFromStore(Order order);
 
 }

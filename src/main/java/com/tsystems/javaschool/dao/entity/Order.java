@@ -63,7 +63,7 @@ public class Order {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // добавил 20 feb
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL) // добавил 1 mart fetch = FetchType.EAGER
     private List<OrderLine> orderLines;
 
     public Order() {
@@ -142,10 +142,17 @@ public class Order {
         this.orderLines = orderLines;
     }
 
+
     @Override
     public String toString() {
+
         return "Order{" +
-                "orderLines=" + orderLines +
+                ", orderStatus=" + orderStatus +
+                ", paymentStatus=" + paymentStatus +
+                ", paymentType=" + paymentType +
+                ", shippingType=" + shippingType +
+                ", date=" + date +
+                ", orderLines=" + orderLines +
                 '}';
     }
 }

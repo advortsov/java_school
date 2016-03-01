@@ -24,13 +24,11 @@
     OrderManager orderManager1 = new OrderManagerImpl();
 
     List<Order> orders = orderManager1.loadAllOrders();
-    //System.out.println(orders.get(orders.size()-1));
-
 %>
 
 
 <style>
-    #tab2, #tab3, #tab4, #tab5, #tab6 {
+    #tab2, #tab3, #tab4, #tab5, #tab6, #tab7 {
         position: fixed;
     }
 
@@ -40,6 +38,7 @@
     .menu1 #tab4:target ~ a:nth-of-type(1),
     .menu1 #tab5:target ~ a:nth-of-type(1),
     .menu1 #tab6:target ~ a:nth-of-type(1),
+    .menu1 #tab7:target ~ a:nth-of-type(1),
     .menu1 > div {
         padding: 5px;
         /*border: 1px solid #aaa;*/
@@ -58,12 +57,14 @@
     #tab4,
     #tab5,
     #tab6,
+    #tab7,
     .menu1 > div,
     .menu1 #tab2:target ~ div:nth-of-type(1),
     .menu1 #tab3:target ~ div:nth-of-type(1),
     .menu1 #tab4:target ~ div:nth-of-type(1),
     .menu1 #tab5:target ~ div:nth-of-type(1),
-    .menu1 #tab6:target ~ div:nth-of-type(1) {
+    .menu1 #tab6:target ~ div:nth-of-type(1),
+    .menu1 #tab7:target ~ div:nth-of-type(1) {
         display: none;
     }
 
@@ -72,7 +73,8 @@
     .menu1 #tab3:target ~ div:nth-of-type(3),
     .menu1 #tab4:target ~ div:nth-of-type(4),
     .menu1 #tab5:target ~ div:nth-of-type(5),
-    .menu1 #tab6:target ~ div:nth-of-type(6) {
+    .menu1 #tab6:target ~ div:nth-of-type(6),
+    .menu1 #tab7:target ~ div:nth-of-type(7) {
         display: block;
     }
 
@@ -81,7 +83,8 @@
     .menu1 #tab3:target ~ a:nth-of-type(3),
     .menu1 #tab4:target ~ a:nth-of-type(4),
     .menu1 #tab5:target ~ a:nth-of-type(5),
-    .menu1 #tab6:target ~ a:nth-of-type(6) {
+    .menu1 #tab6:target ~ a:nth-of-type(6),
+    .menu1 #tab7:target ~ a:nth-of-type(7) {
         border-bottom: 1px solid #fff;
     }
 </style>
@@ -91,12 +94,14 @@
     <br id="tab4"/>
     <br id="tab5"/>
     <br id="tab6"/>
+    <br id="tab7"/>
     <a href="#tab1">Книги</a>
     <a href="#tab2">Жанры</a>
     <a href="#tab3">Издатели</a>
     <a href="#tab4">Авторы</a>
     <a href="#tab5">Заказы</a>
-    <a href="#tab6">Клиенты</a>
+    <a href="#tab6">Топ-10</a>
+    <a href="#tab7">Выручка</a>
 
     <%--tab1 - Книги--%>
     <%@include file="../WEB-INF/jspf/adminf/add_book.jspf" %>

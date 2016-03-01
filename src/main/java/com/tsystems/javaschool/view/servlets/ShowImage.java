@@ -7,39 +7,74 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShowImage extends HttpServlet {
+
+    private static byte[] defaultImage = null;
+
+    private byte[] getDefaultImage() {
+        if (defaultImage != null) {
+            return defaultImage;
+        } else {
+            String filePath = getServletContext().getRealPath("/") + "/images/standart_book_img.png";
+            File file = new File(filePath);
+            byte[] bytes = new byte[0];
+
+            try (FileInputStream fis = new FileInputStream(file);
+                 ByteArrayOutputStream bos = new ByteArrayOutputStream();) {
+                byte[] buf = new byte[1024];
+                try {
+                    for (int readNum; (readNum = fis.read(buf)) != -1; ) {
+                        //Writes to this byte array output stream
+                        bos.write(buf, 0, readNum);
+                    }
+                } catch (IOException ex) {
+                }
+
+                bytes = bos.toByteArray();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            defaultImage = bytes;
+            return defaultImage;
+        }
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         response.setContentType("image/jpeg");
 
-        try (OutputStream out = response.getOutputStream() ) {
+        try (OutputStream out = response.getOutputStream()) {
             int index = Integer.valueOf(request.getParameter("index"));
-            List<Book> list = (ArrayList<Book>)request.getSession(false).getAttribute("currentBookList");
+            List<Book> list = (ArrayList<Book>) request.getSession(false).getAttribute("currentBookList");
             Book book = list.get(index);
-            response.setContentLength(book.getImage().length);
-            out.write(book.getImage());
-        }catch (Exception ex) {
+            if (book.getImage().length != 0) {
+                response.setContentLength(book.getImage().length);
+                out.write(book.getImage());
+            } else {
+                out.write(getDefaultImage());
+            }
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP
      * <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -51,10 +86,10 @@ public class ShowImage extends HttpServlet {
      * Handles the HTTP
      * <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -62,13 +97,4 @@ public class ShowImage extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 }

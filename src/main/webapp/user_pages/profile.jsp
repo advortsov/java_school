@@ -31,25 +31,85 @@
             currClient = ClientController.actualizeClient(request, currClientName);
         }
     %>
+
+    <p>&nbsp;</p>
+
     <form name="client_edit_form" action="/editProfile" method="post">
 
-        <div class="book_info">
-            <div class="book_details">
-                <br><strong>Имя:</strong><input name="client_name" type="text" value="<%=currClient.getName()%>">
-                <br><strong>Фамилия:</strong><input name="client_surname" type="text"
-                                                    value="<%=currClient.getSurname()%>">
-                <br><strong>Адрес:</strong><input name="client_address" type="text"
-                                                  value="<%=currClient.getAddress()%>">
-                <br><strong>Дата рождения:</strong>
-                <input type="date" name="client_bday" value="<%=currClient.getBirthday()%>">
-                <br><strong>Почта:</strong><input type="email" name="client_email"
-                                                  value="<%=currClient.getEmail()%>">
+        <div class="edit_book_info">
+            <div>
+                <style type="text/css">
+                    body {
+                        font-size: 13px;
+                    }
 
-                <p><input type="submit" value="Сохранить"></p>
+                    label {
+                        float: left;
+                        padding-right: 10px;
+                    }
+
+                    .field {
+                        clear: both;
+                        text-align: right;
+                        line-height: 25px;
+                    }
+
+                    .main {
+                        float: left;
+                    }
+                </style>
+                <div class="field">
+                    <label for="client_name">Имя:</label><input name="client_name"
+                                                                id="client_name" type="text"
+                                                                value="<%=currClient.getName()%>"
+                                                                pattern=".{5,255}"
+                                                                required
+                                                                title="Имя может содержать от 5 до 255 символов">
+                </div>
+                <div class="field">
+
+                    <label for="client_surname">Фамилия:</label><input name="client_surname"
+                                                                       id="client_surname" type="text"
+                                                                       value="<%=currClient.getSurname()%>"
+                                                                       pattern=".{5,255}"
+                                                                       required
+                                                                       title="Фамилия может содержать от 5 до 255 символов">
+                </div>
+
+                <div class="field">
+
+                    <label for="client_address">Адрес:</label><input name="client_address"
+                                                                     id="client_address" type="text"
+                                                                     value="<%=currClient.getAddress()%>"
+                                                                     pattern=".{5,255}"
+                                                                     required
+                                                                     title="Адрес может содержать от 5 до 255 символов">
+                </div>
+                <div class="field">
+
+                    <label for="client_bday">Дата рождения:</label><input name="client_bday"
+                                                                          id="client_bday" type="date"
+                                                                          value="<%=currClient.getBirthday()%>"
+                                                                          required
+                                                                          title="Выберите дату вашего рождения">
+                </div>
+
+                <div class="field">
+
+                    <label for="client_email">Почта:</label><input name="client_email"
+                                                                   id="client_email" type="email"
+                                                                   value="<%=currClient.getEmail()%>"
+                                                                   pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+                                                                   required
+                                                                   title="Введите валидный e-mail">
+                </div>
+
+                <input type="hidden" name="action" value="edit"></p>
+                <p><input type="submit" value="Изменить"></p>
             </div>
         </div>
-    </form>
 
+    </form>
     <%--copypast--%>
 
 
@@ -78,7 +138,7 @@
             }
 
             th, td {
-                border-style: dotted;
+                border-style: solid;
                 border-width: 0 1px 1px 0;
                 border-color: black;
             }

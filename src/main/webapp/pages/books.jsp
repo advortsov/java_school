@@ -1,6 +1,6 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Book" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.tsystems.javaschool.services.util.Managers" %>
+<%@ page import="java.util.List" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
@@ -32,8 +32,12 @@
             </p>
         </div>
         <div class="book_image">
-            <a href="#"><img src="<%=request.getContextPath()%>/ShowImage?index=<%=currentBookList.indexOf(book)%>"
-                             height="250" width="190" alt="Обложка"/></a>
+
+            <a href=""><img src="<%=request.getContextPath()%>/ShowImage?index=<%=currentBookList.indexOf(book)%>"
+                            height="250" width="190" alt="Обложка" id="cover"/></a>
+
+
+
         </div>
         <div class="book_details">
             <br><strong>ISBN:</strong> <%=book.getIsbn()%>

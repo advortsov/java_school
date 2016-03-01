@@ -6,6 +6,7 @@ import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.dao.interfaces.BookDAO;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -18,12 +19,6 @@ public class BookDAOImpl extends GenericDAOImpl<Book, Long> implements BookDAO {
 
     @Override
     public List<Book> findByName(String name) {
-//        Book book = null;
-//        String sql = "SELECT a FROM Book a WHERE a.name = :name";
-//        Query query = JpaUtil.getEntityManager().createQuery(sql).
-//                setParameter("name", name);
-//        book = findOne(query);
-//        return book;
         List<Book> books = null;
         String sql = "SELECT a FROM Book a WHERE a.name = :name";
         Query query = JpaUtil.getEntityManager().createQuery(sql).
@@ -58,12 +53,11 @@ public class BookDAOImpl extends GenericDAOImpl<Book, Long> implements BookDAO {
     }
 
     @Override
-    public void setBookQuantity(long bookId, int orderQuantity) {
+    public void setBookQuantity(long bookId, int orderQuantity, EntityManager em) {
         Book book = this.findByID(Book.class, bookId);
         int actualQuantity = book.getQuantity();
         book.setQuantity(actualQuantity - orderQuantity);
-        merge(book);
+        merge(book, em);
     }
-
 
 }

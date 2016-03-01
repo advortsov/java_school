@@ -118,12 +118,12 @@ public class BookListController extends HttpServlet {
         } else if (req.getParameter("search_string") != null) {
             String searchStr = req.getParameter("search_string");
             SearchType type = SearchType.TITLE;
-            if (req.getParameter("search_option").equals("Автор")) {
+            if (req.getParameter("search_option").equals("AUTHOR")) {
                 type = SearchType.AUTHOR;
             }
 
             if (searchStr != null && !searchStr.trim().equals("")) {//
-                currentBookList = bookManager.getBooksBySearch(searchStr, type);
+                currentBookList = bookManager.getBooksBySearch(searchStr.trim(), type);
             }
         }
 
@@ -230,7 +230,9 @@ public class BookListController extends HttpServlet {
                         break;
                 }
             } else {
-                book.setImage(item.get());
+                if (item.get().length != 0) {
+                    book.setImage(item.get());
+                }
             }
         }
 

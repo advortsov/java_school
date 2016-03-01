@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,6 +34,10 @@ public class CreateOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
+        String status = "pages/cart.jsp#order_popup_ok";
+        String notOk = "pages/cart.jsp#order_popup_not_ok";
+        String notEnoughPagePath = "error/not_enough.html";
 
         List<OrderLine> orderLines = (List<OrderLine>) req.getSession().getAttribute("orderLines");
 
@@ -52,16 +55,13 @@ public class CreateOrderServlet extends HttpServlet {
                     throw new NotEnoughBooksInTheStockException(wantedQuantity);
                 } catch (NotEnoughBooksInTheStockException e) {
                     e.printStackTrace();
-                    //resp.sendRedirect("error/not_enough.jsp");
+                    status = notEnoughPagePath;
                 }
             } else {
                 orderLine.setQuantity(wantedQuantity);
                 orderLine.setOrder(order);
             }
         }
-
-        String status = "pages/cart.jsp#order_popup_ok";
-        String notOk = "pages/cart.jsp#order_popup_not_ok";
 
         try {
 
@@ -81,6 +81,7 @@ public class CreateOrderServlet extends HttpServlet {
             order.setClient((Client) req.getSession().getAttribute("currentClient"));
             order.setDate(new Date(System.currentTimeMillis()));
             OrderManager orderManager = new OrderManagerImpl();
+            System.out.println(order);
             orderManager.saveNewOrder(order);
 
             ClearCartServlet.clearCartAndCookies(req, resp);
