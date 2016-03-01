@@ -5,8 +5,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Онлайн-магазин</title>
-    <%--<link href="../css/style_main.css" rel="stylesheet" type="text/css">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style_main.css" type="text/css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css" type="text/css"/>
 </head>
 <body>
     <%

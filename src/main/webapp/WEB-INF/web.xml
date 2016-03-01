@@ -29,7 +29,6 @@
     </servlet-mapping>
 
 
-
     <servlet>
         <servlet-name>AddToCartServlet</servlet-name>
         <servlet-class>com.tsystems.javaschool.view.servlets.cart.AddToCartServlet</servlet-class>
@@ -166,18 +165,41 @@
         <url-pattern>/editProfile</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>OrdersPerPeriodServlet</servlet-name>
+        <servlet-class>com.tsystems.javaschool.view.servlets.order.OrdersPerPeriodServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrdersPerPeriodServlet</servlet-name>
+        <url-pattern>/getOrdersPerPeriod</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>SetPostEncoding</filter-name>
+        <filter-class>com.tsystems.javaschool.view.servlets.SetPostEncoding</filter-class>
+        <init-param>
+            <param-name>requestEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>SetPostEncoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!--erorrs-->
     <!--<error-page>-->
 
-        <!--<exception-type>com.tsystems.javaschool.dao.exeption.NotRegisteredUserException</exception-type>-->
+    <!--<exception-type>com.tsystems.javaschool.dao.exeption.NotRegisteredUserException</exception-type>-->
 
-        <!--<location>/error/not_registered_user.html</location>-->
+    <!--<location>/error/not_registered_user.html</location>-->
 
     <!--</error-page>-->
 
 
-<error-page>
+    <error-page>
 
         <exception-type>com.tsystems.javaschool.dao.exeption.NotRegisteredUserException</exception-type>
 
@@ -189,7 +211,6 @@
         <error-code>500</error-code>
         <location>/error/500.html</location>
     </error-page>
-
 
 
     <security-constraint>
@@ -220,7 +241,6 @@
     <security-role>
         <role-name>admin</role-name>
     </security-role>
-
 
 
     <login-config>

@@ -1,29 +1,14 @@
-<%@ page import="com.tsystems.javaschool.dao.entity.Client" %>
-<%@ page import="com.tsystems.javaschool.view.controllers.ClientController" %>
 <%@ page import="com.tsystems.javaschool.dao.entity.Order" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.tsystems.javaschool.services.util.Managers" %>
 <%@ page pageEncoding="UTF-8" %>
+
+
+<%--<fmt:formatDate pattern="MM/dd/yyyy" value="${date}" var="currDate"/>--%>
+
 <div class="edit_penal">
 
-    <br><strong>Выручка за период:</strong>
+    <br><strong>Выручка:</strong>
 
-        <%
-        Client currClient = (Client) session.getAttribute("currentClient");
-        if (currClient == null || currClient.getName().equals("Guest")) {
-
-            String currClientName;
-
-            if (request.getUserPrincipal().getName().toString() != null) {
-                currClientName = request.getUserPrincipal().getName().toString();
-            } else {
-                currClientName = (String) session.getAttribute("username");
-            }
-            currClient = ClientController.actualizeClient(request, currClientName);
-        }
-
-        List<Order> ordersPerPeriod  = Managers.getAdminManager().getOrdersPerPeriod()
-    %>
 
     <p>&nbsp;</p>
 
@@ -31,22 +16,8 @@
 
         <div class="edit_book_info">
             <div>
-                <style type="text/css">
-                    body {
-                        font-size: 13px;
-                    }
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css" type="text/css"/>
 
-                    label {
-                        float: left;
-                        padding-right: 10px;
-                    }
-
-                    .field {
-                        clear: both;
-                        text-align: right;
-                        line-height: 25px;
-                    }
-                </style>
                 <div class="field">
 
                     <label for="start_date">С:</label><input name="start_date"
@@ -56,6 +27,7 @@
                 </div>
 
                 <div class="field">
+
 
                     <label for="end_date">По:</label><input name="end_date"
                                                             id="end_date" type="date"
@@ -67,3 +39,78 @@
                 <p><input type="submit" value="Показать"></p>
 
             </div>
+        </div>
+    </form>
+
+    <p>&nbsp;</p>
+
+    <div class="admin_penal">
+        <%
+            List<Order> ordersPerPeriod = (List<Order>) session.getAttribute("ordersPerPeriod");
+            int totalSumm = 0;
+            if (ordersPerPeriod != null && !ordersPerPeriod.isEmpty()) {
+        %>
+
+        <br><strong>Заказы</strong>
+
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/order_table.css" type="text/css"/>
+
+        <table border="1">
+            <tr>
+                <td>id</td>
+                <td>Дата</td>
+                <td>Имя клиента</td>
+                <td>Статус заказа</td>
+                <td>Способ доставки</td>
+                <td>Способ оплаты</td>
+                <td>Статус оплаты</td>
+                <td>Сумма заказа</td>
+            </tr>
+            <%
+                for (Order order : ordersPerPeriod) {
+                    int currOrderSumm = orderManager.orderTotalSumm(order);
+                    totalSumm += currOrderSumm;
+            %>
+            <tr>
+                <td><%=order.getId()%>
+                </td>
+                <td><%=order.getDate()%>
+                </td>
+                <td><%=order.getClient().getName()%>
+                </td>
+                <td><%=order.getOrderStatus()%>
+                </td>
+                <td><%=order.getShippingType()%>
+                </td>
+                <td><%=order.getPaymentType()%>
+                </td>
+                <td><%=order.getPaymentStatus()%>
+                </td>
+                <td><%=currOrderSumm%> руб.</td>
+                <td>
+                    <a href="edit_order.jsp?order_id=<%=order.getId()%>">
+                        <img src="../images/edit.png" alt="Редактировать" name="edit"/></a>
+                </td>
+
+            </tr>
+            <%
+                }
+            %>
+        </table>
+
+        <%
+        } else {
+        %>
+        <br><strong>В базе нет заказов за выбранный период</strong>
+        <%
+            }
+        %>
+
+        <br><strong>Выручка за период: <%=totalSumm %> руб.
+    </strong>
+
+
+    </div>
+
+</div>
+

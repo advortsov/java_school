@@ -38,26 +38,8 @@
 
         <div class="edit_book_info">
             <div>
-                <style type="text/css">
-                    body {
-                        font-size: 13px;
-                    }
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css" type="text/css"/>
 
-                    label {
-                        float: left;
-                        padding-right: 10px;
-                    }
-
-                    .field {
-                        clear: both;
-                        text-align: right;
-                        line-height: 25px;
-                    }
-
-                    .main {
-                        float: left;
-                    }
-                </style>
                 <div class="field">
                     <label for="client_name">Имя:</label><input name="client_name"
                                                                 id="client_name" type="text"
@@ -99,7 +81,6 @@
                     <label for="client_email">Почта:</label><input name="client_email"
                                                                    id="client_email" type="email"
                                                                    value="<%=currClient.getEmail()%>"
-                                                                   pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
                                                                    required
                                                                    title="Введите валидный e-mail">
                 </div>
@@ -123,35 +104,7 @@
         %>
 
         <br><strong>Ваши заказы</strong>
-
-        <style>
-            table {
-                font-size: 10px;
-                border-collapse: collapse;
-                text-align: center;
-            }
-
-            th, td:first-child {
-                /*background: white;*/
-                color: black;
-                padding: 5px 10px;
-            }
-
-            th, td {
-                border-style: solid;
-                border-width: 0 1px 1px 0;
-                border-color: black;
-            }
-
-            td {
-                background: #D8E6F3;
-            }
-
-            th:first-child, td:first-child {
-                text-align: left;
-            }
-        </style>
-
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/order_table.css" type="text/css"/>
         <table>
             <%--<table border="1">--%>
             <tr>

@@ -1,8 +1,8 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Client" %>
 <%@ page import="com.tsystems.javaschool.dao.entity.Order" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.tsystems.javaschool.services.interfaces.OrderManager" %>
 <%@ page import="com.tsystems.javaschool.services.impl.OrderManagerImpl" %>
+<%@ page import="com.tsystems.javaschool.services.interfaces.OrderManager" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -204,7 +204,10 @@
     </div>
 
 
-    <%--tab1 - Клиенты--%>
+    <%--tab1 - top10--%>
     <%@include file="../WEB-INF/jspf/adminf/top10.jspf" %>
+
+    <%--tab1 - Proceeds--%>
+    <%@include file="../WEB-INF/jspf/adminf/proceeds_per_period.jspf" %>
 
 </div>

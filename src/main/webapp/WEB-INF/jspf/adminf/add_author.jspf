@@ -7,26 +7,7 @@
     <form name="genre_add_form" action="/addAuthor" method="post">
         <div class="edit_book_info">
             <div>
-                <style type="text/css">
-                    body {
-                        font-size: 13px;
-                    }
-
-                    label {
-                        float: left;
-                        padding-right: 10px;
-                    }
-
-                    .field {
-                        clear: both;
-                        text-align: right;
-                        line-height: 25px;
-                    }
-
-                    .main {
-                        float: left;
-                    }
-                </style>
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css" type="text/css"/>
                 <div class="field">
                     <label for="author_name">Имя автора:</label><input name="author_name" type="text" id="author_name">
                 </div>
