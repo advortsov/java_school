@@ -1,7 +1,7 @@
 package com.tsystems.javaschool.services.interfaces;
 
-import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.dao.entity.Publisher;
+import com.tsystems.javaschool.services.exception.DuplicateException;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface PublisherManager {
 
     public List<Publisher> loadAllPublishers();
 
-    public void saveNewPublisher(Publisher publisher);
+    public void saveNewPublisher(Publisher publisher) throws DuplicateException;
 
     public Publisher findPublisherById(long id);
 

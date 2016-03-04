@@ -10,6 +10,6 @@ import com.tsystems.javaschool.dao.exeption.NotRegisteredUserException;
  * @since 09.02.2016
  */
 public interface ClientDAO extends GenericDAO<Client, Long> {
-    public Client findByUserName(String name) throws NotRegisteredUserException;
+    Client findByUserName(String name) throws NotRegisteredUserException;
 
 }

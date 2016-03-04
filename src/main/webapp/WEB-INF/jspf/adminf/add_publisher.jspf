@@ -9,7 +9,7 @@
                 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css" type="text/css"/>
 
                 <div class="field">
-                    <label for="publisher_name">Имя автора:</label><input name="publisher_name" type="text" id="publisher_name">
+                    <label for="publisher_name">Имя издателя:</label><input name="publisher_name" type="text" id="publisher_name">
                 </div>
                 <input type="hidden" name="action" value="add"></p>
                 <p><input type="submit" value="Сохранить"></p>

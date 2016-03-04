@@ -21,11 +21,8 @@ public class SetOrderStatusServlet extends HttpServlet {
         Order orderForEdit = Managers.getOrderManager().
                 findOrderById(Long.parseLong(req.getParameter("order_id")));
         OrderStatus newOrderStatus = OrderStatus.valueOf(req.getParameter("order_status"));
-
         orderForEdit.setOrderStatus(newOrderStatus);
-
         Managers.getOrderManager().updateOrder(orderForEdit);
-
-        resp.sendRedirect("admin_pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp#tab5");
     }
 }

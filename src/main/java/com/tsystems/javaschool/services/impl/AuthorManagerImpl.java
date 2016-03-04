@@ -1,17 +1,15 @@
 package com.tsystems.javaschool.services.impl;
 
 import com.tsystems.javaschool.dao.entity.Author;
-import com.tsystems.javaschool.dao.impl.AuthorDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.AuthorDAO;
 import com.tsystems.javaschool.dao.util.Daos;
 import com.tsystems.javaschool.dao.util.JpaUtil;
+import com.tsystems.javaschool.services.exception.DuplicateException;
 import com.tsystems.javaschool.services.interfaces.AuthorManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Alexander Dvortsov
@@ -33,7 +31,7 @@ public class AuthorManagerImpl implements AuthorManager {
     }
 
     @Override
-    public void saveNewAuthor(Author author) {
+    public void saveNewAuthor(Author author) throws DuplicateException {
         EntityManager em = null;
         try {
             em = JpaUtil.beginTransaction();
@@ -42,6 +40,7 @@ public class AuthorManagerImpl implements AuthorManager {
         } catch (PersistenceException ex) {
             ex.printStackTrace();
             JpaUtil.rollbackTransaction(em);
+            throw new DuplicateException();
         }
     }
 
@@ -73,7 +72,6 @@ public class AuthorManagerImpl implements AuthorManager {
             authorDAO.merge(author, em);
             JpaUtil.commitTransaction(em);
         } catch (PersistenceException ex) {
-            Logger.getLogger(BookManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
             JpaUtil.rollbackTransaction(em);
         }

@@ -51,14 +51,16 @@ public class ShowImage extends HttpServlet {
         response.setContentType("image/jpeg");
 
         try (OutputStream out = response.getOutputStream()) {
-            int index = Integer.valueOf(request.getParameter("index"));
+            Integer index = Integer.valueOf(request.getParameter("index"));
             List<Book> list = (ArrayList<Book>) request.getSession(false).getAttribute("currentBookList");
-            Book book = list.get(index);
-            if (book.getImage().length != 0) {
-                response.setContentLength(book.getImage().length);
-                out.write(book.getImage());
-            } else {
-                out.write(getDefaultImage());
+            if (index != null && list != null) {
+                Book book = list.get(index);
+                if (book.getImage().length != 0) {
+                    response.setContentLength(book.getImage().length);
+                    out.write(book.getImage());
+                } else {
+                    out.write(getDefaultImage());
+                }
             }
         } catch (Exception ex) {
             ex.printStackTrace();

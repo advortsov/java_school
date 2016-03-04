@@ -33,8 +33,12 @@
                     border-color: black;
                 }
 
-                td {
-                    background: #D8E6F3;
+                /*td {*/
+                    /*background: #D8E6F3;*/
+                /*}*/
+
+                tr:nth-child(even) {
+                    background-color: #f2f2f2
                 }
 
                 th:first-child, td:first-child {
@@ -121,9 +125,9 @@
                     border-color: black;
                 }
 
-                td {
-                    background: #D8E6F3;
-                }
+                /*td {*/
+                    /*background: #D8E6F3;*/
+                /*}*/
 
                 th:first-child, td:first-child {
                     text-align: left;

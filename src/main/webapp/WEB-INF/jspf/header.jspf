@@ -3,6 +3,7 @@
 
 <html>
 <head>
+    <script src="/js/jquery-2.2.1.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Онлайн-магазин</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style_main.css" type="text/css"/>
@@ -32,7 +33,7 @@
 
     <div class="header">
         <div class="logo">
-            <a href="main.jsp"><img src="../images/lib.png" alt="Логотип" name="logo"/></a>
+            <a><img src="../images/lib.png" alt="Логотип" name="logo"/></a>
 
         </div>
         <div class="descr">

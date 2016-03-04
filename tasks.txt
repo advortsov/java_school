@@ -25,3 +25,9 @@ JOIN book ON order_line.book_id = book.id
 GROUP BY clientId, buy.id
 ORDER BY total DESC
 #LIMIT 1
+=================================================================================
+
+разноцветные строки
+ссылки в отчете
+тесты
+ajax

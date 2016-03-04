@@ -5,7 +5,6 @@ import com.tsystems.javaschool.dao.entity.Client;
 import com.tsystems.javaschool.dao.entity.OrderLine;
 import com.tsystems.javaschool.services.ShoppingCart;
 import com.tsystems.javaschool.services.impl.BookManagerImpl;
-import com.tsystems.javaschool.services.impl.ShoppingCartManagerImpl;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 import com.tsystems.javaschool.services.interfaces.ShoppingCartManager;
 import com.tsystems.javaschool.services.util.Managers;
@@ -51,26 +50,22 @@ public class AddToCartServlet extends HttpServlet {
 
         int previousQuantity = 0;
         if (orderLineWithThisBook == null) {
-            orderLines.add(new OrderLine(1, newBook)); //одну книгу добавляем может сетом реализовать? или мапой?
+            orderLines.add(new OrderLine(1, newBook));
         } else {
-                previousQuantity = orderLineWithThisBook.getQuantity();
-        for (OrderLine orderLine : orderLines) {
-            if (orderLine.getBook().equals(newBook)) {
-                orderLine.setQuantity(++previousQuantity);
+            previousQuantity = orderLineWithThisBook.getQuantity();
+            for (OrderLine orderLine : orderLines) {
+                if (orderLine.getBook().equals(newBook)) {
+                    orderLine.setQuantity(++previousQuantity);
+                }
             }
         }
-    }
 
-    // при каждом клике на добавить в корзину затираются старые и создаются новые куки:
+        // при каждом клике на добавить в корзину затираются старые и создаются новые куки:
+        cart.setItems(orderLines);
+        shoppingCartManager.setShoppingCart(cart);
 
-    // возможно здесь придется еще и юзер нейм добавлять, для разграничения по ролям
-//        <h5>Добро пожаловать, <%= request.getUserPrincipal().getName().toString() %>!</h5>
-
-    cart.setItems(orderLines);
-    shoppingCartManager.setShoppingCart(cart);
-
-    CartController.writeBooksIntoCookie(req, resp,
-            newBook.getId(), previousQuantity, shoppingCartManager);
+        CartController.writeBooksIntoCookie(req, resp,
+                newBook.getId(), previousQuantity);
 
         resp.sendRedirect("pages/books.jsp?genre=all");
 

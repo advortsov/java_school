@@ -13,6 +13,7 @@ import com.tsystems.javaschool.services.impl.BookManagerImpl;
 import com.tsystems.javaschool.services.impl.OrderManagerImpl;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 import com.tsystems.javaschool.services.interfaces.OrderManager;
+import com.tsystems.javaschool.services.util.Managers;
 import com.tsystems.javaschool.view.servlets.cart.ClearCartServlet;
 
 import javax.servlet.ServletException;
@@ -80,7 +81,7 @@ public class CreateOrderServlet extends HttpServlet {
             order.setOrderStatus(OrderStatus.WAITING_FOR_PAYMENT); // потому что заказ только что создан
             order.setClient((Client) req.getSession().getAttribute("currentClient"));
             order.setDate(new Date(System.currentTimeMillis()));
-            OrderManager orderManager = new OrderManagerImpl();
+            OrderManager orderManager = Managers.getOrderManager();
             System.out.println(order);
             orderManager.saveNewOrder(order);
 

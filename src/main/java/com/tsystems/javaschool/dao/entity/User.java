@@ -1,46 +1,27 @@
 package com.tsystems.javaschool.dao.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
  * @author Alexander Dvortsov
  * @version 1.0
  * @since 19.02.2016
- *
- *
- *
- create table users (
-user_name         varchar(15) not null primary key,
-user_pass         varchar(15) not null
-);
-
-create table user_roles (
-user_name         varchar(15) not null,
-role_name         varchar(15) not null,
-primary key (user_name, role_name)
-);
  */
 
 @Entity
-@Table(name="users")
-public class User implements Serializable{
+@Table(name = "users")
+public class User implements Serializable {
 
-//    @Id
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name="client_id")
-//    private Client client;
     @Id
-    @Column(name="user_name", length = 15, unique = true, nullable = false)
+    @Column(name = "user_name", length = 15, unique = true, nullable = false)
     private String userName;
 
-    @Column(name="user_pass", length = 15, nullable = false)
+    @Column(name = "user_pass", length = 15, nullable = false)
     private String userPass;
-
-    //    @OneToOne(cascade = CascadeType.DETACH)
-//    @JoinColumn(name="genre_id") // this column inda book table
-//    private Genre genre;
-
 
     public String getUserName() {
         return userName;
@@ -64,5 +45,20 @@ public class User implements Serializable{
                 "user_name='" + userName + '\'' +
                 ", userPass='" + userPass + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return userName.equals(user.userName);
+    }
+
+    @Override
+    public int hashCode() {
+        return userName.hashCode();
     }
 }

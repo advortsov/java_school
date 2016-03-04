@@ -2,11 +2,12 @@ package com.tsystems.javaschool.services.impl;
 
 
 import com.tsystems.javaschool.dao.entity.Genre;
-import com.tsystems.javaschool.dao.impl.GenreDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.GenreDAO;
 import com.tsystems.javaschool.dao.util.Daos;
 import com.tsystems.javaschool.dao.util.JpaUtil;
+import com.tsystems.javaschool.services.exception.DuplicateException;
 import com.tsystems.javaschool.services.interfaces.GenreManager;
+import org.hibernate.exception.ConstraintViolationException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
@@ -34,7 +35,7 @@ public class GenreManagerImpl implements GenreManager {
     }
 
     @Override
-    public void saveNewGenre(Genre genre) {
+    public void saveNewGenre(Genre genre) throws DuplicateException {
         EntityManager em = null;
         try {
             em = JpaUtil.beginTransaction();
@@ -43,6 +44,7 @@ public class GenreManagerImpl implements GenreManager {
         } catch (PersistenceException ex) {
             ex.printStackTrace();
             JpaUtil.rollbackTransaction(em);
+            throw new DuplicateException();
         }
     }
 
@@ -54,7 +56,6 @@ public class GenreManagerImpl implements GenreManager {
             genreDAO.merge(genre, em);
             JpaUtil.commitTransaction(em);
         } catch (PersistenceException ex) {
-            Logger.getLogger(BookManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
             JpaUtil.rollbackTransaction(em);
         }
@@ -62,17 +63,7 @@ public class GenreManagerImpl implements GenreManager {
 
     @Override
     public Genre findGenreById(long id) {
-//        Genre genre = null;
-//        try {
-//            JpaUtil.beginTransaction();
-//            genre = genreDAO.findByID(Genre.class, id);
-//            JpaUtil.commitTransaction();
-//        } catch (PersistenceException ex) {
-//            ex.printStackTrace();
-//        }
-//        return genre;
         return genreDAO.findByID(Genre.class, id);
-
     }
 
     @Override
@@ -87,6 +78,11 @@ public class GenreManagerImpl implements GenreManager {
             ex.printStackTrace();
             JpaUtil.rollbackTransaction(em);
         }
+    }
+
+    @Override
+    public Genre findGenreByName(String name) {
+        return genreDAO.findByName(name);
     }
 
 }

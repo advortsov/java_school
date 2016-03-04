@@ -26,7 +26,6 @@ public class RemoveOrderLineServlet extends HttpServlet {
         ShoppingCartManager shoppingCartManager
                 = (ShoppingCartManager) req.getSession().getAttribute("cartManager");
         shoppingCartManager.removeLine(book);
-
         CartController.deleteOrderLineCookie(book.getId(), req, resp);
 
         req.setAttribute("cartManager", shoppingCartManager);

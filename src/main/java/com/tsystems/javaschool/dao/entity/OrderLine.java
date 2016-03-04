@@ -7,13 +7,10 @@ import javax.persistence.*;
  * @author Alexander Dvortsov
  * @version 1.0
  * @since 09.02.2016
- * <p>
- * POJO
  */
 
 @Entity
 @Table(name = "order_line")//
-//@Embeddable
 @NamedQuery(name = "OrderLine.getAll", query = "SELECT b from OrderLine b")
 public class OrderLine {
 
@@ -21,8 +18,7 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    //@ManyToOne(cascade = CascadeType.DETACH) // много линий в одном заказе было так до 20
-    @ManyToOne(cascade = CascadeType.ALL) // много линий в одном заказе
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
@@ -71,6 +67,30 @@ public class OrderLine {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderLine orderLine = (OrderLine) o;
+
+        if (id != orderLine.id) return false;
+        if (quantity != orderLine.quantity) return false;
+        if (!order.equals(orderLine.order)) return false;
+        return book.equals(orderLine.book);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + order.hashCode();
+        result = 31 * result + quantity;
+        result = 31 * result + book.hashCode();
+        return result;
     }
 
     @Override

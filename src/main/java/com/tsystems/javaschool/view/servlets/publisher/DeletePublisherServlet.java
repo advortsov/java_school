@@ -1,8 +1,8 @@
 package com.tsystems.javaschool.view.servlets.publisher;
 
 import com.tsystems.javaschool.dao.entity.Publisher;
-import com.tsystems.javaschool.services.impl.PublisherManagerImpl;
 import com.tsystems.javaschool.services.interfaces.PublisherManager;
+import com.tsystems.javaschool.services.util.Managers;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,9 +18,9 @@ import java.io.IOException;
 public class DeletePublisherServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PublisherManager publisherManager = new PublisherManagerImpl();
+        PublisherManager publisherManager = Managers.getPublisherManager();
         Publisher publisherForDel = publisherManager.findByPublisherName(req.getParameter("publisher_name"));
         publisherManager.deletePublisher(publisherForDel);
-        resp.sendRedirect("admin_pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp#tab3");
     }
 }

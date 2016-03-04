@@ -9,14 +9,14 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="publisher")
+@Table(name = "publisher")
 public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="name", unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     public Publisher() {
@@ -39,8 +39,26 @@ public class Publisher {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Publisher publisher = (Publisher) o;
+
+        if (id != publisher.id) return false;
+        return name.equals(publisher.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return name;
     }
-
 }

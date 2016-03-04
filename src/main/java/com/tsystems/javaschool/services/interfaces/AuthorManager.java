@@ -1,12 +1,8 @@
 package com.tsystems.javaschool.services.interfaces;
 
 import com.tsystems.javaschool.dao.entity.Author;
-import com.tsystems.javaschool.dao.entity.Book;
-import com.tsystems.javaschool.dao.entity.Client;
-import com.tsystems.javaschool.dao.entity.Order;
+import com.tsystems.javaschool.services.exception.DuplicateException;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +15,7 @@ public interface AuthorManager {
 
     public List<Author> loadAllAuthors();
 
-    public void saveNewAuthor(Author author);
+    public void saveNewAuthor(Author author) throws DuplicateException;
 
     public Author findAuthorById(long id);
 

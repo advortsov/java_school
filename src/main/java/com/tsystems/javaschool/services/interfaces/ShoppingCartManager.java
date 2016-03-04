@@ -2,7 +2,6 @@ package com.tsystems.javaschool.services.interfaces;
 
 
 import com.tsystems.javaschool.dao.entity.Book;
-import com.tsystems.javaschool.dao.entity.Order;
 import com.tsystems.javaschool.services.ShoppingCart;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,21 +12,15 @@ import javax.servlet.http.HttpServletRequest;
  * @since 09.02.2016
  */
 public interface ShoppingCartManager {
-    public void addBook(Book book, int amount);
+    void addBook(Book book, int amount);
 
-    public void setBookAmount(Book book, int amount);
+    void setBookAmount(Book book, int amount);
 
-    public void removeLine(Book book);
+    void removeLine(Book book);
 
-    public void clearCart();
+    void clearCart();
 
-    public Order createOrder();
-
-    public boolean isEnoughBooksInStock(int quantity);
-
-    public void fillUpFromCookies(HttpServletRequest request);
-
-    public void deleteExistingCookies(long id, HttpServletRequest req);
+    boolean isEnoughBooksInStock(int quantity);
 
     ShoppingCart getShoppingCart();
 

@@ -1,10 +1,15 @@
 package com.tsystems.javaschool.view.controllers;
 
-import com.tsystems.javaschool.services.interfaces.ShoppingCartManager;
+import com.tsystems.javaschool.dao.entity.OrderLine;
+import com.tsystems.javaschool.services.ShoppingCart;
+import com.tsystems.javaschool.services.interfaces.BookManager;
+import com.tsystems.javaschool.services.util.Managers;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Alexander Dvortsov
@@ -14,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 public class CartController {
 
     public static void writeBooksIntoCookie(HttpServletRequest req, HttpServletResponse resp,
-                                            long bookId, int previousQuantity, ShoppingCartManager shoppingCartManager) {
-        shoppingCartManager.deleteExistingCookies(bookId, req);
+                                            long bookId, int previousQuantity) {
+        deleteExistingCookies(bookId, req);
         Cookie cookie = new Cookie(String.valueOf(bookId),
                 req.getSession().getAttribute("name_for_greeting") + "dlm" + bookId + "dlm" + ++previousQuantity);
         cookie.setMaxAge(60 * 60 * 24 * 30); // for working with browser closing
@@ -47,13 +52,61 @@ public class CartController {
             String value = cookie.getValue();
             if (value.contains("dlm")) {
                 String[] cookieContent = value.split("dlm");
-                if (cookieContent[0].equals(cookieOwner) && id == Long.parseLong(cookieContent[1])) {
+                if ((cookieContent[0].equals(cookieOwner) || cookieContent[0].equals("Guest"))
+                        && id == Long.parseLong(cookieContent[1])) {
                     cookie.setMaxAge(0);
                     cookie.setPath("/");
                     resp.addCookie(cookie);
                 }
             }
         }
+    }
+
+    public static void deleteExistingCookies(long bookId, HttpServletRequest req) {
+        // удаляем куки с таким же айди, чтобы перезаписать количество
+        Cookie[] cookies = req.getCookies();
+        for (Cookie cookie : cookies) {
+            String value = cookie.getValue();
+            if (value.contains("qty")) {
+                String[] arr = value.split("qty");
+                long id = Long.parseLong(arr[0]);
+                if (id == bookId) {
+                    cookie.setMaxAge(0);
+                }
+            }
+        }
+    }
+
+    public static void fillUpFromCookies(HttpServletRequest request, ShoppingCart cart) {
+        BookManager bookManager = Managers.getBookManager();
+        Cookie[] cookies = request.getCookies();
+
+        List<OrderLine> newItems = new ArrayList<>();
+        // заполняем по куки корзину
+
+        if (cookies != null) {
+            String cookieOwner = (String) request.getSession().getAttribute("name_for_greeting");
+            long id;
+            int quantity;
+            for (Cookie cookie : cookies) {
+                String value = cookie.getValue();
+                if (value.contains("dlm")) {
+                    String[] cookieContent = value.split("dlm");
+                    if (cookieContent[0].equals(cookieOwner)) {
+                        id = Long.parseLong(cookieContent[1]);
+                        quantity = Integer.parseInt(cookieContent[2]);
+                        newItems.add(new OrderLine(quantity, bookManager.findBookById(id)));
+
+                    }
+
+                }
+            }
+        }
+
+        if (!newItems.isEmpty()) {
+            cart.setItems(newItems);
+        }
+
     }
 
 

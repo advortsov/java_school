@@ -1,13 +1,11 @@
 package com.tsystems.javaschool.dao.entity;
 
-import com.sun.istack.internal.NotNull;
 import com.tsystems.javaschool.services.enums.OrderStatus;
 import com.tsystems.javaschool.services.enums.PaymentStatus;
 import com.tsystems.javaschool.services.enums.PaymentType;
 import com.tsystems.javaschool.services.enums.ShippingType;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -15,24 +13,10 @@ import java.util.List;
  * @author Alexander Dvortsov
  * @version 1.0
  * @since 09.02.2016
- *
- *
-
- * org.hibernate.MappingException:
- * Could not determine type for:
- * com.tsystems.javaschool.dao.entity.Client, at table: order, for columns: [org.hibernate.mapping.Column(client)]
- *
- *
- *  com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException:
- *  You have an error in your SQL syntax; check the manual that corresponds to your MySQL
- *  server version for the right syntax to use near 'order (id bigint not null auto_increment, date datetime, orderStatus varchar(255' at line 1
-
  */
 
-
 @Entity
-@Table(name="buy")
-//@NamedQuery(name = "Order.getAll", query = "SELECT b from Order b")
+@Table(name = "buy")
 public class Order {
 
     @Id
@@ -40,7 +24,7 @@ public class Order {
     private long id;
 
     @ManyToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name="client_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
     @Column(name = "orderStatus", nullable = false)
@@ -63,7 +47,8 @@ public class Order {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL) // добавил 1 mart fetch = FetchType.EAGER
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL)
+// добавил 1 mart fetch = FetchType.EAGER
     private List<OrderLine> orderLines;
 
     public Order() {
@@ -142,10 +127,8 @@ public class Order {
         this.orderLines = orderLines;
     }
 
-
     @Override
     public String toString() {
-
         return "Order{" +
                 ", orderStatus=" + orderStatus +
                 ", paymentStatus=" + paymentStatus +
@@ -154,5 +137,33 @@ public class Order {
                 ", date=" + date +
                 ", orderLines=" + orderLines +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        if (id != order.id) return false;
+        if (!client.equals(order.client)) return false;
+        if (orderStatus != order.orderStatus) return false;
+        if (paymentStatus != order.paymentStatus) return false;
+        if (paymentType != order.paymentType) return false;
+        if (shippingType != order.shippingType) return false;
+        return date.equals(order.date);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + client.hashCode();
+        result = 31 * result + orderStatus.hashCode();
+        result = 31 * result + paymentStatus.hashCode();
+        result = 31 * result + paymentType.hashCode();
+        result = 31 * result + shippingType.hashCode();
+        result = 31 * result + date.hashCode();
+        return result;
     }
 }

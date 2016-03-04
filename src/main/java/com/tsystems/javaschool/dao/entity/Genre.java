@@ -2,7 +2,6 @@ package com.tsystems.javaschool.dao.entity;
 
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * @author Alexander Dvortsov
@@ -11,15 +10,14 @@ import java.util.List;
  */
 
 @Entity
-@Table(name="genre")//
-@NamedQuery(name = "Genre.getAll", query = "SELECT g from Genre g")
+@Table(name = "genre")//
 public class Genre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="name", unique = true, nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     public Genre() {
@@ -39,6 +37,25 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Genre genre = (Genre) o;
+
+        if (id != genre.id) return false;
+        return name.equals(genre.name);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + name.hashCode();
+        return result;
     }
 
     @Override

@@ -36,11 +36,6 @@ public class Daos {
         return clientDAO;
     }
 
-    public static GenericDAO getGenericDAO() {
-        if (genericDAO == null) genericDAO = new GenreDAOImpl();
-        return genericDAO;
-    }
-
     public static GenreDAO getGenreDAO() {
         if (genreDAO == null) genreDAO = new GenreDAOImpl();
         return genreDAO;

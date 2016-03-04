@@ -3,6 +3,7 @@ package com.tsystems.javaschool.view.servlets.author;
 import com.tsystems.javaschool.dao.entity.Author;
 import com.tsystems.javaschool.services.impl.AuthorManagerImpl;
 import com.tsystems.javaschool.services.interfaces.AuthorManager;
+import com.tsystems.javaschool.services.util.Managers;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,9 +21,9 @@ public class DeleteAuthorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
 
-        AuthorManager authorManager = new AuthorManagerImpl();
+        AuthorManager authorManager = Managers.getAuthorManager();
         Author authorForDel = authorManager.findByAuthorName(req.getParameter("author_name"));
         authorManager.deleteAuthor(authorForDel);
-        resp.sendRedirect("admin_pages/admin.jsp");
+        resp.sendRedirect("admin_pages/admin.jsp#tab4");
     }
 }

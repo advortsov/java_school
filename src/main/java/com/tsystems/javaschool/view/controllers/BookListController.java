@@ -2,6 +2,7 @@ package com.tsystems.javaschool.view.controllers;
 
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.services.enums.SearchType;
+import com.tsystems.javaschool.services.exception.DuplicateException;
 import com.tsystems.javaschool.services.impl.AuthorManagerImpl;
 import com.tsystems.javaschool.services.impl.BookManagerImpl;
 import com.tsystems.javaschool.services.impl.GenreManagerImpl;
@@ -10,12 +11,14 @@ import com.tsystems.javaschool.services.interfaces.AuthorManager;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 import com.tsystems.javaschool.services.interfaces.GenreManager;
 import com.tsystems.javaschool.services.interfaces.PublisherManager;
+import com.tsystems.javaschool.services.util.Managers;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import javax.persistence.NoResultException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,15 +35,18 @@ import java.util.List;
  */
 public class BookListController extends HttpServlet {
 
+    private String status = "/pages/books.jsp";
+    private String notOk = "/error/duplicate.jsp";
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        resp.setContentType ("text/html; charset=UTF-8");
+        resp.setContentType("text/html; charset=UTF-8");
 
         List<Book> currBookList = getByParam(req);
         req.getSession().setAttribute("currentBookList", currBookList);
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/pages/books.jsp");
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(status);
         requestDispatcher.forward(req, resp);
     }
 
@@ -48,7 +54,7 @@ public class BookListController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        resp.setContentType ("text/html; charset=UTF-8");
+        resp.setContentType("text/html; charset=UTF-8");
 
         String action = null;
 
@@ -75,26 +81,24 @@ public class BookListController extends HttpServlet {
         }
         // --------------------- cause its encrypt data form
 
-
         if (action != null) {
-            switch (action) {
-                case "add": {
-                    addBook(items);
-                    break;
+            try {
+                switch (action) {
+                    case "add": {
+                        addBook(items);
+                        break;
+                    }
+                    case "edit": {
+                        editBook(req, items);
+                        break;
+                    }
                 }
-                case "edit": {
-                    editBook(req, items);
-                    break;
-                }
-                case "delete": {
-                    //deleteBook(req);
-                    break;
-                }
+            } catch (DuplicateException e) {
+                throw new IOException();
             }
         }
 
-
-        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/pages/books.jsp");
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher(status);
         requestDispatcher.forward(req, resp);
     }
 
@@ -131,15 +135,14 @@ public class BookListController extends HttpServlet {
         return currentBookList;
     }
 
-    private void addBook(List<FileItem> items) {
+    private void addBook(List<FileItem> items) throws DuplicateException {
 
         Book book = new Book();
 
-        PublisherManager publisherManager = new PublisherManagerImpl();
-        AuthorManager authorManager = new AuthorManagerImpl();
-        GenreManager genreManager = new GenreManagerImpl();
-
-        BookManager bookManager = new BookManagerImpl();
+        PublisherManager publisherManager = Managers.getPublisherManager();
+        AuthorManager authorManager = Managers.getAuthorManager();
+        GenreManager genreManager = Managers.getGenreManager();
+        BookManager bookManager = Managers.getBookManager();
 
         for (FileItem item : items) {
             if (item.isFormField()) {
@@ -155,6 +158,7 @@ public class BookListController extends HttpServlet {
                         break;
                     case "book_isbn":
                         if (value.length() == 0) throw new IllegalArgumentException();
+                        verifyIsbnUniqueness(value, book);
                         book.setIsbn(value);
                         break;
                     case "book_publisher":
@@ -181,10 +185,14 @@ public class BookListController extends HttpServlet {
             }
         }
 
-        bookManager.saveNewBook(book);
+        try {
+            bookManager.saveNewBook(book);
+        } catch (DuplicateException e) {
+            status = notOk;
+        }
     }
 
-    private void editBook(HttpServletRequest request, List<FileItem> items) {
+    private void editBook(HttpServletRequest request, List<FileItem> items) throws DuplicateException {
         try {
             request.setCharacterEncoding("UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -193,11 +201,10 @@ public class BookListController extends HttpServlet {
 
         Book book = (Book) request.getSession().getAttribute("currentBook");
 
-        PublisherManager publisherManager = new PublisherManagerImpl();
-        AuthorManager authorManager = new AuthorManagerImpl();
-        GenreManager genreManager = new GenreManagerImpl();
-
-        BookManager bookManager = new BookManagerImpl();
+        PublisherManager publisherManager = Managers.getPublisherManager();
+        AuthorManager authorManager = Managers.getAuthorManager();
+        GenreManager genreManager = Managers.getGenreManager();
+        BookManager bookManager = Managers.getBookManager();
 
         for (FileItem item : items) {
             if (item.isFormField()) {
@@ -211,6 +218,7 @@ public class BookListController extends HttpServlet {
                         book.setGenre(genreManager.findByGenreName(value));
                         break;
                     case "book_isbn":
+                        verifyIsbnUniqueness(value, book);
                         book.setIsbn(value);
                         break;
                     case "book_publisher":
@@ -228,6 +236,9 @@ public class BookListController extends HttpServlet {
                     case "book_price":
                         book.setPrice(Integer.parseInt(value));
                         break;
+                    case "book_count":
+                        book.setQuantity(Integer.parseInt(value));
+                        break;
                 }
             } else {
                 if (item.get().length != 0) {
@@ -235,9 +246,23 @@ public class BookListController extends HttpServlet {
                 }
             }
         }
+        try {
+            bookManager.updateBook(book);
+        } catch (DuplicateException e) {
+            status = notOk;
+        }
+    }
 
-        bookManager.updateBook(book);
-
+    private void verifyIsbnUniqueness(String value, Book verifyBook) throws DuplicateException {
+        Book book = null;
+        try {
+            book = Managers.getBookManager().findBookByIsbn(value);
+        } catch (NoResultException exception) {
+            book = null;
+        }
+        if (verifyBook.getName() != null) {
+            if (book != null && !book.getName().equals(verifyBook.getName())) throw new DuplicateException();
+        }
     }
 
 }

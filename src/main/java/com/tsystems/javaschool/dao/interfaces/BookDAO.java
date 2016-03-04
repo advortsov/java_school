@@ -19,7 +19,7 @@ public interface BookDAO extends GenericDAO<Book, Long> {
 
     List<Book> findByAuthor(Author author);
 
-    List<Book> findByAuthorName(String authorName);
+    Book findByIsbn(String isbn);
 
     void setBookQuantity(long bookId, int quantity, EntityManager em);
 }

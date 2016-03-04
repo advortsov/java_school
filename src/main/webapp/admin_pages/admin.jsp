@@ -1,8 +1,6 @@
 <%@ page import="com.tsystems.javaschool.dao.entity.Client" %>
-<%@ page import="com.tsystems.javaschool.dao.entity.Order" %>
 <%@ page import="com.tsystems.javaschool.services.impl.OrderManagerImpl" %>
 <%@ page import="com.tsystems.javaschool.services.interfaces.OrderManager" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
@@ -21,73 +19,14 @@
         session.invalidate();
     }
 
-    OrderManager orderManager1 = new OrderManagerImpl();
+    OrderManager orderManager1 = Managers.getOrderManager();
 
     List<Order> orders = orderManager1.loadAllOrders();
 %>
 
 
-<style>
-    #tab2, #tab3, #tab4, #tab5, #tab6, #tab7 {
-        position: fixed;
-    }
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/tabs.css" type="text/css"/>
 
-    .menu1 > a,
-    .menu1 #tab2:target ~ a:nth-of-type(1),
-    .menu1 #tab3:target ~ a:nth-of-type(1),
-    .menu1 #tab4:target ~ a:nth-of-type(1),
-    .menu1 #tab5:target ~ a:nth-of-type(1),
-    .menu1 #tab6:target ~ a:nth-of-type(1),
-    .menu1 #tab7:target ~ a:nth-of-type(1),
-    .menu1 > div {
-        padding: 5px;
-        /*border: 1px solid #aaa;*/
-        width: 700px;
-        /*float: left;*/
-    }
-
-    .menu1 > a {
-        line-height: 28px;
-        background: #fff;
-        text-decoration: none;
-    }
-
-    #tab2,
-    #tab3,
-    #tab4,
-    #tab5,
-    #tab6,
-    #tab7,
-    .menu1 > div,
-    .menu1 #tab2:target ~ div:nth-of-type(1),
-    .menu1 #tab3:target ~ div:nth-of-type(1),
-    .menu1 #tab4:target ~ div:nth-of-type(1),
-    .menu1 #tab5:target ~ div:nth-of-type(1),
-    .menu1 #tab6:target ~ div:nth-of-type(1),
-    .menu1 #tab7:target ~ div:nth-of-type(1) {
-        display: none;
-    }
-
-    .menu1 > div:nth-of-type(1),
-    .menu1 #tab2:target ~ div:nth-of-type(2),
-    .menu1 #tab3:target ~ div:nth-of-type(3),
-    .menu1 #tab4:target ~ div:nth-of-type(4),
-    .menu1 #tab5:target ~ div:nth-of-type(5),
-    .menu1 #tab6:target ~ div:nth-of-type(6),
-    .menu1 #tab7:target ~ div:nth-of-type(7) {
-        display: block;
-    }
-
-    .menu1 > a:nth-of-type(1),
-    .menu1 #tab2:target ~ a:nth-of-type(2),
-    .menu1 #tab3:target ~ a:nth-of-type(3),
-    .menu1 #tab4:target ~ a:nth-of-type(4),
-    .menu1 #tab5:target ~ a:nth-of-type(5),
-    .menu1 #tab6:target ~ a:nth-of-type(6),
-    .menu1 #tab7:target ~ a:nth-of-type(7) {
-        border-bottom: 1px solid #fff;
-    }
-</style>
 <div class="menu1">
     <br id="tab2"/>
     <br id="tab3"/>
@@ -123,33 +62,7 @@
 
         <br><strong>Заказы</strong>
 
-        <style>
-            table {
-                font-size: 10px;
-                border-collapse: collapse;
-                text-align: center;
-            }
-
-            th, td:first-child {
-                /*background: white;*/
-                color: black;
-                padding: 5px 10px;
-            }
-
-            th, td {
-                border-style: solid;
-                border-width: 0 1px 1px 0;
-                border-color: black;
-            }
-
-            td {
-                background: #D8E6F3;
-            }
-
-            th:first-child, td:first-child {
-                text-align: left;
-            }
-        </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/order_table.css" type="text/css"/>
 
         <table border="1">
             <tr>
@@ -200,9 +113,7 @@
             }
         %>
 
-
     </div>
-
 
     <%--tab1 - top10--%>
     <%@include file="../WEB-INF/jspf/adminf/top10.jspf" %>

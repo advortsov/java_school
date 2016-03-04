@@ -1,9 +1,6 @@
 package com.tsystems.javaschool.dao.interfaces;
 
-import com.tsystems.javaschool.dao.entity.Order;
 import com.tsystems.javaschool.dao.entity.Publisher;
-
-import java.math.BigDecimal;
 
 /**
  * @author Alexander Dvortsov
@@ -11,6 +8,5 @@ import java.math.BigDecimal;
  * @since 11.02.2016
  */
 public interface PublisherDAO extends GenericDAO<Publisher, Long> {
-    public Publisher findByName(String name);
-
+    Publisher findByName(String name);
 }

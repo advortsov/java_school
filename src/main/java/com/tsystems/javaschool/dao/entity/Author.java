@@ -3,30 +3,22 @@ package com.tsystems.javaschool.dao.entity;
 
 import javax.persistence.*;
 
-import java.util.Collection;
-import java.util.Date;
-
 /**
  * @author Alexander Dvortsov
  * @version 1.0
  * @since 09.02.2016
- *
- *
- * POJO
- *
  */
 
 @Entity
-@Table(name="author")
+@Table(name = "author")
 //@NamedQuery(name = "Author.getById", query = "SELECT c from Car c")
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private long id;//
+    private long id;
 
-    @Column(name="name", unique = true, nullable = false)
-    // from 20 feb //@Column(nulable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     public Author() {
@@ -50,6 +42,25 @@ public class Author {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Author author = (Author) o;
+
+        if (id != author.id) return false;
+        return !(name != null ? !name.equals(author.name) : author.name != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 
     @Override

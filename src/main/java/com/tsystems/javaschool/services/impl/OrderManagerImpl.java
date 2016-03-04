@@ -2,8 +2,6 @@ package com.tsystems.javaschool.services.impl;
 
 import com.tsystems.javaschool.dao.entity.Order;
 import com.tsystems.javaschool.dao.entity.OrderLine;
-import com.tsystems.javaschool.dao.impl.BookDAOImpl;
-import com.tsystems.javaschool.dao.impl.OrderDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.BookDAO;
 import com.tsystems.javaschool.dao.interfaces.OrderDAO;
 import com.tsystems.javaschool.dao.util.Daos;

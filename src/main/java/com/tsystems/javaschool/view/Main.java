@@ -1,10 +1,7 @@
 package com.tsystems.javaschool.view;
 
 
-import com.tsystems.javaschool.dao.entity.*;
-import com.tsystems.javaschool.dao.exeption.NotRegisteredUserException;
-import com.tsystems.javaschool.dao.util.JpaUtil;
-import com.tsystems.javaschool.services.impl.*;
+import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.services.interfaces.*;
 import com.tsystems.javaschool.services.util.Managers;
 
@@ -116,6 +113,15 @@ public class Main {
 //        } catch (NotRegisteredUserException e) {
 //            e.printStackTrace();
 //        }
+
+        Book book = Managers.getBookManager().findBookByIsbn("494-uig-84");
+        //Book book1 = Managers.getBookManager().findBookByIsbn("4924-uig-84");
+//        System.out.println(book.getName());
+        //System.out.println(book1.getName());
+
+        List<Book> actual = Managers.getBookManager().findByAuthorName("Laffore");
+        System.out.println(actual.size());
+
     }
 
     public static void printMap(Map mp) {

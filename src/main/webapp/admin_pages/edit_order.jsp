@@ -8,21 +8,28 @@
     <br><strong>Изменение статуса заказа</strong>
 
     <form name="order_set_status_form" action="/setOrderStatus" method="get">
-        <div class="book_info">
-            <div class="book_details">
-                <br><strong>ID заказа:</strong>
-                <input type="text" value="<%=request.getParameter("order_id")%>"
-                       name="order_id" readonly>
-                <br><strong>Статус выполнения заказа:</strong>
-                <select name="order_status">
-                    <%
-                        for (OrderStatus status : OrderStatus.values()) {
-                    %>
-                    <option><%=status.toString()%>
-                    </option>
-                    <% } %>
-                </select>
+        <div class="edit_book_info">
+            <div>
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/css/form.css" type="text/css"/>
 
+                <div class="field">
+                    <label for="order_id">ID заказа:</label> <%=request.getParameter("order_id")%>
+                    <input type="text" value="<%=request.getParameter("order_id")%>"
+                           name="order_id" id="order_id" hidden>
+                </div>
+
+                <div class="field">
+                    <label for="order_status">Статус выполнения заказа:</label>
+                    <select name="order_status" id="order_status">
+                        <%
+                            for (OrderStatus status : OrderStatus.values()) {
+                        %>
+                        <option><%=status.toString()%>
+                        </option>
+                        <% } %>
+                    </select>
+                </div>
+                <input type="hidden" name="action" value="set"></p>
                 <p><input type="submit" value="Задать"></p>
             </div>
         </div>

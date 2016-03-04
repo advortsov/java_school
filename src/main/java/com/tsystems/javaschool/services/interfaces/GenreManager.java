@@ -2,8 +2,8 @@ package com.tsystems.javaschool.services.interfaces;
 
 
 import com.tsystems.javaschool.dao.entity.Genre;
+import com.tsystems.javaschool.services.exception.DuplicateException;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -17,11 +17,13 @@ public interface GenreManager {
 
     public List<Genre> loadAllGenres();
 
-    public void saveNewGenre(Genre genre);
+    public void saveNewGenre(Genre genre) throws DuplicateException;
 
     public void updateGenre(Genre genre);
 
     public Genre findGenreById(long id);
 
     public void deleteGenre(Genre genre);
+
+    Genre findGenreByName(String name);
 }

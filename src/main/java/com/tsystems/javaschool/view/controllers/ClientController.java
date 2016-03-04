@@ -47,7 +47,7 @@ public class ClientController {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setClient(client);
         shoppingCartManager.setShoppingCart(shoppingCart);
-        shoppingCartManager.fillUpFromCookies(request); // заполняем ее из кукисов
+        CartController.fillUpFromCookies(request, shoppingCart); // заполняем ее из кукисов
         request.getSession().setAttribute("cart", shoppingCart);
     }
 

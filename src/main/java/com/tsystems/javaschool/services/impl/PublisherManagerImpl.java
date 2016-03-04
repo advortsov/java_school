@@ -1,10 +1,10 @@
 package com.tsystems.javaschool.services.impl;
 
 import com.tsystems.javaschool.dao.entity.Publisher;
-import com.tsystems.javaschool.dao.impl.PublisherDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.PublisherDAO;
 import com.tsystems.javaschool.dao.util.Daos;
 import com.tsystems.javaschool.dao.util.JpaUtil;
+import com.tsystems.javaschool.services.exception.DuplicateException;
 import com.tsystems.javaschool.services.interfaces.PublisherManager;
 
 import javax.persistence.EntityManager;
@@ -33,7 +33,7 @@ public class PublisherManagerImpl implements PublisherManager {
     }
 
     @Override
-    public void saveNewPublisher(Publisher publisher) {
+    public void saveNewPublisher(Publisher publisher) throws DuplicateException {
         EntityManager em = null;
         try {
             em = JpaUtil.beginTransaction();
@@ -42,6 +42,7 @@ public class PublisherManagerImpl implements PublisherManager {
         } catch (PersistenceException ex) {
             ex.printStackTrace();
             JpaUtil.rollbackTransaction(em);
+            throw new DuplicateException();
         }
     }
 
@@ -71,7 +72,6 @@ public class PublisherManagerImpl implements PublisherManager {
             publisherDAO.merge(publisher, em);
             JpaUtil.commitTransaction(em);
         } catch (PersistenceException ex) {
-            Logger.getLogger(BookManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
             ex.printStackTrace();
             JpaUtil.rollbackTransaction(em);
         }

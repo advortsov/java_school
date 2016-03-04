@@ -12,7 +12,8 @@
 
     <p>&nbsp;</p>
 
-    <form name="book_add_form" enctype="multipart/form-data" action="/bookList" method="post">
+    <form name="book_add_form" enctype="multipart/form-data" accept-charset="utf-8"
+          action="/bookList" method="post">
         <div class="edit_book_info">
             <div>
 

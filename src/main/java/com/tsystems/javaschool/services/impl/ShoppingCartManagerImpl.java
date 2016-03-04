@@ -29,7 +29,6 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
     public ShoppingCartManagerImpl() {
     }
 
-
     public ShoppingCartManagerImpl(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
@@ -79,14 +78,6 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
         shoppingCart.setItems(items);
     }
 
-    // writing into DB
-    @Override
-    public Order createOrder() {
-        //Order order = new Order(shoppingCart.getClient(), )
-        return null;
-    }
-
-
     @Override
     public boolean isEnoughBooksInStock(int id) {
         BookManager bookManager = new BookManagerImpl();
@@ -96,60 +87,10 @@ public class ShoppingCartManagerImpl implements ShoppingCartManager {
             int storeQuantity = bookManager.getBookQuantity(orderLine.getBook().getId());
 
             if (wantedQuantity > storeQuantity) {
-                //throw new NotEnoughBooksInTheStockException(quantity);
                 return false;
             }
         }
         return true;
     }
-
-    @Override
-    public void fillUpFromCookies(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-
-        List<OrderLine> newItems = new ArrayList<>();
-        // заполняем по куки корзину
-
-        if (cookies != null) {
-            String cookieOwner = (String) request.getSession().getAttribute("name_for_greeting");
-            long id;
-            int quantity;
-            for (Cookie cookie : cookies) {
-                String value = cookie.getValue();
-                if (value.contains("dlm")) {
-                    String[] cookieContent = value.split("dlm");
-                    if (cookieContent[0].equals(cookieOwner)) {
-                        id = Long.parseLong(cookieContent[1]);
-                        quantity = Integer.parseInt(cookieContent[2]);
-                        newItems.add(new OrderLine(quantity, bookManager.findBookById(id)));
-
-                    }
-
-                }
-            }
-        }
-
-        if (!newItems.isEmpty()) {
-            shoppingCart.setItems(newItems);
-        }
-
-    }
-
-    @Override
-    public void deleteExistingCookies(long bookId, HttpServletRequest req) {
-        // удаляем куки с таким же айди, чтобы перезаписать количество
-        Cookie[] cookies = req.getCookies();
-        for (Cookie cookie : cookies) {
-            String value = cookie.getValue();
-            if (value.contains("qty")) {
-                String[] arr = value.split("qty");
-                long id = Long.parseLong(arr[0]);
-                if (id == bookId) {
-                    cookie.setMaxAge(0);
-                }
-            }
-        }
-    }
-
 
 }

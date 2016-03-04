@@ -1,26 +1,11 @@
 package com.tsystems.javaschool.dao.entity;
 
-import com.sun.istack.internal.NotNull;
-
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * @author Alexander Dvortsov
  * @version 1.0
  * @since 19.02.2016
- * <p>
- * <p>
- * * create table users (
- * user_name         varchar(15) not null primary key,
- * user_pass         varchar(15) not null
- * );
- * <p>
- * create table user_roles (
- * user_name         varchar(15) not null,
- * role_name         varchar(15) not null,
- * primary key (user_name, role_name)
- * );
  */
 
 @Entity
@@ -29,13 +14,12 @@ import java.io.Serializable;
 public class UserRole {
 
     @Id
-    @Column(name = "user_name", unique = true, length = 15, nullable = false)
+    @Column(name = "user_name", length = 15, nullable = false) // changed on not unique 3 march
     private String userName;
 
     @Id
     @Column(name = "role_name", length = 15, nullable = false)
     private String userRole;
-
 
     public UserRole() {
     }
@@ -54,5 +38,24 @@ public class UserRole {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserRole userRole1 = (UserRole) o;
+
+        if (!userName.equals(userRole1.userName)) return false;
+        return userRole.equals(userRole1.userRole);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userName.hashCode();
+        result = 31 * result + userRole.hashCode();
+        return result;
     }
 }

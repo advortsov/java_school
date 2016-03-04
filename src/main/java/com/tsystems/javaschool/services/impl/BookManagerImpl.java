@@ -3,13 +3,12 @@ package com.tsystems.javaschool.services.impl;
 import com.tsystems.javaschool.dao.entity.Author;
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Genre;
-import com.tsystems.javaschool.dao.impl.AuthorDAOImpl;
-import com.tsystems.javaschool.dao.impl.BookDAOImpl;
 import com.tsystems.javaschool.dao.interfaces.AuthorDAO;
 import com.tsystems.javaschool.dao.interfaces.BookDAO;
 import com.tsystems.javaschool.dao.util.Daos;
 import com.tsystems.javaschool.dao.util.JpaUtil;
 import com.tsystems.javaschool.services.enums.SearchType;
+import com.tsystems.javaschool.services.exception.DuplicateException;
 import com.tsystems.javaschool.services.interfaces.BookManager;
 import org.apache.log4j.Logger;
 
@@ -58,7 +57,7 @@ public class BookManagerImpl implements BookManager {
     }
 
     @Override
-    public void saveNewBook(Book book) {
+    public void saveNewBook(Book book) throws DuplicateException {
         logger.info("Try to save new book...");
         EntityManager em = null;
         try {
@@ -70,15 +69,16 @@ public class BookManagerImpl implements BookManager {
             logger.error("New book has not been saved!");
             ex.printStackTrace();
             JpaUtil.rollbackTransaction(em);
+            throw new DuplicateException();
         }
     }
 
     @Override
-    public void updateBook(Book book) {
+    public void updateBook(Book book) throws DuplicateException {
         logger.info("Try to update book...");
         EntityManager em = null;
         try {
-            JpaUtil.beginTransaction();
+            em = JpaUtil.beginTransaction();
             bookDAO.merge(book, em);
             JpaUtil.commitTransaction(em);
             logger.info("New book has been updated.");
@@ -86,6 +86,7 @@ public class BookManagerImpl implements BookManager {
             logger.error("Book has not been updated!");
             ex.printStackTrace();
             JpaUtil.rollbackTransaction(em);
+            throw new DuplicateException();
         }
     }
 
@@ -147,5 +148,11 @@ public class BookManagerImpl implements BookManager {
     public List<Book> getBooksByAuthor(Author author) {
         logger.info("Try to get books by author...");
         return bookDAO.findByAuthor(author);
+    }
+
+    @Override
+    public Book findBookByIsbn(String value) {
+        logger.info("Try to get one book by id...");
+        return bookDAO.findByIsbn(value);
     }
 }

@@ -4,6 +4,7 @@ import com.tsystems.javaschool.dao.entity.Author;
 import com.tsystems.javaschool.dao.entity.Book;
 import com.tsystems.javaschool.dao.entity.Genre;
 import com.tsystems.javaschool.services.enums.SearchType;
+import com.tsystems.javaschool.services.exception.DuplicateException;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface BookManager {
 
     public List<Book> loadAllBooks();
 
-    public void saveNewBook(Book book);
+    public void saveNewBook(Book book) throws DuplicateException;
 
     public Book findBookById(long id);
 
@@ -31,9 +32,11 @@ public interface BookManager {
 
     public List<Book> getBooksBySearch(String searchStr, SearchType type);
 
-    public void updateBook(Book book);
+    public void updateBook(Book book) throws DuplicateException;
 
     public int getBookQuantity(long id);
 
     public List<Book> getBooksByAuthor(Author author);
+
+    Book findBookByIsbn(String value);
 }

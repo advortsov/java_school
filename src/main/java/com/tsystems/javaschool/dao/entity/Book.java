@@ -39,24 +39,22 @@ public class Book {
     private String descr;
 
     @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "author_id") // this column inda book table
+    @JoinColumn(name = "author_id")
     private Author author;
 
     @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "genre_id") // this column inda book table
+    @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @OneToOne(cascade = CascadeType.DETACH)
-    @JoinColumn(name = "publisher_id") // this column inda book table
+    @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
-    @Column(name = "quantity")//
+    @Column(name = "quantity")
     private int quantity;
 
     @Column(name = "price")
     private int price;
-
-    //private List<OrderLine> orderLinesById;
 
     public Book() {
     }

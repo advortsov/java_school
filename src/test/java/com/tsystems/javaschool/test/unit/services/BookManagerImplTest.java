@@ -12,6 +12,7 @@ import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import static org.junit.Assert.assertTrue;
 public class BookManagerImplTest {
     private List<Book> allBooks = new ArrayList<>();
     private List<Book> oneBookFindByName = new ArrayList<>();
+    private List<Book> oneBookFindByAuthorName = new ArrayList<>();
     private Book book2;
     private BookManager bookManager;
 
@@ -33,6 +35,7 @@ public class BookManagerImplTest {
 
         Genre genre1 = new Genre("Algs");
         Author author1 = new Author("Author1");
+        Author author2 = new Author("Author2");
         Publisher publisher1 = new Publisher("Publisher1");
 
         byte[] img = {4, 3, 5};
@@ -41,18 +44,20 @@ public class BookManagerImplTest {
                 "descr", author1, genre1,
                 publisher1, 3, 2184);
 
-        book2 = new Book("Java1", 3525, "ISlBN-434352", 2013, img,
-                "descr", author1, genre1,
+        book2 = new Book("Java1", 3525, "ISlBN-434789352", 2013, img,
+                "descr", author2, genre1,
                 publisher1, 3, 2184);
 
         Book book3 = new Book("Java2", 3525, "ISlBN-4343j52", 2013, img,
-                "descr", author1, genre1,
+                "descr", author2, genre1,
                 publisher1, 3, 2184);
 
         allBooks.add(book1);
         allBooks.add(book2);
         allBooks.add(book3);
         oneBookFindByName.add(book2);
+        oneBookFindByAuthorName.add(book2);
+        oneBookFindByAuthorName.add(book3);
     }
 
     @Test
@@ -90,18 +95,28 @@ public class BookManagerImplTest {
         assertTrue("The actual book is not equals to expected book!",
                 actual.get(0)
                         .equals(book2));
-        context.assertIsSatisfied(); // то что ожидал от заглушки вызвалось
+        context.assertIsSatisfied();
     }
 
     @Test
     public void testFindByAuthorName() throws Exception {
-
+//        Mockery context = new Mockery();
+//        final BookDAO mockBookDAO = context.mock(BookDAO.class);
+//        bookManager = new BookManagerImpl(mockBookDAO);
+//
+//        context.checking(new Expectations() {
+//            {
+//                oneOf(mockBookDAO).findByAuthorName("Author2");
+//                will(returnValue(oneBookFindByAuthorName));
+//            }
+//        });
+//
+//        List<Book> actual = bookManager.findByAuthorName("Author2");
+//        assertTrue("The actual book is not equals to expected book!",
+//                actual.size() == 2);
+//        context.assertIsSatisfied();
     }
 
-    @Test
-    public void testLoadAllBooks1() throws Exception {
-
-    }
 
     @Test
     public void testSaveNewBook() throws Exception {

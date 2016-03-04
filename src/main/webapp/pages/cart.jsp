@@ -52,7 +52,7 @@
             table {
                 font-size: 13px;
                 border-collapse: collapse;
-                width: 100%;
+                width: 80%;
             }
 
             th, td {
@@ -122,6 +122,7 @@
 
         <% if (request.getUserPrincipal() != null) {%>
         <p></p>
+
         <p><input type="submit" value="Оформить заказ"></p>
         <% } else { %>
         <br><a href="/user_pages/profile.jsp">Войдите</a>, чтобы сделать заказ</br></p>
@@ -139,64 +140,7 @@
 
 </div>
 
-
-<style>
-    h1 {
-        text-align: center;
-        font-family: Tahoma, Arial, sans-serif;
-        color: orange;
-        margin: 100px 0;
-    }
-
-    .overlay {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0, 0, 0, 0.7);
-        transition: opacity 500ms;
-        visibility: hidden;
-        opacity: 0;
-    }
-
-    .overlay:target {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    .popup {
-        margin: 70px auto;
-        padding: 20px;
-        background: #fff;
-        border-radius: 5px;
-        width: 30%;
-        position: relative;
-        transition: all 5s ease-in-out;
-    }
-
-    .popup h2 {
-        margin-top: 0;
-        color: #333;
-        font-family: Tahoma, Arial, sans-serif;
-    }
-
-    .popup .close {
-        position: absolute;
-        top: 20px;
-        right: 30px;
-        transition: all 200ms;
-        font-size: 30px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #333;
-    }
-
-    .popup .close:hover {
-        color: red;
-    }
-
-</style>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/popup.css" type="text/css"/>
 <div id="order_popup_ok" class="overlay">
     <div class="popup">
         <h2>Заказ</h2>
@@ -207,7 +151,6 @@
         </div>
     </div>
 </div>
-
 
 <div id="order_popup_not_ok" class="overlay">
     <div class="popup">
